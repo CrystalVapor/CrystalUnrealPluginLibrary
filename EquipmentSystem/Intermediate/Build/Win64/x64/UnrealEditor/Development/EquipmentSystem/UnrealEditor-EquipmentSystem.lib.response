@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-EquipmentSystem.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.obj"
+"D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\EquipmentSystem.cpp.obj"
+"D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Default.rc2.res"
+/OUT:"D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\UnrealEditor-EquipmentSystem.lib"
