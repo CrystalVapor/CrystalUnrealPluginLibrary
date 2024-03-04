@@ -41,6 +41,7 @@ public class ExpandedGameplayAbilitySystem : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"EditorInteractiveToolsFramework",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

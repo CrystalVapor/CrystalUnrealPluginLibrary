@@ -3,13 +3,19 @@
 	{
 		"Module.EquipmentSystem.cpp.obj": [
 			"EquipmentFragment.gen.cpp.obj",
+			"EquipmentFragment_ModifierBase.gen.cpp.obj",
+			"EquipmentFragment_Test.gen.cpp.obj",
 			"EquipmentInstance.gen.cpp.obj",
+			"EquipmentManagerComponent.gen.cpp.obj",
 			"EquipmentReplicatedPropertyManagerComponent.gen.cpp.obj",
 			"EquipmentSystem.init.gen.cpp.obj",
 			"EquipmentFragment.cpp.obj",
 			"EquipmentInstance.cpp.obj",
 			"EquipmentReplicatedPropertyManagerComponent.cpp.obj",
-			"EquipmentSystem.cpp.obj"
+			"EquipmentSystem.cpp.obj",
+			"EquipmentFragment_ModifierBase.cpp.obj",
+			"EquipmentFragment_Test.cpp.obj",
+			"EquipmentManagerComponent.cpp.obj"
 		]
 	}
 }

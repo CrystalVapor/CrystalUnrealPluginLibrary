@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EquipmentInstance.h"
 #include "GameplayTagContainer.h"
 #include "UObject/Object.h"
 #include "Engine/AssetManager.h"
 #include "EquipmentFragment.generated.h"
 
+class AEquipmentInstance;
 DECLARE_DELEGATE_RetVal(float&, FFragmentFloatPropertyGetter)
 DECLARE_DELEGATE_RetVal(FGameplayTagContainer&, FFragmentTagContainerPropertyGetter)
 DECLARE_DELEGATE_RetVal(FRuntimeFloatCurve&, FFragmentCurvePropertyGetter)

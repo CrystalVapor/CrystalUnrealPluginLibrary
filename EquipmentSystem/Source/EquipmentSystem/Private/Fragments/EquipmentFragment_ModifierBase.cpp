@@ -3,6 +3,8 @@
 
 #include "Fragments/EquipmentFragment_ModifierBase.h"
 
+#include "EquipmentInstance.h"
+
 void UEquipmentFragment_ModifierBase::HandleChildOutsideInitialize(AEquipmentInstance* Instance)
 {
 	Super::HandleChildOutsideInitialize(Instance);
@@ -11,7 +13,7 @@ void UEquipmentFragment_ModifierBase::HandleChildOutsideInitialize(AEquipmentIns
 		UEquipmentFragment* Fragment = Instance->GetFragment(Modifier.TargetFragment);
 		if(Fragment)
 		{
-			Fragment->RegisterModifier(Modifier);
+			Fragment->RegisterModifier(Modifier.MakeModifier());
 		}
 	}
 	for(auto& Modifier: TagContainerModifiers)
@@ -19,7 +21,7 @@ void UEquipmentFragment_ModifierBase::HandleChildOutsideInitialize(AEquipmentIns
 		UEquipmentFragment* Fragment = Instance->GetFragment(Modifier.TargetFragment);
 		if(Fragment)
 		{
-			Fragment->RegisterModifier(Modifier);
+			Fragment->RegisterModifier(Modifier.MakeModifier());
 		}
 	}
 	for(auto& Modifier: CurveModifiers)
@@ -27,7 +29,7 @@ void UEquipmentFragment_ModifierBase::HandleChildOutsideInitialize(AEquipmentIns
 		UEquipmentFragment* Fragment = Instance->GetFragment(Modifier.TargetFragment);
 		if(Fragment)
 		{
-			Fragment->RegisterModifier(Modifier);
+			Fragment->RegisterModifier(Modifier.MakeModifier());
 		}
 	}
 }

@@ -3,9 +3,9 @@
 
 #include "Fragments/EquipmentFragment_Test.h"
 
-void UEquipmentFragment_Test::HandleChildInsideInitialize()
+void UEquipmentFragment_Test::HandleChildInsideInitialize(AEquipmentInstance* Instance)
 {
-	Super::HandleChildInsideInitialize();
+	Super::HandleChildInsideInitialize(Instance);
 	FRAGMENT_REGISTER_FLOAT_PROPERTY_GETTER(UEquipmentFragment_Test, TestValue);
 	FRAGMENT_REGISTER_TAG_PROPERTY_GETTER(UEquipmentFragment_Test, TestTags);
 	FRAGMENT_REGISTER_CURVE_PROPERTY_GETTER(UEquipmentFragment_Test, TestCurve);

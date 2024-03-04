@@ -34,7 +34,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "PropertyTags", meta = (DisplayName = "Test Curve", Categories = "Equipment.Property"))
 	FGameplayTag TestCurveTag;
 
-	virtual void HandleChildInsideInitialize() override;
+	virtual void HandleChildInsideInitialize(AEquipmentInstance* Instance) override;
 	
 	virtual void AsyncLoadAssets() override;
 	virtual void CheckAssetsFullyLoaded(bool& bIsFullyLoaded) override;
