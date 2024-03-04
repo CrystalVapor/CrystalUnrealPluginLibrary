@@ -26,6 +26,8 @@ public class EquipmentSystem : ModuleRules
 			new string[]
 			{
 				"Core",
+				"ExpandedGameplayAbilitySystem",
+				"GameplayTags",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -38,6 +40,7 @@ public class EquipmentSystem : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"NetCore",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

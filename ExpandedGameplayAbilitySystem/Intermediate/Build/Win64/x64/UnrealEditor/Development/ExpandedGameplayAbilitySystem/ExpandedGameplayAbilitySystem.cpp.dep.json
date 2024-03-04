@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealproject\\pluginproject\\plugins\\crystalpluginlibrary\\expandedgameplayabilitysystem\\source\\expandedgameplayabilitysystem\\private\\expandedgameplayabilitysystem.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealproject\\pluginproject\\intermediate\\build\\win64\\x64\\pluginprojecteditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "d:\\unrealproject\\pluginproject\\plugins\\crystalpluginlibrary\\expandedgameplayabilitysystem\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\expandedgameplayabilitysystem\\definitions.expandedgameplayabilitysystem.h",
+            "d:\\unrealproject\\pluginproject\\plugins\\crystalpluginlibrary\\expandedgameplayabilitysystem\\source\\expandedgameplayabilitysystem\\public\\expandedgameplayabilitysystem.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

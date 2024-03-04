@@ -1,6 +1,6 @@
-D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Source\EquipmentSystem\Private\EquipmentSystem.cpp
+D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source\EquipmentSystem\Private\EquipmentSystem.cpp
 /I .
-/I D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Source\EquipmentSystem\Private
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source\EquipmentSystem\Private
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\UHT
 /I Runtime\CoreUObject\Public
 /I Runtime
@@ -273,8 +273,16 @@ D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Source\EquipmentSystem\Pr
 /I Runtime\MovieSceneCapture\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController\UHT
 /I Developer\AnimationDataController\Public
-/I D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Source
-/I D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Source\EquipmentSystem\Public
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source\EquipmentSystem\Public
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source\ExpandedGameplayAbilitySystem\Public
+/I ..\Plugins\Runtime\GameplayAbilities\Intermediate\Build\Win64\UnrealEditor\Inc\GameplayAbilities\UHT
+/I ..\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Public
+/I ..\Plugins\Runtime\GameplayAbilities\Source
+/I ..\Plugins\Runtime\DataRegistry\Intermediate\Build\Win64\UnrealEditor\Inc\DataRegistry\UHT
+/I ..\Plugins\Runtime\DataRegistry\Source\DataRegistry\Public
+/I ..\Plugins\Runtime\DataRegistry\Source
 /external:W0
 /external:I ThirdParty\mimalloc\include
 /external:I ThirdParty\LibTiff\Source\Win64
@@ -285,11 +293,11 @@ D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Source\EquipmentSystem\Pr
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\um"
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\winrt"
 /FI"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h"
-/FI"D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Definitions.EquipmentSystem.h"
+/FI"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Definitions.EquipmentSystem.h"
 /Yu"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h"
 /Fp"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.pch"
-/Fo"D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\EquipmentSystem.cpp.obj"
-/sourceDependencies D:\unrealProject\PluginProject\Plugins\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\EquipmentSystem.cpp.dep.json
+/Fo"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\EquipmentSystem.cpp.obj"
+/sourceDependencies D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\EquipmentSystem.cpp.dep.json
 /Zc:inline
 /nologo
 /Oi
