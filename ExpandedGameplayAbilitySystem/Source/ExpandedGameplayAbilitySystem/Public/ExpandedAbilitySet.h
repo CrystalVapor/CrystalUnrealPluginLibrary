@@ -52,6 +52,8 @@ struct FExpandedAbilitySet_GrantHandle
 
 	void RemoveFromAbilitySystem();
 
+	FExpandedAbilitySet_GrantHandle& Append(const FExpandedAbilitySet_GrantHandle& Other);
+
 protected:
 	UPROPERTY()
 	TWeakObjectPtr<UExpandedAbilitySystemComponent> AbilitySystemComponent = nullptr;
@@ -73,10 +75,21 @@ UCLASS()
 class EXPANDEDGAMEPLAYABILITYSYSTEM_API UExpandedAbilitySet : public UDataAsset
 {
 	GENERATED_BODY()
+
 public:
-	void GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject, FExpandedAbilitySet_GrantHandle& GrantHandle);
-	
+	virtual void GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
+	                                 FExpandedAbilitySet_GrantHandle& GrantHandle);
+
 protected:
+	void GiveAbilityToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
+	                                FExpandedAbilitySet_GrantHandle& GrantHandle,
+	                                const FExpandedAbilitySet_Ability& AbilityData);
+	void GiveEffectToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent,
+	                               FExpandedAbilitySet_GrantHandle& GrantHandle,
+	                               const FExpandedAbilitySet_Effect& EffectData);
+	void GiveAttributeSetToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent,
+	                                     FExpandedAbilitySet_GrantHandle& GrantHandle,
+	                                     const FExpandedAbilitySet_AttributeSet& AttributeSetData);
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FExpandedAbilitySet_Ability> Abilities;
 	UPROPERTY(EditDefaultsOnly)

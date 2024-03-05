@@ -273,18 +273,21 @@ D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Inte
 /I Runtime\MovieSceneCapture\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController\UHT
 /I Developer\AnimationDataController\Public
-/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\UnrealEditor\Inc\EquipmentSystem\UHT
-/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source
-/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source\EquipmentSystem\Public
-/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\UnrealEditor\Inc\ExpandedGameplayAbilitySystem\UHT
-/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source
-/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source\ExpandedGameplayAbilitySystem\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EditorInteractiveToolsFramework\UHT
+/I Editor\Experimental\EditorInteractiveToolsFramework\Public
+/I Editor\Experimental
 /I ..\Plugins\Runtime\GameplayAbilities\Intermediate\Build\Win64\UnrealEditor\Inc\GameplayAbilities\UHT
 /I ..\Plugins\Runtime\GameplayAbilities\Source\GameplayAbilities\Public
 /I ..\Plugins\Runtime\GameplayAbilities\Source
 /I ..\Plugins\Runtime\DataRegistry\Intermediate\Build\Win64\UnrealEditor\Inc\DataRegistry\UHT
 /I ..\Plugins\Runtime\DataRegistry\Source\DataRegistry\Public
 /I ..\Plugins\Runtime\DataRegistry\Source
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\UnrealEditor\Inc\EquipmentSystem\UHT
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Source\EquipmentSystem\Public
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\UnrealEditor\Inc\ExpandedGameplayAbilitySystem\UHT
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source
+/I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source\ExpandedGameplayAbilitySystem\Public
 /external:W0
 /external:I ThirdParty\mimalloc\include
 /external:I ThirdParty\LibTiff\Source\Win64

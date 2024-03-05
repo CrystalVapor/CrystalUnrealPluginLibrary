@@ -41,6 +41,10 @@ public class EquipmentSystem : ModuleRules
 				"Slate",
 				"SlateCore",
 				"NetCore",
+				"EditorInteractiveToolsFramework",
+				"GameplayAbilities",
+				"GameplayTasks",
+				"GameplayTags",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

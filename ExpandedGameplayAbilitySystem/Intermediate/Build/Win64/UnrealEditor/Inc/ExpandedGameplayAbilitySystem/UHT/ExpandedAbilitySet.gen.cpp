@@ -420,6 +420,8 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UExpandedAbilitySet_Statics::NewProp_Abilities_MetaData[] = {
 		{ "Category", "ExpandedAbilitySet" },
+		{ "EditCondition", "bShowBaseClassAbilitySet" },
+		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/ExpandedAbilitySet.h" },
 	};
 #endif
@@ -428,6 +430,8 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UExpandedAbilitySet_Statics::NewProp_Effects_MetaData[] = {
 		{ "Category", "ExpandedAbilitySet" },
+		{ "EditCondition", "bShowBaseClassEffectSet" },
+		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/ExpandedAbilitySet.h" },
 	};
 #endif
@@ -436,6 +440,8 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UExpandedAbilitySet_Statics::NewProp_AttributeSets_MetaData[] = {
 		{ "Category", "ExpandedAbilitySet" },
+		{ "EditCondition", "bShowBaseClassAttributeSet" },
+		{ "EditConditionHides", "" },
 		{ "ModuleRelativePath", "Public/ExpandedAbilitySet.h" },
 	};
 #endif
@@ -493,9 +499,9 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 		{ FExpandedAbilitySet_GrantHandle::StaticStruct, Z_Construct_UScriptStruct_FExpandedAbilitySet_GrantHandle_Statics::NewStructOps, TEXT("ExpandedAbilitySet_GrantHandle"), &Z_Registration_Info_UScriptStruct_ExpandedAbilitySet_GrantHandle, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FExpandedAbilitySet_GrantHandle), 2432598336U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UExpandedAbilitySet, UExpandedAbilitySet::StaticClass, TEXT("UExpandedAbilitySet"), &Z_Registration_Info_UClass_UExpandedAbilitySet, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UExpandedAbilitySet), 1931612175U) },
+		{ Z_Construct_UClass_UExpandedAbilitySet, UExpandedAbilitySet::StaticClass, TEXT("UExpandedAbilitySet"), &Z_Registration_Info_UClass_UExpandedAbilitySet, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UExpandedAbilitySet), 1816793356U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_3222685992(TEXT("/Script/ExpandedGameplayAbilitySystem"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_2408811533(TEXT("/Script/ExpandedGameplayAbilitySystem"),
 		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_Statics::ClassInfo),
 		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySet_h_Statics::ScriptStructInfo),
 		nullptr, 0);
