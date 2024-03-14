@@ -42,38 +42,6 @@ struct FExpandedAbilityGrantSource_AttributeSet
 };
 
 USTRUCT()
-struct FLimitedAbilityGrantSource_Ability: public FExpandedAbilityGrantSource_Ability
-{
-	GENERATED_BODY()
-	
-	// used to limit the ability
-	UPROPERTY(EditAnywhere, NoClear, meta = (AllowAbstract = true, EditCondition = "bCanEditRequiredAbilityClass"))
-	TSubclassOf<UExpandedGameplayAbility> RequiredAbilityClass = UExpandedGameplayAbility::StaticClass();
-
-	UPROPERTY()
-	bool bCanEditRequiredAbilityClass = false;
-	
-#if WITH_EDITOR
-	EDataValidationResult IsDataValid(TArray<FText>& ValidationErrors) const
-	{
-		EDataValidationResult Result = EDataValidationResult::Valid;
-		if (!RequiredAbilityClass)
-		{
-			Result = EDataValidationResult::Invalid;
-			ValidationErrors.Add(FText::FromString(TEXT("RequiredAbilityClass is null")));
-		}
-		else if(IsValid(Ability)&&!Ability->IsChildOf(RequiredAbilityClass))
-		{
-			Result = EDataValidationResult::Invalid;
-			ValidationErrors.Add(FText::FromString(FString::Printf(TEXT("Ability is not a child of %ls"), *UExpandedGameplayAbility::StaticClass()->GetName())));
-		}
-		return Result;
-	}
-#endif
-};
-
-
-USTRUCT()
 struct FExpandedAbilityGrantSource_GrantHandle
 {
 	GENERATED_BODY()
