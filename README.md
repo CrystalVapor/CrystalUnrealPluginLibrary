@@ -7,4 +7,4 @@ This is a personal Library of Crystal, contains some Plugin for unreal 5.
 Current Plugins:
 
 - Expanded Gameplay Ability System (WIP)
-- Equipment System (Migrating code)
+- Equipment System (WIP)
