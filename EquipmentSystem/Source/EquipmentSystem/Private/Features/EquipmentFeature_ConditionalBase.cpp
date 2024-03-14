@@ -16,7 +16,7 @@ void UEquipmentFeature_ConditionalBase::GetFeatures(const FGameplayTagContainer&
 		{
 			bHasAnyBlockedTags = true;
 		}
-		if(bUseAllowedTag && !FeatureTags.HasAllExact(AllowedTags))
+		if(!AllowedTags.IsEmpty() && !FeatureTags.HasAllExact(AllowedTags))
 		{
 			bHasAllAllowedTags = false;
 		}

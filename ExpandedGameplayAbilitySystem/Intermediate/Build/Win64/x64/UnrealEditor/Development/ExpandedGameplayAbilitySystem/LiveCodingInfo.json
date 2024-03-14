@@ -2,10 +2,12 @@
 	"RemapUnityFiles": 
 	{
 		"Module.ExpandedGameplayAbilitySystem.cpp.obj": [
+			"ExpandedAbilityGrantSource.gen.cpp.obj",
 			"ExpandedAbilitySet.gen.cpp.obj",
 			"ExpandedAbilitySystemComponent.gen.cpp.obj",
 			"ExpandedGameplayAbility.gen.cpp.obj",
 			"ExpandedGameplayAbilitySystem.init.gen.cpp.obj",
+			"ExpandedAbilityGrantSource.cpp.obj",
 			"ExpandedAbilitySet.cpp.obj",
 			"ExpandedAbilitySystemComponent.cpp.obj",
 			"ExpandedGameplayAbility.cpp.obj",

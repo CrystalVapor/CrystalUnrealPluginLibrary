@@ -41,7 +41,6 @@ public class EquipmentSystem : ModuleRules
 				"Slate",
 				"SlateCore",
 				"NetCore",
-				"EditorInteractiveToolsFramework",
 				"GameplayAbilities",
 				"GameplayTasks",
 				"GameplayTags",
@@ -56,5 +55,16 @@ public class EquipmentSystem : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
+		
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.AddRange(
+				new string[]
+				{
+					"UnrealEd",
+					"EditorInteractiveToolsFramework",
+				}
+				);
+		}
 	}
 }

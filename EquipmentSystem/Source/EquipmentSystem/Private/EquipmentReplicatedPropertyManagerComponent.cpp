@@ -3,6 +3,7 @@
 
 #include "EquipmentReplicatedPropertyManagerComponent.h"
 
+#include "GameFramework/PlayerController.h"
 #include "GameFramework/PlayerState.h"
 #include "Net/UnrealNetwork.h"
 

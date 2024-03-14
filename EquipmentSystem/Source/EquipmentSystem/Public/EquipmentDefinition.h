@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "EquipmentFeature.h"
 #include "EquipmentFragment.h"
-#include "ExpandedAbilitySet.h"
 #include "Engine/DataAsset.h"
 #include "EquipmentDefinition.generated.h"
 
@@ -20,7 +19,7 @@ struct FEquipmentFeatureData
 	UPROPERTY()
 	TArray<TSubclassOf<UEquipmentFragment>> FragmentClasses;
 	UPROPERTY()
-	TArray<TObjectPtr<UExpandedAbilitySet>> AbilitySets;
+	TArray<TObjectPtr<UObject>> AbilitySets;
 	
 	FEquipmentFeatureDelegate OnFragmentInitialized;
 };
@@ -33,7 +32,13 @@ class EQUIPMENTSYSTEM_API UEquipmentDefinition : public UDataAsset
 {
 	GENERATED_BODY()
 public:
-	void GetFeatureData(const FGameplayTagContainer& FeatureTags, FEquipmentFeatureData& OutFeatureData) const;
+	virtual void GetFeatureData(const FGameplayTagContainer& FeatureTags, FEquipmentFeatureData& OutFeatureData) const;
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
+	virtual EDataValidationResult IsDataValid(TArray<FText>& ValidationErrors) override;
+#endif
+	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Default")
 	FString EquipmentName;

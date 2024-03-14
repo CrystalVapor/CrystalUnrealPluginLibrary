@@ -297,10 +297,10 @@ D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Inte
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\shared"
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\um"
 /external:I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0\winrt"
-/FI"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h"
+/FI"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.InclOrderUnreal5_0.h"
 /FI"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Definitions.EquipmentSystem.h"
-/Yu"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h"
-/Fp"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.pch"
+/Yu"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.InclOrderUnreal5_0.h"
+/Fp"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.InclOrderUnreal5_0.h.pch"
 /Fo"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Module.EquipmentSystem.cpp.obj"
 /sourceDependencies D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Module.EquipmentSystem.cpp.dep.json
 /Zc:inline

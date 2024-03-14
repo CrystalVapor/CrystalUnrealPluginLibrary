@@ -2,11 +2,11 @@
 	"RemapUnityFiles": 
 	{
 		"Module.EquipmentSystem.cpp.obj": [
-			"EquipmentAbilitySet.gen.cpp.obj",
 			"EquipmentDefinition.gen.cpp.obj",
 			"EquipmentFeature.gen.cpp.obj",
 			"EquipmentFeature_AddFragmentAndAbilitySet.gen.cpp.obj",
 			"EquipmentFeature_ConditionalBase.gen.cpp.obj",
+			"EquipmentFeature_LimitedFeature.gen.cpp.obj",
 			"EquipmentFragment.gen.cpp.obj",
 			"EquipmentFragment_ModifierBase.gen.cpp.obj",
 			"EquipmentFragment_Test.gen.cpp.obj",
@@ -14,7 +14,6 @@
 			"EquipmentManagerComponent.gen.cpp.obj",
 			"EquipmentReplicatedPropertyManagerComponent.gen.cpp.obj",
 			"EquipmentSystem.init.gen.cpp.obj",
-			"EquipmentAbilitySet.cpp.obj",
 			"EquipmentDefinition.cpp.obj",
 			"EquipmentFeature.cpp.obj",
 			"EquipmentFragment.cpp.obj",
@@ -23,6 +22,7 @@
 			"EquipmentSystem.cpp.obj",
 			"EquipmentFeature_AddFragmentAndAbilitySet.cpp.obj",
 			"EquipmentFeature_ConditionalBase.cpp.obj",
+			"EquipmentFeature_LimitedFeature.cpp.obj",
 			"EquipmentFragment_ModifierBase.cpp.obj",
 			"EquipmentFragment_Test.cpp.obj",
 			"EquipmentManagerComponent.cpp.obj"

@@ -1,0 +1,156 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+/*===========================================================================
+	Generated code exported from UnrealHeaderTool.
+	DO NOT modify this manually! Edit the corresponding .h files instead!
+===========================================================================*/
+
+// IWYU pragma: private, include "ExpandedAbilityGrantSource.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+#ifdef EXPANDEDGAMEPLAYABILITYSYSTEM_ExpandedAbilityGrantSource_generated_h
+#error "ExpandedAbilityGrantSource.generated.h already included, missing '#pragma once' in ExpandedAbilityGrantSource.h"
+#endif
+#define EXPANDEDGAMEPLAYABILITYSYSTEM_ExpandedAbilityGrantSource_generated_h
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_14_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Ability_Statics; \
+	EXPANDEDGAMEPLAYABILITYSYSTEM_API static class UScriptStruct* StaticStruct();
+
+
+template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FExpandedAbilityGrantSource_Ability>();
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_28_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Effect_Statics; \
+	EXPANDEDGAMEPLAYABILITYSYSTEM_API static class UScriptStruct* StaticStruct();
+
+
+template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FExpandedAbilityGrantSource_Effect>();
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_39_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_AttributeSet_Statics; \
+	EXPANDEDGAMEPLAYABILITYSYSTEM_API static class UScriptStruct* StaticStruct();
+
+
+template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FExpandedAbilityGrantSource_AttributeSet>();
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_47_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics; \
+	EXPANDEDGAMEPLAYABILITYSYSTEM_API static class UScriptStruct* StaticStruct(); \
+	typedef FExpandedAbilityGrantSource_Ability Super;
+
+
+template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FLimitedAbilityGrantSource_Ability>();
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_79_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics; \
+	EXPANDEDGAMEPLAYABILITYSYSTEM_API static class UScriptStruct* StaticStruct();
+
+
+template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FExpandedAbilityGrantSource_GrantHandle>();
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_SPARSE_DATA
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_RPC_WRAPPERS
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_RPC_WRAPPERS_NO_PURE_DECLS
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_ACCESSORS
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_STANDARD_CONSTRUCTORS \
+	/** Standard constructor, called after all reflected properties have been initialized */ \
+	NO_API UExpandedAbilityGrantSource(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
+	DEFINE_ABSTRACT_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UExpandedAbilityGrantSource) \
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UExpandedAbilityGrantSource); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UExpandedAbilityGrantSource); \
+private: \
+	/** Private move- and copy-constructors, should never be used */ \
+	NO_API UExpandedAbilityGrantSource(UExpandedAbilityGrantSource&&); \
+	NO_API UExpandedAbilityGrantSource(const UExpandedAbilityGrantSource&); \
+public: \
+	NO_API virtual ~UExpandedAbilityGrantSource();
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_ENHANCED_CONSTRUCTORS \
+	/** Standard constructor, called after all reflected properties have been initialized */ \
+	NO_API UExpandedAbilityGrantSource(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
+private: \
+	/** Private move- and copy-constructors, should never be used */ \
+	NO_API UExpandedAbilityGrantSource(UExpandedAbilityGrantSource&&); \
+	NO_API UExpandedAbilityGrantSource(const UExpandedAbilityGrantSource&); \
+public: \
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, UExpandedAbilityGrantSource); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(UExpandedAbilityGrantSource); \
+	DEFINE_ABSTRACT_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UExpandedAbilityGrantSource) \
+	NO_API virtual ~UExpandedAbilityGrantSource();
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_GENERATED_UINTERFACE_BODY() \
+private: \
+	static void StaticRegisterNativesUExpandedAbilityGrantSource(); \
+	friend struct Z_Construct_UClass_UExpandedAbilityGrantSource_Statics; \
+public: \
+	DECLARE_CLASS(UExpandedAbilityGrantSource, UInterface, COMPILED_IN_FLAGS(CLASS_Abstract | CLASS_Interface), CASTCLASS_None, TEXT("/Script/ExpandedGameplayAbilitySystem"), NO_API) \
+	DECLARE_SERIALIZER(UExpandedAbilityGrantSource)
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_GENERATED_BODY_LEGACY \
+		PRAGMA_DISABLE_DEPRECATION_WARNINGS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_GENERATED_UINTERFACE_BODY() \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_STANDARD_CONSTRUCTORS \
+	PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_GENERATED_BODY \
+	PRAGMA_DISABLE_DEPRECATION_WARNINGS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_GENERATED_UINTERFACE_BODY() \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_ENHANCED_CONSTRUCTORS \
+private: \
+	PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_INCLASS_IINTERFACE_NO_PURE_DECLS \
+protected: \
+	virtual ~IExpandedAbilityGrantSource() {} \
+public: \
+	typedef UExpandedAbilityGrantSource UClassType; \
+	typedef IExpandedAbilityGrantSource ThisClass; \
+	virtual UObject* _getUObject() const { return nullptr; }
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_INCLASS_IINTERFACE \
+protected: \
+	virtual ~IExpandedAbilityGrantSource() {} \
+public: \
+	typedef UExpandedAbilityGrantSource UClassType; \
+	typedef IExpandedAbilityGrantSource ThisClass; \
+	virtual UObject* _getUObject() const { return nullptr; }
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_104_PROLOG
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_115_GENERATED_BODY_LEGACY \
+PRAGMA_DISABLE_DEPRECATION_WARNINGS \
+public: \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_SPARSE_DATA \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_RPC_WRAPPERS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_ACCESSORS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_INCLASS_IINTERFACE \
+public: \
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_115_GENERATED_BODY \
+PRAGMA_DISABLE_DEPRECATION_WARNINGS \
+public: \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_SPARSE_DATA \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_ACCESSORS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_107_INCLASS_IINTERFACE_NO_PURE_DECLS \
+private: \
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+
+template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* StaticClass<class UExpandedAbilityGrantSource>();
+
+#undef CURRENT_FILE_ID
+#define CURRENT_FILE_ID FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h
+
+
+PRAGMA_ENABLE_DEPRECATION_WARNINGS

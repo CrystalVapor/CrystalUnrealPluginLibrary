@@ -41,7 +41,6 @@ public class ExpandedGameplayAbilitySystem : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"EditorInteractiveToolsFramework",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -53,5 +52,15 @@ public class ExpandedGameplayAbilitySystem : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
+		
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.AddRange(
+				new string[]
+				{
+					"EditorInteractiveToolsFramework",
+				}
+			);
+		}
 	}
 }
