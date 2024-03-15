@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "../../../../ExpandedGameplayAbilitySystem/Source/ExpandedGameplayAbilitySystem/Public/ExpandedAbilityGrantSource.h"
 #include "Components/ActorComponent.h"
 #include "EquipmentManagerComponent.generated.h"
 
@@ -15,6 +16,9 @@ class EQUIPMENTSYSTEM_API UEquipmentManagerComponent : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UEquipmentManagerComponent();
+
+	FExpandedAbilityGrantSource_GrantHandle HandleGrantAbility(IExpandedAbilityGrantSource* Source);
+	void NotifyInstanceInitialized(AEquipmentInstance* Instance);
 
 protected:
 	// Called when the game starts

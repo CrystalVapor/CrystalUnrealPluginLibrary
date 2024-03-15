@@ -10,5 +10,5 @@ void UEquipmentFeature_AddFragmentAndAbilitySet::GetFeaturesConditional(const FG
 {
 	Super::GetFeaturesConditional(FeatureTags, OutFeatures);
 	OutFeatures.FragmentClasses.Append(Fragments);
-	OutFeatures.AbilitySets.Append(AbilitySets);
+	OutFeatures.AbilityGrantSources.Append(AbilitySets);
 }

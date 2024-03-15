@@ -19,7 +19,7 @@ struct FEquipmentFeatureData
 	UPROPERTY()
 	TArray<TSubclassOf<UEquipmentFragment>> FragmentClasses;
 	UPROPERTY()
-	TArray<TObjectPtr<UObject>> AbilitySets;
+	TArray<TObjectPtr<UObject>> AbilityGrantSources;
 	
 	FEquipmentFeatureDelegate OnFragmentInitialized;
 };

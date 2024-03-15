@@ -161,7 +161,7 @@ void UEquipmentFeature_LimitedFeature::GetFeaturesConditional(const FGameplayTag
 	{
 		OutFeatures.FragmentClasses.Add(LimitedFragmentEntry.FragmentClass);
 	}
-	OutFeatures.AbilitySets.Add(const_cast<UEquipmentFeature_LimitedFeature*>(this));
+	OutFeatures.AbilityGrantSources.Add(const_cast<UEquipmentFeature_LimitedFeature*>(this));
 }
 
 void UEquipmentFeature_LimitedFeature::GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent,
