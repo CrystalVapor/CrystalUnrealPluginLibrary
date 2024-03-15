@@ -3,6 +3,8 @@
 
 #include "EquipmentFragment.h"
 
+#include "EquipmentInstance.h"
+
 FFragmentRegisteredModifier& FFragmentRegisteredModifier::Append(const FFragmentRegisteredModifier& Other)
 {
 	if(PropertyTag != Other.PropertyTag)
@@ -88,36 +90,32 @@ const FGameplayTagContainer& UEquipmentFragment::GetTagContainerProperty(FGamepl
 	return InternalGetTagContainerProperty(PropertyTag);
 }
 
-void UEquipmentFragment::NotifyStartInsideInitialize(AEquipmentInstance* Instance,
-                                                     FSimpleDelegate* InstanceNotifyDelegate)
+void UEquipmentFragment::NotifyStartInsideInitialize(AEquipmentInstance* Instance)
 {
-	InstanceNotifyDelegate_InsideInitialized = InstanceNotifyDelegate;
+	InstanceNotifyDelegate_InsideInitialized.BindUObject(Instance, &AEquipmentInstance::ContinueInitializeInstance);
 	HandleChildInsideInitialize(Instance);
 	CheckInsideInitializationFinished();
 }
 
-void UEquipmentFragment::NotifyStartOutsideInitialize(AEquipmentInstance* Instance,
-	FSimpleDelegate* InstanceNotifyDelegate)
+void UEquipmentFragment::NotifyStartOutsideInitialize(AEquipmentInstance* Instance)
 {
-	InstanceNotifyDelegate_OnOutsideInitialized = InstanceNotifyDelegate;
+	InstanceNotifyDelegate_InsideInitialized.BindUObject(Instance, &AEquipmentInstance::ContinueInitializeInstance);
 	HandleChildOutsideInitialize(Instance);
 	CheckOutsideInitializationFinished();
 }
 
-void UEquipmentFragment::NotifyStartRuminativeInitialize(AEquipmentInstance* Instance,
-	FSimpleDelegate* InstanceNotifyDelegate)
+void UEquipmentFragment::NotifyStartRuminativeInitialize(AEquipmentInstance* Instance)
 {
-	InstanceNotifyDelegate_OnRuminativeInitialized = InstanceNotifyDelegate;
+	InstanceNotifyDelegate_InsideInitialized.BindUObject(Instance, &AEquipmentInstance::ContinueInitializeInstance);
 	PerformModifiers();
 	HandleChildRuminativeInitialize(Instance);
 	AsyncLoadAssets();
 	CheckRuminativeInitializationFinished();
 }
 
-void UEquipmentFragment::NotifyStartFinalInitialize(AEquipmentInstance* Instance,
-	FSimpleDelegate* InstanceNotifyDelegate)
+void UEquipmentFragment::NotifyStartFinalInitialize(AEquipmentInstance* Instance)
 {
-	InstanceNotifyDelegate_OnFinialInitialized = InstanceNotifyDelegate;
+	InstanceNotifyDelegate_InsideInitialized.BindUObject(Instance, &AEquipmentInstance::ContinueInitializeInstance);
 	HandleChildFinialInitialize(Instance);
 	CheckFinialInitializationFinished();
 }
@@ -145,6 +143,34 @@ void UEquipmentFragment::CheckRuminativeInitializationFinished()
 void UEquipmentFragment::CheckFinialInitializationFinished()
 {
 	HandleFinialInitialized();
+}
+
+void UEquipmentFragment::HandleInsideInitialized()
+{
+	// ReSharper disable once CppExpressionWithoutSideEffects
+	InstanceNotifyDelegate_InsideInitialized.ExecuteIfBound();
+	bIsInsideInitialized = true;
+}
+
+void UEquipmentFragment::HandleOutsideInitialized()
+{
+	// ReSharper disable once CppExpressionWithoutSideEffects
+	InstanceNotifyDelegate_OnOutsideInitialized.ExecuteIfBound();
+	bIsOutsideInitialized = true;
+}
+
+void UEquipmentFragment::HandleRuminativeInitialized()
+{
+	// ReSharper disable once CppExpressionWithoutSideEffects
+	InstanceNotifyDelegate_OnRuminativeInitialized.ExecuteIfBound();
+	bIsRuminativeInitialized = true;
+}
+
+void UEquipmentFragment::HandleFinialInitialized()
+{
+	// ReSharper disable once CppExpressionWithoutSideEffects
+	InstanceNotifyDelegate_OnFinialInitialized.ExecuteIfBound();
+	bIsFinialInitialized = true;
 }
 
 void UEquipmentFragment::NotifyInstanceUninitialized()

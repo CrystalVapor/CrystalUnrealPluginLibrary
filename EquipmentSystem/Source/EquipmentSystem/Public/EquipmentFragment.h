@@ -97,10 +97,10 @@ public:
 	const FRuntimeFloatCurve& GetCurveProperty(FGameplayTag PropertyTag);
 	const FGameplayTagContainer& GetTagContainerProperty(FGameplayTag PropertyTag);
 
-	void NotifyStartInsideInitialize(AEquipmentInstance* Instance, FSimpleDelegate* InstanceNotifyDelegate);
-	void NotifyStartOutsideInitialize(AEquipmentInstance* Instance, FSimpleDelegate* InstanceNotifyDelegate);
-	void NotifyStartRuminativeInitialize(AEquipmentInstance* Instance, FSimpleDelegate* InstanceNotifyDelegate);
-	void NotifyStartFinalInitialize(AEquipmentInstance* Instance, FSimpleDelegate* InstanceNotifyDelegate);
+	void NotifyStartInsideInitialize(AEquipmentInstance* Instance);
+	void NotifyStartOutsideInitialize(AEquipmentInstance* Instance);
+	void NotifyStartRuminativeInitialize(AEquipmentInstance* Instance);
+	void NotifyStartFinalInitialize(AEquipmentInstance* Instance);
 
 	virtual void HandleChildInsideInitialize(AEquipmentInstance* Instance) {};
 	virtual void HandleChildOutsideInitialize(AEquipmentInstance* Instance) {};
@@ -111,35 +111,15 @@ public:
 	void CheckOutsideInitializationFinished();
 	void CheckRuminativeInitializationFinished();
 	void CheckFinialInitializationFinished();
-
-	// ReSharper disable once CppExpressionWithoutSideEffects
-	void HandleInsideInitialized()
-	{
-		InstanceNotifyDelegate_InsideInitialized->ExecuteIfBound();
-		bIsInsideInitialized = true;
-	};
-	FSimpleDelegate* InstanceNotifyDelegate_InsideInitialized;
-	// ReSharper disable once CppExpressionWithoutSideEffects
-	void HandleOutsideInitialized()
-	{
-		InstanceNotifyDelegate_OnOutsideInitialized->ExecuteIfBound();
-		bIsOutsideInitialized = true;
-	};
-	FSimpleDelegate* InstanceNotifyDelegate_OnOutsideInitialized;
-	// ReSharper disable once CppExpressionWithoutSideEffects
-	void HandleRuminativeInitialized()
-	{
-		InstanceNotifyDelegate_OnRuminativeInitialized->ExecuteIfBound();
-		bIsRuminativeInitialized = true;
-	};
-	FSimpleDelegate* InstanceNotifyDelegate_OnRuminativeInitialized;
-	// ReSharper disable once CppExpressionWithoutSideEffects
-	void HandleFinialInitialized()
-	{
-		InstanceNotifyDelegate_OnFinialInitialized->ExecuteIfBound();
-		bIsFinialInitialized = true;
-	};
-	FSimpleDelegate* InstanceNotifyDelegate_OnFinialInitialized;
+	
+	void HandleInsideInitialized();;
+	FSimpleDelegate InstanceNotifyDelegate_InsideInitialized;
+	void HandleOutsideInitialized();;
+	FSimpleDelegate InstanceNotifyDelegate_OnOutsideInitialized;
+	void HandleRuminativeInitialized();;
+	FSimpleDelegate InstanceNotifyDelegate_OnRuminativeInitialized;
+	void HandleFinialInitialized();;
+	FSimpleDelegate InstanceNotifyDelegate_OnFinialInitialized;
 
 	bool bIsInsideInitialized = false;
 	bool bIsOutsideInitialized = false;
