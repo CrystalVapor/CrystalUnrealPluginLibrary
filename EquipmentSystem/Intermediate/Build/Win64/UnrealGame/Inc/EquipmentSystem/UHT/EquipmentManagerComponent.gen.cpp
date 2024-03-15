@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "EquipmentSystem/Public/Fragments/EquipmentManagerComponent.h"
+#include "EquipmentSystem/Public/EquipmentManagerComponent.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEquipmentManagerComponent() {}
 // Cross Module References
@@ -37,8 +37,8 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentManagerComponent() {}
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentManagerComponent_Statics::Class_MetaDataParams[] = {
-		{ "IncludePath", "Fragments/EquipmentManagerComponent.h" },
-		{ "ModuleRelativePath", "Public/Fragments/EquipmentManagerComponent.h" },
+		{ "IncludePath", "EquipmentManagerComponent.h" },
+		{ "ModuleRelativePath", "Public/EquipmentManagerComponent.h" },
 	};
 #endif
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UEquipmentManagerComponent_Statics::StaticCppClassTypeInfo = {
@@ -73,15 +73,15 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentManagerComponent() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UEquipmentManagerComponent);
 	UEquipmentManagerComponent::~UEquipmentManagerComponent() {}
-	struct Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_Statics
+	struct Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UEquipmentManagerComponent, UEquipmentManagerComponent::StaticClass, TEXT("UEquipmentManagerComponent"), &Z_Registration_Info_UClass_UEquipmentManagerComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UEquipmentManagerComponent), 485474401U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UEquipmentManagerComponent, UEquipmentManagerComponent::StaticClass, TEXT("UEquipmentManagerComponent"), &Z_Registration_Info_UClass_UEquipmentManagerComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UEquipmentManagerComponent), 3484107393U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_3905805161(TEXT("/Script/EquipmentSystem"),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_2140402998(TEXT("/Script/EquipmentSystem"),
+		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

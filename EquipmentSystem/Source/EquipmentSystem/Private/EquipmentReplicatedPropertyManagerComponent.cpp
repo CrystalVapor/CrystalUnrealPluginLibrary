@@ -153,6 +153,12 @@ void UEquipmentReplicatedPropertyManagerComponent::RegisterProperty(FGameplayTag
 	OnReplicatedPropertyRegistered.Broadcast(PropertyTag);
 }
 
+FOnEquipmentReplicatedPropertyChangedDelegate& UEquipmentReplicatedPropertyManagerComponent::
+GetOnPropertyChangedDelegate(FGameplayTag PropertyTag)
+{
+	return GetPropertyItem(PropertyTag)->OnPropertyChanged;
+}
+
 FEquipmentReplicatedProperty* UEquipmentReplicatedPropertyManagerComponent::GetPropertyItem(FGameplayTag PropertyTag)
 {
 	for(auto& Property: Properties.Items)

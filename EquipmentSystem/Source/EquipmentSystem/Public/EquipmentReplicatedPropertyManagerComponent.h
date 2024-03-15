@@ -85,6 +85,8 @@ public:
 
 	void RegisterProperty(FGameplayTag PropertyTag, float DefaultValue, bool bSyncOnEndPrediction = false);
 
+	FOnEquipmentReplicatedPropertyChangedDelegate& GetOnPropertyChangedDelegate(FGameplayTag PropertyTag);
+
 	FEquipmentReplicatedPropertyRegisteredDelegate OnReplicatedPropertyRegistered;
 protected:
 	FEquipmentReplicatedProperty* GetPropertyItem(FGameplayTag PropertyTag);

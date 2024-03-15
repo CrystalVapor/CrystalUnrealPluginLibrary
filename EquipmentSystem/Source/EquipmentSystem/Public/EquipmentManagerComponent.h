@@ -18,6 +18,7 @@ public:
 	UEquipmentManagerComponent();
 
 	FExpandedAbilityGrantSource_GrantHandle HandleGrantAbility(IExpandedAbilityGrantSource* Source);
+	void HandleRemoveAbility(FExpandedAbilityGrantSource_GrantHandle Handle);
 	void NotifyInstanceInitialized(AEquipmentInstance* Instance);
 
 protected:

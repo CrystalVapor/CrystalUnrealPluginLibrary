@@ -1,7 +1,7 @@
 ﻿// Copyright 2024 CrystalVapor
 
 
-#include "Fragments/EquipmentManagerComponent.h"
+#include "EquipmentManagerComponent.h"
 
 
 // Sets default values for this component's properties
@@ -12,6 +12,20 @@ UEquipmentManagerComponent::UEquipmentManagerComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
+}
+
+FExpandedAbilityGrantSource_GrantHandle UEquipmentManagerComponent::HandleGrantAbility(
+	IExpandedAbilityGrantSource* Source)
+{
+	return FExpandedAbilityGrantSource_GrantHandle();
+}
+
+void UEquipmentManagerComponent::HandleRemoveAbility(FExpandedAbilityGrantSource_GrantHandle Handle)
+{
+}
+
+void UEquipmentManagerComponent::NotifyInstanceInitialized(AEquipmentInstance* Instance)
+{
 }
 
 
