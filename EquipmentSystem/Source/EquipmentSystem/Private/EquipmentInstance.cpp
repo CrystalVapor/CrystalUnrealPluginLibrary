@@ -32,7 +32,6 @@ UEquipmentFragment* AEquipmentInstance::GetFragment(TSubclassOf<UEquipmentFragme
 			return Fragment;
 		}
 	}
-	checkNoEntry();
 	return nullptr;
 }
 
@@ -176,7 +175,7 @@ void AEquipmentInstance::HandleInitializeInstanceChanged()
 				if(AbilityGrantSource->Implements<UExpandedAbilityGrantSource>())
 				{
 					FExpandedAbilityGrantSource_GrantHandle NewGrantHandle = ManagerComponent->HandleGrantAbility(
-						Cast<IExpandedAbilityGrantSource>(AbilityGrantSource));
+						Cast<IExpandedAbilityGrantSource>(AbilityGrantSource), this);
 					GrantedAbilityHandle.Append(NewGrantHandle);
 				}
 			}
@@ -259,20 +258,25 @@ bool AEquipmentInstance::IsInitializing() const
 		EEquipmentInstanceState::NotInitialized;
 }
 
-void AEquipmentInstance::Uninitialize()
+void AEquipmentInstance::UninitializeInstance_Implementation()
 {
-	if(!IsInitialized()||IsInitializing())
+	LocalUninitializeInstance();
+}
+
+void AEquipmentInstance::LocalUninitializeInstance()
+{
+	if (!IsInitialized() || IsInitializing())
 	{
 		return;
 	}
 	ManagerComponent->HandleRemoveAbility(GrantedAbilityHandle);
 	GrantedAbilityHandle = FExpandedAbilityGrantSource_GrantHandle();
-	for(auto& Fragment:Fragments)
+	for (auto& Fragment : Fragments)
 	{
 		Fragment->NotifyInstanceUninitialized();
 	}
 	Fragments.Empty();
-	for(auto& VisualActor:VisualActors)
+	for (auto& VisualActor : VisualActors)
 	{
 		VisualActor->NotifyInstanceUninitialized();
 	}

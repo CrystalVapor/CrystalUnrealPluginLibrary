@@ -24,7 +24,7 @@ void FExpandedAbilityGrantSource_GrantHandle::AddAttributeSet(UAttributeSet* Att
 	GrantedAttributeSets.Add(AttributeSet);
 }
 
-void FExpandedAbilityGrantSource_GrantHandle::SetAbilitySystemComponent(UExpandedAbilitySystemComponent* InAbilitySystemComponent)
+void FExpandedAbilityGrantSource_GrantHandle::SetAbilitySystemComponent(UAbilitySystemComponent* InAbilitySystemComponent)
 {
 	AbilitySystemComponent = InAbilitySystemComponent;
 }
@@ -82,7 +82,7 @@ FExpandedAbilityGrantSource_GrantHandle& FExpandedAbilityGrantSource_GrantHandle
 	return *this;
 }
 
-void IExpandedAbilityGrantSource::GiveAbilityToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject, FExpandedAbilityGrantSource_GrantHandle& GrantHandle, const FExpandedAbilityGrantSource_Ability& AbilityData)
+void IExpandedAbilityGrantSource::GiveAbilityToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject, FExpandedAbilityGrantSource_GrantHandle& GrantHandle, const FExpandedAbilityGrantSource_Ability& AbilityData)
 {
 	FGameplayAbilitySpec AbilitySpec(AbilityData.Ability, AbilityData.Level, INDEX_NONE, SourceObject);
 	AbilitySpec.DynamicAbilityTags.AppendTags(AbilityData.DynamicTags);
@@ -93,7 +93,7 @@ void IExpandedAbilityGrantSource::GiveAbilityToAbilitySystem(UExpandedAbilitySys
 	GrantHandle.AddAbilitySpecHandle(SpecHandle);
 }
 
-void IExpandedAbilityGrantSource::GiveEffectToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, FExpandedAbilityGrantSource_GrantHandle& GrantHandle, const FExpandedAbilityGrantSource_Effect& EffectData)
+void IExpandedAbilityGrantSource::GiveEffectToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, FExpandedAbilityGrantSource_GrantHandle& GrantHandle, const FExpandedAbilityGrantSource_Effect& EffectData)
 {
 	UGameplayEffect* EffectCDO = EffectData.Effect->GetDefaultObject<UGameplayEffect>();
 		
@@ -101,7 +101,7 @@ void IExpandedAbilityGrantSource::GiveEffectToAbilitySystem(UExpandedAbilitySyst
 	GrantHandle.AddActiveGameplayEffectHandle(EffectSpecHandle);
 }
 
-void IExpandedAbilityGrantSource::GiveAttributeSetToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, FExpandedAbilityGrantSource_GrantHandle& GrantHandle, const FExpandedAbilityGrantSource_AttributeSet& AttributeSetData)
+void IExpandedAbilityGrantSource::GiveAttributeSetToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, FExpandedAbilityGrantSource_GrantHandle& GrantHandle, const FExpandedAbilityGrantSource_AttributeSet& AttributeSetData)
 {
 	UAttributeSet* AttributeSet = NewObject<UAttributeSet>(AbilitySystemComponent->GetOwner(), AttributeSetData.AttributeSet);
 	AbilitySystemComponent->AddAttributeSetSubobject(AttributeSet);

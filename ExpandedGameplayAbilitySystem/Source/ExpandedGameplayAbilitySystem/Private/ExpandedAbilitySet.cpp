@@ -4,8 +4,8 @@
 #include "ExpandedAbilitySet.h"
 
 void UExpandedAbilitySet::GiveToAbilitySystem(
-	UExpandedAbilitySystemComponent* AbilitySystemComponent,
-	UObject* SourceObject, 
+	UAbilitySystemComponent* AbilitySystemComponent,
+	UObject* SourceObject,
 	FExpandedAbilityGrantSource_GrantHandle& GrantHandle)
 {
 	check(AbilitySystemComponent)

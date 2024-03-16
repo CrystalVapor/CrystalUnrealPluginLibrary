@@ -33,7 +33,7 @@ UCLASS()
 class EQUIPMENTSYSTEM_API AEquipmentInstance : public AActor
 {
 	GENERATED_BODY()
-
+friend UEquipmentManagerComponent;
 public:
 	// Sets default values for this actor's properties
 	AEquipmentInstance();
@@ -65,7 +65,9 @@ public:
 	bool IsInitialized() const{ return InitializeState == EEquipmentInstanceState::Initialized;}
 	bool IsInitializing() const;
 
-	void Uninitialize();
+	UFUNCTION(NetMulticast, Reliable)
+	void UninitializeInstance();
+	void LocalUninitializeInstance();
 	
 	bool IsEquipped();
 	void NotifyEquipped();
@@ -82,7 +84,6 @@ protected:
 	EEquipmentInstanceState InitializeState = EEquipmentInstanceState::NotInitialized;
 	UPROPERTY()
 	UEquipmentInstanceInitializeComponent* InitializeComponent;
-	
 
 	UPROPERTY()
 	UEquipmentDefinition* Definition = nullptr;

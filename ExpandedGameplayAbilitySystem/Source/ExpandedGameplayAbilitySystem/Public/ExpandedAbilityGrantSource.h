@@ -48,7 +48,7 @@ struct FExpandedAbilityGrantSource_GrantHandle
 	void AddAbilitySpecHandle(const FGameplayAbilitySpecHandle& Handle);
 	void AddActiveGameplayEffectHandle(const FActiveGameplayEffectHandle& Handle);
 	void AddAttributeSet(UAttributeSet* AttributeSet);
-	void SetAbilitySystemComponent(UExpandedAbilitySystemComponent* AbilitySystemComponent);
+	void SetAbilitySystemComponent(UAbilitySystemComponent* AbilitySystemComponent);
 
 	void RemoveFromAbilitySystem();
 
@@ -56,7 +56,7 @@ struct FExpandedAbilityGrantSource_GrantHandle
 
 protected:
 	UPROPERTY()
-	TWeakObjectPtr<UExpandedAbilitySystemComponent> AbilitySystemComponent = nullptr;
+	TWeakObjectPtr<UAbilitySystemComponent> AbilitySystemComponent = nullptr;
 
 	UPROPERTY()
 	TArray<FGameplayAbilitySpecHandle> AbilitySpecHandles;
@@ -82,18 +82,18 @@ class EXPANDEDGAMEPLAYABILITYSYSTEM_API IExpandedAbilityGrantSource
 {
 	GENERATED_BODY()
 public:
-	virtual void GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
-									 FExpandedAbilityGrantSource_GrantHandle& GrantHandle) = 0;
+	virtual void GiveToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
+	                                 FExpandedAbilityGrantSource_GrantHandle& GrantHandle) = 0;
 protected:
-	virtual void GiveAbilityToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
-									FExpandedAbilityGrantSource_GrantHandle& GrantHandle,
-									const FExpandedAbilityGrantSource_Ability& AbilityData);
+	virtual void GiveAbilityToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
+	                                        FExpandedAbilityGrantSource_GrantHandle& GrantHandle,
+	                                        const FExpandedAbilityGrantSource_Ability& AbilityData);
 	
-	virtual void GiveEffectToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent,
-								   FExpandedAbilityGrantSource_GrantHandle& GrantHandle,
-								   const FExpandedAbilityGrantSource_Effect& EffectData);
+	virtual void GiveEffectToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent,
+	                                       FExpandedAbilityGrantSource_GrantHandle& GrantHandle,
+	                                       const FExpandedAbilityGrantSource_Effect& EffectData);
 	
-	virtual void GiveAttributeSetToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent,
-										 FExpandedAbilityGrantSource_GrantHandle& GrantHandle,
-										 const FExpandedAbilityGrantSource_AttributeSet& AttributeSetData);
+	virtual void GiveAttributeSetToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent,
+	                                             FExpandedAbilityGrantSource_GrantHandle& GrantHandle,
+	                                             const FExpandedAbilityGrantSource_AttributeSet& AttributeSetData);
 };

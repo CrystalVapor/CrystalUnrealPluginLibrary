@@ -152,8 +152,8 @@ public:
 	
 	virtual void GetFeaturesConditional(const FGameplayTagContainer& FeatureTags, FEquipmentFeatureData& OutFeatures) const override;
 	
-	virtual void GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
-		FExpandedAbilityGrantSource_GrantHandle& GrantHandle) override;
+	virtual void GiveToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
+	                                 FExpandedAbilityGrantSource_GrantHandle& GrantHandle) override;
 
 	UPROPERTY(VisibleAnywhere)
 	bool bDetailsUnlocked = true;

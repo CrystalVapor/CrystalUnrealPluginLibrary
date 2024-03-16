@@ -19,7 +19,7 @@ class EXPANDEDGAMEPLAYABILITYSYSTEM_API UExpandedAbilitySet : public UDataAsset,
 	GENERATED_BODY()
 
 public:
-	virtual void GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
+	virtual void GiveToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
 	                                 FExpandedAbilityGrantSource_GrantHandle& GrantHandle);
 
 protected:

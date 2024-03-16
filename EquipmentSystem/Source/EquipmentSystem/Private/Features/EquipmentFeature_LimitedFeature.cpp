@@ -164,8 +164,8 @@ void UEquipmentFeature_LimitedFeature::GetFeaturesConditional(const FGameplayTag
 	OutFeatures.AbilityGrantSources.Add(const_cast<UEquipmentFeature_LimitedFeature*>(this));
 }
 
-void UEquipmentFeature_LimitedFeature::GiveToAbilitySystem(UExpandedAbilitySystemComponent* AbilitySystemComponent,
-	UObject* SourceObject, FExpandedAbilityGrantSource_GrantHandle& GrantHandle)
+void UEquipmentFeature_LimitedFeature::GiveToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent,
+                                                           UObject* SourceObject, FExpandedAbilityGrantSource_GrantHandle& GrantHandle)
 {
 	for(auto& LimitedAbilityEntry : LimitedAbilityList)
 	{
