@@ -88,6 +88,9 @@ public:
 	void InitializeInstance(AEquipmentInstance* Instance, UEquipmentDefinition* Definition, FGameplayTagContainer FeatureTags);
 	void UninitializeInstance(AEquipmentInstance* Instance, bool bDestroyInstance = false);
 
+	void HandleInstanceCreated(int32 Id);
+	void HandleInstanceRemoved(int32 Id);
+
 	int32 GetInstanceId(AEquipmentInstance* Instance);
 	AEquipmentInstance* GetInstance(int32 Id);
 
@@ -111,6 +114,8 @@ public:
     void InternalUnequipEquipment(int32 Id);
 
 	FEquipmentManagerNotifyDelegate OnInstanceInitialized;
+	FEquipmentManagerNotifyDelegate OnInstanceCreated;
+	FEquipmentManagerNotifyDelegate OnInstanceRemoved;
 
 protected:
 	FEquipmentInstanceEntry* GetEntry(int32 Id);

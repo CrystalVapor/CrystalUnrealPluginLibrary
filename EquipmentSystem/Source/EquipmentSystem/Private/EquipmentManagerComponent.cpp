@@ -8,12 +8,20 @@
 
 void FEquipmentInstancesContainer::PreReplicatedRemove(const TArrayView<int32>& RemovedIndices, int32 FinalSize)
 {
-
+	for(auto& Index:RemovedIndices)
+	{
+		FEquipmentInstanceEntry& Entry = Items[Index];
+		Manager->OnInstanceRemoved.Broadcast(Entry.Id);
+	}
 }
 
 void FEquipmentInstancesContainer::PostReplicatedAdd(const TArrayView<int32>& AddedIndices, int32 FinalSize)
 {
-
+	for(auto& Index:AddedIndices)
+	{
+		FEquipmentInstanceEntry& Entry = Items[Index];
+		Manager->OnInstanceCreated.Broadcast(Entry.Id);
+	}
 }
 
 void FEquipmentInstancesContainer::PostReplicatedChange(const TArrayView<int32>& ChangedIndices, int32 FinalSize)
@@ -117,8 +125,8 @@ void UEquipmentManagerComponent::CreateInstance(UEquipmentDefinition* Definition
 	AEquipmentInstance* Instance = GetWorld()->SpawnActor<AEquipmentInstance>();
 	Instance->SetOwner(GetOwner());
 	Instances.AddToItems(Instance);
+	HandleInstanceCreated(GetInstanceId(Instance));
 	InitializeInstance(Instance, Definition, FeatureTags);
-	
 }
 
 void UEquipmentManagerComponent::RemoveInstance(int32 Id, bool bDestroyInstance)
@@ -136,6 +144,7 @@ void UEquipmentManagerComponent::RemoveInstance(int32 Id, bool bDestroyInstance)
 	{
 		UninitializeInstance(Instance, bDestroyInstance);
 	}
+	HandleInstanceRemoved(Id);
 	Instances.RemoveFromItems(Id);
 }
 
@@ -163,6 +172,16 @@ void UEquipmentManagerComponent::UninitializeInstance(AEquipmentInstance* Instan
 			Instance->Destroy();
 		}
 	}
+}
+
+void UEquipmentManagerComponent::HandleInstanceCreated(int32 Id)
+{
+	OnInstanceCreated.Broadcast(Id);
+}
+
+void UEquipmentManagerComponent::HandleInstanceRemoved(int32 Id)
+{
+	OnInstanceRemoved.Broadcast(Id);
 }
 
 int32 UEquipmentManagerComponent::GetInstanceId(AEquipmentInstance* Instance)
