@@ -13,7 +13,7 @@ class UEquipmentQuickBarComponent;
 
 typedef TArray<int32> FEquipmentIdContainer;
 
-DECLARE_DELEGATE_RetVal_OneParam(bool, FEquipmentQuickBarActivationConditionChecker, UEquipmentQuickBarComponent*)
+DECLARE_DELEGATE_RetVal_TwoParams(bool, FEquipmentQuickBarActivationConditionChecker, int32, UEquipmentQuickBarComponent*)
 
 USTRUCT()
 struct FEquipmentQuickBarInfo
@@ -64,6 +64,8 @@ public:
 
 	FGameplayTagContainer GetActivationGroups();
 	FGameplayTagContainer GetActivationGroupsForEquipment(int32 Id);
+
+	UEquipmentManagerComponent* GetEquipmentManagerComponent();
 protected:
 	FEquipmentQuickBarInfo* GetEquipmentInfo(int32 Id);
 	

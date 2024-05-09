@@ -3,6 +3,10 @@
 
 #include "Fragments/EquipmentFragment_Test.h"
 
+FRAGMENT_DEFINE_PROPERTY_TAG(TestValue);
+FRAGMENT_DEFINE_PROPERTY_TAG(TestTags);
+FRAGMENT_DEFINE_PROPERTY_TAG(TestCurve);
+
 void UEquipmentFragment_Test::HandleChildInsideInitialize(AEquipmentInstance* Instance)
 {
 	Super::HandleChildInsideInitialize(Instance);

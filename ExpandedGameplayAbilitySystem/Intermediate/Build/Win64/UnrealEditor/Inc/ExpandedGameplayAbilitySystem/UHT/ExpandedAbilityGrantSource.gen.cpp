@@ -16,13 +16,12 @@ void EmptyLinkFunctionForGeneratedCodeExpandedAbilityGrantSource() {}
 	COREUOBJECT_API UClass* Z_Construct_UClass_UInterface();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* Z_Construct_UClass_UExpandedAbilityGrantSource();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* Z_Construct_UClass_UExpandedAbilityGrantSource_NoRegister();
-	EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* Z_Construct_UClass_UExpandedAbilitySystemComponent_NoRegister();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* Z_Construct_UClass_UExpandedGameplayAbility_NoRegister();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Ability();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_AttributeSet();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Effect();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle();
-	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability();
+	GAMEPLAYABILITIES_API UClass* Z_Construct_UClass_UAbilitySystemComponent_NoRegister();
 	GAMEPLAYABILITIES_API UClass* Z_Construct_UClass_UAttributeSet_NoRegister();
 	GAMEPLAYABILITIES_API UClass* Z_Construct_UClass_UGameplayEffect_NoRegister();
 	GAMEPLAYABILITIES_API UScriptStruct* Z_Construct_UScriptStruct_FActiveGameplayEffectHandle();
@@ -264,95 +263,6 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 		}
 		return Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_AttributeSet.InnerSingleton;
 	}
-
-static_assert(std::is_polymorphic<FLimitedAbilityGrantSource_Ability>() == std::is_polymorphic<FExpandedAbilityGrantSource_Ability>(), "USTRUCT FLimitedAbilityGrantSource_Ability cannot be polymorphic unless super FExpandedAbilityGrantSource_Ability is polymorphic");
-
-	static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability;
-class UScriptStruct* FLimitedAbilityGrantSource_Ability::StaticStruct()
-{
-	if (!Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability.OuterSingleton)
-	{
-		Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability.OuterSingleton = GetStaticStruct(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability, (UObject*)Z_Construct_UPackage__Script_ExpandedGameplayAbilitySystem(), TEXT("LimitedAbilityGrantSource_Ability"));
-	}
-	return Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability.OuterSingleton;
-}
-template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FLimitedAbilityGrantSource_Ability>()
-{
-	return FLimitedAbilityGrantSource_Ability::StaticStruct();
-}
-	struct Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics
-	{
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[];
-#endif
-		static void* NewStructOps();
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_RequiredAbilityClass_MetaData[];
-#endif
-		static const UECodeGen_Private::FClassPropertyParams NewProp_RequiredAbilityClass;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_bCanEditRequiredAbilityClass_MetaData[];
-#endif
-		static void NewProp_bCanEditRequiredAbilityClass_SetBit(void* Obj);
-		static const UECodeGen_Private::FBoolPropertyParams NewProp_bCanEditRequiredAbilityClass;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-		static const UECodeGen_Private::FStructParams ReturnStructParams;
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::Struct_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/ExpandedAbilityGrantSource.h" },
-	};
-#endif
-	void* Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewStructOps()
-	{
-		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FLimitedAbilityGrantSource_Ability>();
-	}
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_RequiredAbilityClass_MetaData[] = {
-		{ "AllowAbstract", "TRUE" },
-		{ "Category", "LimitedAbilityGrantSource_Ability" },
-		{ "Comment", "// used to limit the ability\n" },
-		{ "EditCondition", "bCanEditRequiredAbilityClass" },
-		{ "ModuleRelativePath", "Public/ExpandedAbilityGrantSource.h" },
-		{ "ToolTip", "used to limit the ability" },
-	};
-#endif
-	const UECodeGen_Private::FClassPropertyParams Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_RequiredAbilityClass = { "RequiredAbilityClass", nullptr, (EPropertyFlags)0x0014000002000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FLimitedAbilityGrantSource_Ability, RequiredAbilityClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UExpandedGameplayAbility_NoRegister, METADATA_PARAMS(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_RequiredAbilityClass_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_RequiredAbilityClass_MetaData)) };
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass_MetaData[] = {
-		{ "ModuleRelativePath", "Public/ExpandedAbilityGrantSource.h" },
-	};
-#endif
-	void Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass_SetBit(void* Obj)
-	{
-		((FLimitedAbilityGrantSource_Ability*)Obj)->bCanEditRequiredAbilityClass = 1;
-	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass = { "bCanEditRequiredAbilityClass", nullptr, (EPropertyFlags)0x0010000000000000, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(FLimitedAbilityGrantSource_Ability), &Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass_SetBit, METADATA_PARAMS(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass_MetaData)) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_RequiredAbilityClass,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewProp_bCanEditRequiredAbilityClass,
-	};
-	const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::ReturnStructParams = {
-		(UObject* (*)())Z_Construct_UPackage__Script_ExpandedGameplayAbilitySystem,
-		Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Ability,
-		&NewStructOps,
-		"LimitedAbilityGrantSource_Ability",
-		sizeof(FLimitedAbilityGrantSource_Ability),
-		alignof(FLimitedAbilityGrantSource_Ability),
-		Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::PropPointers,
-		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::PropPointers),
-		RF_Public|RF_Transient|RF_MarkAsNative,
-		EStructFlags(0x00000001),
-		METADATA_PARAMS(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::Struct_MetaDataParams))
-	};
-	UScriptStruct* Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability()
-	{
-		if (!Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability.InnerSingleton)
-		{
-			UECodeGen_Private::ConstructUScriptStruct(Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability.InnerSingleton, Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::ReturnStructParams);
-		}
-		return Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability.InnerSingleton;
-	}
 	static FStructRegistrationInfo Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_GrantHandle;
 class UScriptStruct* FExpandedAbilityGrantSource_GrantHandle::StaticStruct()
 {
@@ -408,7 +318,7 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 		{ "ModuleRelativePath", "Public/ExpandedAbilityGrantSource.h" },
 	};
 #endif
-	const UECodeGen_Private::FWeakObjectPropertyParams Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySystemComponent = { "AbilitySystemComponent", nullptr, (EPropertyFlags)0x0024080000080008, UECodeGen_Private::EPropertyGenFlags::WeakObject, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FExpandedAbilityGrantSource_GrantHandle, AbilitySystemComponent), Z_Construct_UClass_UExpandedAbilitySystemComponent_NoRegister, METADATA_PARAMS(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySystemComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySystemComponent_MetaData)) };
+	const UECodeGen_Private::FWeakObjectPropertyParams Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySystemComponent = { "AbilitySystemComponent", nullptr, (EPropertyFlags)0x0024080000080008, UECodeGen_Private::EPropertyGenFlags::WeakObject, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FExpandedAbilityGrantSource_GrantHandle, AbilitySystemComponent), Z_Construct_UClass_UAbilitySystemComponent_NoRegister, METADATA_PARAMS(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySystemComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySystemComponent_MetaData)) };
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySpecHandles_Inner = { "AbilitySpecHandles", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UScriptStruct_FGameplayAbilitySpecHandle, METADATA_PARAMS(nullptr, 0) }; // 3562347300
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewProp_AbilitySpecHandles_MetaData[] = {
@@ -450,7 +360,7 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 		Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::PropPointers,
 		UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::PropPointers),
 		RF_Public|RF_Transient|RF_MarkAsNative,
-		EStructFlags(0x00000005),
+		EStructFlags(0x00000205),
 		METADATA_PARAMS(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::Struct_MetaDataParams))
 	};
 	UScriptStruct* Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle()
@@ -502,7 +412,7 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 		0,
 		0,
 		0,
-		0x000040A1u,
+		0x001040A1u,
 		METADATA_PARAMS(Z_Construct_UClass_UExpandedAbilityGrantSource_Statics::Class_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UClass_UExpandedAbilityGrantSource_Statics::Class_MetaDataParams))
 	};
 	UClass* Z_Construct_UClass_UExpandedAbilityGrantSource()
@@ -520,23 +430,22 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FExpand
 	UExpandedAbilityGrantSource::UExpandedAbilityGrantSource(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UExpandedAbilityGrantSource);
 	UExpandedAbilityGrantSource::~UExpandedAbilityGrantSource() {}
-	struct Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics
+	struct Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics
 	{
 		static const FStructRegisterCompiledInInfo ScriptStructInfo[];
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ScriptStructInfo[] = {
+	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ScriptStructInfo[] = {
 		{ FExpandedAbilityGrantSource_Ability::StaticStruct, Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Ability_Statics::NewStructOps, TEXT("ExpandedAbilityGrantSource_Ability"), &Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_Ability, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FExpandedAbilityGrantSource_Ability), 2303708370U) },
 		{ FExpandedAbilityGrantSource_Effect::StaticStruct, Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_Effect_Statics::NewStructOps, TEXT("ExpandedAbilityGrantSource_Effect"), &Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_Effect, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FExpandedAbilityGrantSource_Effect), 1338536718U) },
 		{ FExpandedAbilityGrantSource_AttributeSet::StaticStruct, Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_AttributeSet_Statics::NewStructOps, TEXT("ExpandedAbilityGrantSource_AttributeSet"), &Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_AttributeSet, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FExpandedAbilityGrantSource_AttributeSet), 1388743448U) },
-		{ FLimitedAbilityGrantSource_Ability::StaticStruct, Z_Construct_UScriptStruct_FLimitedAbilityGrantSource_Ability_Statics::NewStructOps, TEXT("LimitedAbilityGrantSource_Ability"), &Z_Registration_Info_UScriptStruct_LimitedAbilityGrantSource_Ability, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FLimitedAbilityGrantSource_Ability), 3264103615U) },
-		{ FExpandedAbilityGrantSource_GrantHandle::StaticStruct, Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewStructOps, TEXT("ExpandedAbilityGrantSource_GrantHandle"), &Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_GrantHandle, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FExpandedAbilityGrantSource_GrantHandle), 2507200418U) },
+		{ FExpandedAbilityGrantSource_GrantHandle::StaticStruct, Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics::NewStructOps, TEXT("ExpandedAbilityGrantSource_GrantHandle"), &Z_Registration_Info_UScriptStruct_ExpandedAbilityGrantSource_GrantHandle, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FExpandedAbilityGrantSource_GrantHandle), 573946471U) },
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UExpandedAbilityGrantSource, UExpandedAbilityGrantSource::StaticClass, TEXT("UExpandedAbilityGrantSource"), &Z_Registration_Info_UClass_UExpandedAbilityGrantSource, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UExpandedAbilityGrantSource), 1976364162U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UExpandedAbilityGrantSource, UExpandedAbilityGrantSource::StaticClass, TEXT("UExpandedAbilityGrantSource"), &Z_Registration_Info_UClass_UExpandedAbilityGrantSource, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UExpandedAbilityGrantSource), 2043090010U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_1409979145(TEXT("/Script/ExpandedGameplayAbilitySystem"),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ClassInfo),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ScriptStructInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_1403472026(TEXT("/Script/ExpandedGameplayAbilitySystem"),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ClassInfo),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_Statics::ScriptStructInfo),
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

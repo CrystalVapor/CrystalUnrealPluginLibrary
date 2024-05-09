@@ -6,7 +6,7 @@
 /NAME:"UnrealEditor-EquipmentSystem.dll"
 /IGNORE:4221
 /NODEFAULTLIB
-"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.InclOrderUnreal5_0.h.obj"
-"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Module.EquipmentSystem.cpp.obj"
-"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Default.rc2.res"
-/OUT:"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\UnrealEditor-EquipmentSystem.lib"
+"D:\unrealProject\Aether\Intermediate\Build\Win64\x64\AetherEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.InclOrderUnreal5_1.h.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Module.EquipmentSystem.cpp.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\Default.rc2.res"
+/OUT:"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystem\UnrealEditor-EquipmentSystem.lib"

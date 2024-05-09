@@ -6,7 +6,11 @@
 #include "EquipmentFragment.h"
 #include "EquipmentFragment_Equippable.generated.h"
 
+FRAGMENT_DECLARE_PROPERTY_TAG(ActivationGroups);
+
 class UEquipmentQuickBarComponent;
+
+
 
 /**
  * 
@@ -19,12 +23,10 @@ class EQUIPMENTSYSTEM_API UEquipmentFragment_Equippable : public UEquipmentFragm
 public:
 	UPROPERTY(EditAnywhere)
 	FGameplayTagContainer ActivationGroups;
-	FRAGMENT_DECLARE_TAG_PROPERTY_GETTER(ActivationGroups)
-	UPROPERTY(EditAnywhere, Category = "PropertyTags", meta = (DisplayName = "Activation Groups", Categories = "Equipment.Property"))
-	FGameplayTag ActivationGroupsTag;
+	FRAGMENT_DECLARE_TAG_PROPERTY_GETTER(ActivationGroups);
 
 	virtual void HandleChildInsideInitialize(AEquipmentInstance* Instance) override;
 
-	virtual bool CanActivate(UEquipmentQuickBarComponent* QuickBarComponent);
-	virtual bool CanDeactivate(UEquipmentQuickBarComponent* QuickBarComponent);
+	virtual bool CanActivate(int32 Id, UEquipmentQuickBarComponent* QuickBarComponent);
+	virtual bool CanDeactivate(int32 Id, UEquipmentQuickBarComponent* QuickBarComponent);
 };

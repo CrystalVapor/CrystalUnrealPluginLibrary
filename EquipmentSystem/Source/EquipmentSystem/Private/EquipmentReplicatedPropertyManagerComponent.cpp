@@ -138,7 +138,7 @@ bool UEquipmentReplicatedPropertyManagerComponent::HasProperty(FGameplayTag Prop
 }
 
 void UEquipmentReplicatedPropertyManagerComponent::RegisterProperty(FGameplayTag PropertyTag, float DefaultValue,
-	bool bSyncOnEndPrediction)
+	bool bSyncRemoteValueWhenEndPrediction)
 {
 	if(GetOwnerRole()!=ROLE_Authority)
 	{
@@ -148,7 +148,7 @@ void UEquipmentReplicatedPropertyManagerComponent::RegisterProperty(FGameplayTag
 	NewProperty.LocalValue = DefaultValue;
 	NewProperty.RemoteValue = DefaultValue;
 	NewProperty.PropertyTag = PropertyTag;
-	NewProperty.bSyncOnEndPrediction = bSyncOnEndPrediction;
+	NewProperty.bSyncOnEndPrediction = bSyncRemoteValueWhenEndPrediction;
 	Properties.MarkItemDirty(NewProperty);
 	OnReplicatedPropertyRegistered.Broadcast(PropertyTag);
 }

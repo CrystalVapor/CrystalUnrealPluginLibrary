@@ -6,11 +6,14 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "EquipmentSystem/Public/EquipmentInstance.h"
+#include "../../Source/Runtime/Engine/Classes/Curves/CurveFloat.h"
 #include "GameplayTagContainer.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEquipmentInstance() {}
 // Cross Module References
+	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
+	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FRuntimeFloatCurve();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_AEquipmentInstance();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_AEquipmentInstance_NoRegister();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_AEquipmentVisualActor_NoRegister();
@@ -20,6 +23,7 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentInstance() {}
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentManagerComponent_NoRegister();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentReplicatedPropertyManagerComponent_NoRegister();
 	EQUIPMENTSYSTEM_API UEnum* Z_Construct_UEnum_EquipmentSystem_EEquipmentInstanceState();
+	GAMEPLAYTAGS_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayTag();
 	GAMEPLAYTAGS_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayTagContainer();
 	UPackage* Z_Construct_UPackage__Script_EquipmentSystem();
 // End Cross Module References
@@ -92,6 +96,38 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentInstance() {}
 		P_THIS->UninitializeInstance_Implementation();
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(AEquipmentInstance::execGetCurveProperty)
+	{
+		P_GET_STRUCT(FGameplayTag,Z_Param_PropertyTag);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(FRuntimeFloatCurve*)Z_Param__Result=P_THIS->GetCurveProperty(Z_Param_PropertyTag);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AEquipmentInstance::execGetTagContainerProperty)
+	{
+		P_GET_STRUCT(FGameplayTag,Z_Param_PropertyTag);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(FGameplayTagContainer*)Z_Param__Result=P_THIS->GetTagContainerProperty(Z_Param_PropertyTag);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AEquipmentInstance::execGetFloatProperty)
+	{
+		P_GET_STRUCT(FGameplayTag,Z_Param_PropertyTag);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(float*)Z_Param__Result=P_THIS->GetFloatProperty(Z_Param_PropertyTag);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AEquipmentInstance::execGetFragment)
+	{
+		P_GET_OBJECT(UClass,Z_Param_FragmentClass);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(UEquipmentFragment**)Z_Param__Result=P_THIS->GetFragment(Z_Param_FragmentClass);
+		P_NATIVE_END;
+	}
 	static FName NAME_AEquipmentInstance_UninitializeInstance = FName(TEXT("UninitializeInstance"));
 	void AEquipmentInstance::UninitializeInstance()
 	{
@@ -101,9 +137,181 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentInstance() {}
 	{
 		UClass* Class = AEquipmentInstance::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "GetCurveProperty", &AEquipmentInstance::execGetCurveProperty },
+			{ "GetFloatProperty", &AEquipmentInstance::execGetFloatProperty },
+			{ "GetFragment", &AEquipmentInstance::execGetFragment },
+			{ "GetTagContainerProperty", &AEquipmentInstance::execGetTagContainerProperty },
 			{ "UninitializeInstance", &AEquipmentInstance::execUninitializeInstance },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics
+	{
+		struct EquipmentInstance_eventGetCurveProperty_Parms
+		{
+			FGameplayTag PropertyTag;
+			FRuntimeFloatCurve ReturnValue;
+		};
+		static const UECodeGen_Private::FStructPropertyParams NewProp_PropertyTag;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_ReturnValue_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_PropertyTag = { "PropertyTag", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetCurveProperty_Parms, PropertyTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(nullptr, 0) }; // 1225434376
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_ReturnValue_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000008000582, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetCurveProperty_Parms, ReturnValue), Z_Construct_UScriptStruct_FRuntimeFloatCurve, METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_ReturnValue_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_ReturnValue_MetaData)) }; // 1477693291
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_PropertyTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/EquipmentInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AEquipmentInstance, nullptr, "GetCurveProperty", nullptr, nullptr, sizeof(Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::EquipmentInstance_eventGetCurveProperty_Parms), Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics
+	{
+		struct EquipmentInstance_eventGetFloatProperty_Parms
+		{
+			FGameplayTag PropertyTag;
+			float ReturnValue;
+		};
+		static const UECodeGen_Private::FStructPropertyParams NewProp_PropertyTag;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_ReturnValue_MetaData[];
+#endif
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_PropertyTag = { "PropertyTag", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetFloatProperty_Parms, PropertyTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(nullptr, 0) }; // 1225434376
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_ReturnValue_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000008000582, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetFloatProperty_Parms, ReturnValue), METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_ReturnValue_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_ReturnValue_MetaData)) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_PropertyTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/EquipmentInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AEquipmentInstance, nullptr, "GetFloatProperty", nullptr, nullptr, sizeof(Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::EquipmentInstance_eventGetFloatProperty_Parms), Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics
+	{
+		struct EquipmentInstance_eventGetFragment_Parms
+		{
+			TSubclassOf<UEquipmentFragment>  FragmentClass;
+			UEquipmentFragment* ReturnValue;
+		};
+		static const UECodeGen_Private::FClassPropertyParams NewProp_FragmentClass;
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FClassPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::NewProp_FragmentClass = { "FragmentClass", nullptr, (EPropertyFlags)0x0014000000000080, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetFragment_Parms, FragmentClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UEquipmentFragment_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetFragment_Parms, ReturnValue), Z_Construct_UClass_UEquipmentFragment_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::NewProp_FragmentClass,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/EquipmentInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AEquipmentInstance, nullptr, "GetFragment", nullptr, nullptr, sizeof(Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::EquipmentInstance_eventGetFragment_Parms), Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AEquipmentInstance_GetFragment()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AEquipmentInstance_GetFragment_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics
+	{
+		struct EquipmentInstance_eventGetTagContainerProperty_Parms
+		{
+			FGameplayTag PropertyTag;
+			FGameplayTagContainer ReturnValue;
+		};
+		static const UECodeGen_Private::FStructPropertyParams NewProp_PropertyTag;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_ReturnValue_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_PropertyTag = { "PropertyTag", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetTagContainerProperty_Parms, PropertyTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(nullptr, 0) }; // 1225434376
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_ReturnValue_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000008000582, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(EquipmentInstance_eventGetTagContainerProperty_Parms, ReturnValue), Z_Construct_UScriptStruct_FGameplayTagContainer, METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_ReturnValue_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_ReturnValue_MetaData)) }; // 3057219007
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_PropertyTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/EquipmentInstance.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AEquipmentInstance, nullptr, "GetTagContainerProperty", nullptr, nullptr, sizeof(Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::EquipmentInstance_eventGetTagContainerProperty_Parms), Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AEquipmentInstance_UninitializeInstance_Statics
 	{
@@ -178,6 +386,10 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentInstance() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_EquipmentSystem,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AEquipmentInstance_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AEquipmentInstance_GetCurveProperty, "GetCurveProperty" }, // 2297932757
+		{ &Z_Construct_UFunction_AEquipmentInstance_GetFloatProperty, "GetFloatProperty" }, // 4250781884
+		{ &Z_Construct_UFunction_AEquipmentInstance_GetFragment, "GetFragment" }, // 1549770858
+		{ &Z_Construct_UFunction_AEquipmentInstance_GetTagContainerProperty, "GetTagContainerProperty" }, // 520909175
 		{ &Z_Construct_UFunction_AEquipmentInstance_UninitializeInstance, "UninitializeInstance" }, // 986334945
 	};
 #if WITH_METADATA
@@ -285,9 +497,9 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentInstance() {}
 		{ EEquipmentInstanceState_StaticEnum, TEXT("EEquipmentInstanceState"), &Z_Registration_Info_UEnum_EEquipmentInstanceState, CONSTRUCT_RELOAD_VERSION_INFO(FEnumReloadVersionInfo, 950445783U) },
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_AEquipmentInstance, AEquipmentInstance::StaticClass, TEXT("AEquipmentInstance"), &Z_Registration_Info_UClass_AEquipmentInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AEquipmentInstance), 3487280738U) },
+		{ Z_Construct_UClass_AEquipmentInstance, AEquipmentInstance::StaticClass, TEXT("AEquipmentInstance"), &Z_Registration_Info_UClass_AEquipmentInstance, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AEquipmentInstance), 776660517U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_2857288720(TEXT("/Script/EquipmentSystem"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_2471949816(TEXT("/Script/EquipmentSystem"),
 		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_Statics::ClassInfo),
 		nullptr, 0,
 		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_Statics::EnumInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_Statics::EnumInfo));

@@ -1,0 +1,19 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.CrystalRecoil.cpp.obj": [
+			"CRBlueprintLibrary.gen.cpp.obj",
+			"CRRecoilComponent.gen.cpp.obj",
+			"CRRecoilInterface.gen.cpp.obj",
+			"CRRecoilPattern.gen.cpp.obj",
+			"CRRecoilUnitGraph.gen.cpp.obj",
+			"CrystalRecoil.init.gen.cpp.obj",
+			"CRBlueprintLibrary.cpp.obj",
+			"CRRecoilComponent.cpp.obj",
+			"CRRecoilInterface.cpp.obj",
+			"CRRecoilPattern.cpp.obj",
+			"CRRecoilUnitGraph.cpp.obj",
+			"CrystalRecoil.cpp.obj"
+		]
+	}
+}

@@ -25,6 +25,7 @@ enum EEquipmentInstanceState:uint8
 	OutsideInitializingFragments,
 	RuminativeInitializingFragments,
 	FinalInitializingFragments,
+	RegisteringVisualActors,
 	GrantingAbility,
 	Initialized
 };
@@ -38,16 +39,20 @@ public:
 	// Sets default values for this actor's properties
 	AEquipmentInstance();
 
+	UFUNCTION(BlueprintCallable)
 	UEquipmentFragment* GetFragment(TSubclassOf<UEquipmentFragment> FragmentClass);
 	template<typename FragmentType>
 	FragmentType* GetFragment()
 	{
 		return Cast<FragmentType>(GetFragment(FragmentType::StaticClass()));
 	}
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	const float& GetFloatProperty(FGameplayTag PropertyTag);
 	const float& GetFloatProperty(FGameplayTag PropertyTag, TSubclassOf<UEquipmentFragment> FragmentClass);
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	const FGameplayTagContainer& GetTagContainerProperty(FGameplayTag PropertyTag);
 	const FGameplayTagContainer& GetTagContainerProperty(FGameplayTag PropertyTag, TSubclassOf<UEquipmentFragment> FragmentClass);
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	const FRuntimeFloatCurve& GetCurveProperty(FGameplayTag PropertyTag);
 	const FRuntimeFloatCurve& GetCurveProperty(FGameplayTag PropertyTag, TSubclassOf<UEquipmentFragment> FragmentClass);
 
@@ -55,6 +60,9 @@ public:
 
 	const TArray<TObjectPtr<AEquipmentVisualActor>>& GetVisualActors() const { return VisualActors; }
 
+	// Initialize the instance with the specified definition and feature tags.
+	// the order of Initialization is:
+	// Fragments -> VisualActors -> Abilities
 	void InitializeInstance(UEquipmentDefinition* Definition, FGameplayTagContainer FeatureTags, UEquipmentManagerComponent* ManagerComponent);
 	void LocalInitializeInstance(UEquipmentDefinition* Definition, FGameplayTagContainer FeatureTags, UEquipmentManagerComponent* ManagerComponent);
 	void ContinueInitializeInstance();
@@ -68,14 +76,27 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void UninitializeInstance();
 	void LocalUninitializeInstance();
+
+	// Register&spawn a visual actor to the owner instance's visual actors list.
+	AEquipmentVisualActor* HandleRegisterVisualActor(
+		TSubclassOf<AEquipmentVisualActor> VisualActorClass,
+		AEquipmentVisualActor* MasterVisualActor = nullptr);
+
+	// Get all visual actors with the specified tag, use empty tag to get all visual actors
+	void GetVisualActors(FGameplayTag VisualActorTag, TArray<AEquipmentVisualActor*>& OutVisualActors);
 	
 	bool IsEquipped();
 	void NotifyEquipped();
 	void NotifyUnequipped();
+	
 	FEquipmentInstanceNotifyDelegate OnEquipped;
 	FEquipmentInstanceNotifyDelegate OnUnequipped;
 
 	UEquipmentReplicatedPropertyManagerComponent* GetReplicatedPropertyManagerComponent() const { return ReplicatedPropertyManagerComponent; }
+
+	UAbilitySystemComponent* GetAbilitySystemComponent() const;
+
+	void HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag, EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters);
 
 	float DefaultFloatProperty;
 	FGameplayTagContainer DefaultTagContainerProperty;

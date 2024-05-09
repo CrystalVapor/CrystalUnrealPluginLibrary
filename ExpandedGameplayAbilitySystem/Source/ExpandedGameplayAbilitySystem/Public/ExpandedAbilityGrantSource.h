@@ -42,7 +42,7 @@ struct FExpandedAbilityGrantSource_AttributeSet
 };
 
 USTRUCT()
-struct FExpandedAbilityGrantSource_GrantHandle
+struct EXPANDEDGAMEPLAYABILITYSYSTEM_API FExpandedAbilityGrantSource_GrantHandle
 {
 	GENERATED_BODY()
 	void AddAbilitySpecHandle(const FGameplayAbilitySpecHandle& Handle);
@@ -70,7 +70,7 @@ protected:
 
 // This class does not need to be modified.
 UINTERFACE()
-class UExpandedAbilityGrantSource : public UInterface
+class EXPANDEDGAMEPLAYABILITYSYSTEM_API UExpandedAbilityGrantSource : public UInterface
 {
 	GENERATED_BODY()
 };

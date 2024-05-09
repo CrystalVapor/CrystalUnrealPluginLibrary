@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "EquipmentInstance.h"
-#include "../../../../ExpandedGameplayAbilitySystem/Source/ExpandedGameplayAbilitySystem/Public/ExpandedAbilityGrantSource.h"
 #include "Components/ActorComponent.h"
 #include "EquipmentManagerComponent.generated.h"
 
@@ -39,7 +38,7 @@ struct FEquipmentInstancesContainer: public FFastArraySerializer
 	UPROPERTY()
 	TArray<FEquipmentInstanceEntry> Items;
 
-	UPROPERTY(NotReplicated)
+	UPROPERTY()
 	UEquipmentManagerComponent* Manager;
 	
 	int32 NextId = 0;
@@ -67,14 +66,24 @@ struct TStructOpsTypeTraits< FEquipmentInstancesContainer > : public TStructOpsT
    };
 };
 
+/**
+ * Equipment manager component.
+ * This component expected to be on a pawn owned by a player controller.
+ */ 
 UCLASS()
 class EQUIPMENTSYSTEM_API UEquipmentManagerComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
+#if WITH_EDITOR
+	virtual EDataValidationResult IsDataValid(FDataValidationContext& Context) override;
+#endif
+	
 	UEquipmentManagerComponent();
 
+	static UEquipmentManagerComponent* FindEquipmentManagerComponent(AActor* Actor);
+	
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	FExpandedAbilityGrantSource_GrantHandle HandleGrantAbility(IExpandedAbilityGrantSource* Source, UObject* SourceObject);
@@ -113,14 +122,16 @@ public:
 	void InternalEquipEquipment(int32 Id);
     void InternalUnequipEquipment(int32 Id);
 
+	UAbilitySystemComponent* GetAbilitySystemComponent() const { return AbilitySystemComponent; }
+
+	void HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag, EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters);
+	
 	FEquipmentManagerNotifyDelegate OnInstanceInitialized;
 	FEquipmentManagerNotifyDelegate OnInstanceCreated;
 	FEquipmentManagerNotifyDelegate OnInstanceRemoved;
 
 protected:
 	FEquipmentInstanceEntry* GetEntry(int32 Id);
-
-	
 	
 	UPROPERTY(Replicated)
 	FEquipmentInstancesContainer Instances;

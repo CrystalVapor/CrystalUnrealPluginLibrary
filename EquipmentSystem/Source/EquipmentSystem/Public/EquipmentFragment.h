@@ -5,31 +5,60 @@
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "UObject/Object.h"
+#include "NativeGameplayTags.h"
 #include "Engine/AssetManager.h"
 #include "EquipmentFragment.generated.h"
 
 class AEquipmentInstance;
+DECLARE_DELEGATE_RetVal(float, FSimpleFloatGetter)
+
 DECLARE_DELEGATE_RetVal(float&, FFragmentFloatPropertyGetter)
 DECLARE_DELEGATE_RetVal(FGameplayTagContainer&, FFragmentTagContainerPropertyGetter)
 DECLARE_DELEGATE_RetVal(FRuntimeFloatCurve&, FFragmentCurvePropertyGetter)
 
-// Macro for declaring and registering property getters
-// Will also register a tag for the property
-// but since you cant put UPROERTY() in a macro
-// you have to declare Tag named PropertyNameTag manually
-// Recommended UPROPERTY() of Tag as follow:
-// UPROPERTY(EditAnywhere, Category = "PropertyTags", meta = (DisplayName = "PropertyName", Categories = "Equipment.Property"))
+/**
+ * Life Saver Macros for defining and declaring property tags
+ * Use Declarer in header and Definer in cpp
+ */
+#define FRAGMENT_DECLARE_PROPERTY_TAG(PropertyName) \
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Equipment_Property_##PropertyName##)
+#define FRAGMENT_DEFINE_PROPERTY_TAG(PropertyName) \
+	UE_DEFINE_GAMEPLAY_TAG(Equipment_Property_##PropertyName##, "Equipment.Property."#PropertyName)
+#define PROPERTY_TAG(PropertyName) Equipment_Property_##PropertyName
 
-// use these in OnFragmentInsideInitialize
+/**
+ * Life Saver Macros for declaring and defining property getters
+ * requires property tag to be defined
+ * use them in fragment class's definition
+ */
 #define FRAGMENT_DECLARE_FLOAT_PROPERTY_GETTER(PropertyName) \
 	FFragmentFloatPropertyGetter Get##PropertyName##Delegate;\
-	float& Get##PropertyName(){ return PropertyName; }
+	virtual float& Get##PropertyName(){ return PropertyName; }\
+	float& InternalGet##PropertyName(){ return PropertyName; }\
+	FGameplayTag PropertyName##Tag = PROPERTY_TAG(PropertyName);
 #define FRAGMENT_DECLARE_TAG_PROPERTY_GETTER(PropertyName) \
 	FFragmentTagContainerPropertyGetter Get##PropertyName##Delegate;\
-	FGameplayTagContainer& Get##PropertyName(){ return PropertyName; }
+	virtual FGameplayTagContainer& Get##PropertyName(){ return PropertyName; }\
+	FGameplayTagContainer& InternalGet##PropertyName(){ return PropertyName; }\
+	FGameplayTag PropertyName##Tag = PROPERTY_TAG(PropertyName);
 #define FRAGMENT_DECLARE_CURVE_PROPERTY_GETTER(PropertyName) \
 	FFragmentCurvePropertyGetter Get##PropertyName##Delegate;\
-	FRuntimeFloatCurve& Get##PropertyName(){ return PropertyName; }
+	virtual FRuntimeFloatCurve& Get##PropertyName(){ return PropertyName; }\
+	FRuntimeFloatCurve& InternalGet##PropertyName(){ return PropertyName; }\
+	FGameplayTag PropertyName##Tag = PROPERTY_TAG(PropertyName);
+
+/**
+ * Used for declaring meta float property
+ * meta property is the property that does not concern about the default value
+ * used as some cached value that locally calculated
+ * remember all the value in Fragment will not be replicated.
+ */
+#define FRAGMENT_DECLARE_FLOAT_PROPERTY_SETTER(PropertyName) \
+	virtual void Set##PropertyName(float Value){ PropertyName = Value; }
+#define FRAGMENT_DEFINE_META_FLOAT_PROPERTY(PropertyName, DefaultValue) \
+	float PropertyName = DefaultValue;\
+	FRAGMENT_DECLARE_FLOAT_PROPERTY_GETTER(PropertyName)\
+	FRAGMENT_DECLARE_FLOAT_PROPERTY_SETTER(PropertyName)
 
 // use these in HandleChildInsideInitialize
 #define FRAGMENT_REGISTER_FLOAT_PROPERTY_GETTER(ClassName ,PropertyName) \
@@ -92,6 +121,8 @@ class EQUIPMENTSYSTEM_API UEquipmentFragment : public UObject
 	GENERATED_BODY()
 public:
 	bool HasProperty(FGameplayTag PropertyTag) const;
+
+	AEquipmentInstance* GetEquipmentInstance();
 	
 	const float& GetFloatProperty(FGameplayTag PropertyTag);
 	const FRuntimeFloatCurve& GetCurveProperty(FGameplayTag PropertyTag);

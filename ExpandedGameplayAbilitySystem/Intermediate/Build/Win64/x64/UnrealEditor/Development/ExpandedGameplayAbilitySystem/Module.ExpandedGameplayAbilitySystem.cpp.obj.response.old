@@ -273,6 +273,9 @@ D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbil
 /I Runtime\MovieSceneCapture\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController\UHT
 /I Developer\AnimationDataController\Public
+/I ..\Intermediate\Build\Win64\UnrealEditor\Inc\EditorInteractiveToolsFramework\UHT
+/I Editor\Experimental\EditorInteractiveToolsFramework\Public
+/I Editor\Experimental
 /I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\UnrealEditor\Inc\ExpandedGameplayAbilitySystem\UHT
 /I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source
 /I D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Source\ExpandedGameplayAbilitySystem\Public

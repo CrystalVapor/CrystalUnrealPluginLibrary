@@ -6,6 +6,11 @@
 #include "EquipmentFragment.h"
 #include "EquipmentFragment_Test.generated.h"
 
+class UDataAsset;
+FRAGMENT_DECLARE_PROPERTY_TAG(TestValue);
+FRAGMENT_DECLARE_PROPERTY_TAG(TestTags);
+FRAGMENT_DECLARE_PROPERTY_TAG(TestCurve);
+
 /**
  * 
  */
@@ -19,20 +24,14 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float TestValue = 10.0f;
 	FRAGMENT_DECLARE_FLOAT_PROPERTY_GETTER(TestValue);
-	UPROPERTY(EditAnywhere, Category = "PropertyTags", meta = (DisplayName = "Test Value", Categories = "Equipment.Property"))
-	FGameplayTag TestValueTag;
 
 	UPROPERTY(EditAnywhere)
 	FGameplayTagContainer TestTags;
 	FRAGMENT_DECLARE_TAG_PROPERTY_GETTER(TestTags);
-	UPROPERTY(EditAnywhere, Category = "PropertyTags", meta = (DisplayName = "Test Tags", Categories = "Equipment.Property"))
-	FGameplayTag TestTagsTag;
 
 	UPROPERTY(EditAnywhere)
 	FRuntimeFloatCurve TestCurve;
 	FRAGMENT_DECLARE_CURVE_PROPERTY_GETTER(TestCurve);
-	UPROPERTY(EditAnywhere, Category = "PropertyTags", meta = (DisplayName = "Test Curve", Categories = "Equipment.Property"))
-	FGameplayTag TestCurveTag;
 
 	virtual void HandleChildInsideInitialize(AEquipmentInstance* Instance) override;
 	

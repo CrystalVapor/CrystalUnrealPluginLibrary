@@ -33,9 +33,9 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN:6
-"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.obj"
-"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\Module.ExpandedGameplayAbilitySystem.cpp.obj"
-"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\Default.rc2.res"
+"D:\unrealProject\Aether\Intermediate\Build\Win64\x64\AetherEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_1.h.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\Module.ExpandedGameplayAbilitySystem.cpp.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\Default.rc2.res"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\CoreUObject\UnrealEditor-CoreUObject.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Engine\UnrealEditor-Engine.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Slate\UnrealEditor-Slate.lib"
@@ -69,7 +69,7 @@
 "setupapi.lib"
 "dwmapi.lib"
 "imm32.lib"
-/OUT:"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Binaries\Win64\UnrealEditor-ExpandedGameplayAbilitySystem.dll"
-/IMPLIB:"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\UnrealEditor-ExpandedGameplayAbilitySystem.suppressed.lib"
-/PDB:"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Binaries\Win64\UnrealEditor-ExpandedGameplayAbilitySystem.pdb"
+/OUT:"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Binaries\Win64\UnrealEditor-ExpandedGameplayAbilitySystem.dll"
+/IMPLIB:"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\UnrealEditor-ExpandedGameplayAbilitySystem.suppressed.lib"
+/PDB:"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Binaries\Win64\UnrealEditor-ExpandedGameplayAbilitySystem.pdb"
 /ignore:4078

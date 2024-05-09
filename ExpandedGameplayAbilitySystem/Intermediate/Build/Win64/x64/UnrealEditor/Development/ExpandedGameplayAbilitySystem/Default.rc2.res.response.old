@@ -69,8 +69,7 @@
 /DBUILT_FROM_CHANGELIST=26001984
 /DBUILD_VERSION=++UE5+Release-5.2-CL-26001984
 /DBUILD_ICON_FILE_NAME="\"..\\Build\\Windows\\Resources\\Default.ico\""
-/DPROJECT_COPYRIGHT_STRING="Wrote by Crystal 2024"
-/DPROJECT_PRODUCT_NAME="Third Person BP Game Template"
-/DPROJECT_PRODUCT_IDENTIFIER=PluginProject
-/fo "D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\Default.rc2.res"
+/DPROJECT_COPYRIGHT_STRING="Fill out your copyright notice in the Description page of Project Settings."
+/DPROJECT_PRODUCT_IDENTIFIER=Aether
+/fo "D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\ExpandedGameplayAbilitySystem\Default.rc2.res"
 "..\Build\Windows\Resources\Default.rc2"

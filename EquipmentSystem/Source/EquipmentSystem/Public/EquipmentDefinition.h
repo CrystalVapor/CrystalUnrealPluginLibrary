@@ -8,6 +8,7 @@
 #include "Engine/DataAsset.h"
 #include "EquipmentDefinition.generated.h"
 
+class AEquipmentVisualActor;
 class UEquipmentManagerComponent;
 class AEquipmentInstance;
 DECLARE_MULTICAST_DELEGATE_TwoParams(FEquipmentFeatureDelegate, AEquipmentInstance*, UEquipmentManagerComponent*);
@@ -18,6 +19,8 @@ struct FEquipmentFeatureData
 	GENERATED_BODY()
 	UPROPERTY()
 	TArray<TSubclassOf<UEquipmentFragment>> FragmentClasses;
+	UPROPERTY()
+	TArray<TSubclassOf<AEquipmentVisualActor>> VisualActorClasses;
 	UPROPERTY()
 	TArray<TObjectPtr<UObject>> AbilityGrantSources;
 	
@@ -38,8 +41,7 @@ public:
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 	virtual EDataValidationResult IsDataValid(TArray<FText>& ValidationErrors) override;
 #endif
-	
-	
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Default")
 	FString EquipmentName;
 	

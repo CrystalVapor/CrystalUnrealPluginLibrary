@@ -75,6 +75,11 @@ bool UEquipmentFragment::HasProperty(FGameplayTag PropertyTag) const
 	return PropertyTags.HasTagExact(PropertyTag);
 }
 
+AEquipmentInstance* UEquipmentFragment::GetEquipmentInstance()
+{
+	return Cast<AEquipmentInstance>(GetOuter());
+}
+
 const float& UEquipmentFragment::GetFloatProperty(FGameplayTag PropertyTag)
 {
 	return InternalGetFloatProperty(PropertyTag);

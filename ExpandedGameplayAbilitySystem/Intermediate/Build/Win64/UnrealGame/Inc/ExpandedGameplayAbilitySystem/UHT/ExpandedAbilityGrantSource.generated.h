@@ -37,7 +37,7 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct 
 
 #define FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilityGrantSource_h_47_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FExpandedAbilityGrantSource_GrantHandle_Statics; \
-	EXPANDEDGAMEPLAYABILITYSYSTEM_API static class UScriptStruct* StaticStruct();
+	static class UScriptStruct* StaticStruct();
 
 
 template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<struct FExpandedAbilityGrantSource_GrantHandle>();

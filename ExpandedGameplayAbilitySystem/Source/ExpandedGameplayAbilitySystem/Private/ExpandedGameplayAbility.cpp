@@ -4,6 +4,7 @@
 #include "ExpandedGameplayAbility.h"
 
 #include "AbilitySystemComponent.h"
+#include "ExpandedAbilitySystemComponent.h"
 
 
 void UExpandedGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
@@ -58,8 +59,40 @@ void UExpandedGameplayAbility::TryActivateOnSpawnOrGranted(const FGameplayAbilit
 	}
 }
 
+void UExpandedGameplayAbility::LocallyExecuteGameplayCueOnOwner(const FGameplayTag GameplayCueTag,
+	const FGameplayCueParameters GameplayCueParameters)
+{
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
+	UExpandedAbilitySystemComponent* ExpandedAbilitySystemComponent = Cast<UExpandedAbilitySystemComponent>(AbilitySystemComponent);
+	if (ExpandedAbilitySystemComponent)
+	{
+		ExpandedAbilitySystemComponent->LocallyExecuteGameplayCueOnOwner(GameplayCueTag, GameplayCueParameters);
+	}
+}
+
+void UExpandedGameplayAbility::LocallyAddGameplayCueOnOwner(const FGameplayTag GameplayCueTag,
+	const FGameplayCueParameters GameplayCueParameters)
+{
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
+	UExpandedAbilitySystemComponent* ExpandedAbilitySystemComponent = Cast<UExpandedAbilitySystemComponent>(AbilitySystemComponent);
+	if (ExpandedAbilitySystemComponent)
+	{
+		ExpandedAbilitySystemComponent->LocallyAddGameplayCueOnOwner(GameplayCueTag, GameplayCueParameters);
+	}
+}
+
+void UExpandedGameplayAbility::LocallyRemoveGameplayCueOnOwner(const FGameplayTag GameplayCueTag)
+{
+	UAbilitySystemComponent* AbilitySystemComponent = GetAbilitySystemComponentFromActorInfo();
+	UExpandedAbilitySystemComponent* ExpandedAbilitySystemComponent = Cast<UExpandedAbilitySystemComponent>(AbilitySystemComponent);
+	if (ExpandedAbilitySystemComponent)
+	{
+		ExpandedAbilitySystemComponent->LocallyRemoveGameplayCueOnOwner(GameplayCueTag);
+	}
+}
+
 bool UExpandedGameplayAbility::CustomCheckCost_Implementation(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo& ActorInfo) const
+                                                              const FGameplayAbilityActorInfo& ActorInfo) const
 {
 	return true;
 }
@@ -83,6 +116,16 @@ bool UExpandedGameplayAbility::IsInputPressed() const
 		return false;
 	}
 	return GetCurrentAbilitySpec()->InputPressed;
+}
+
+void UExpandedGameplayAbility::AddBatchGameplayCueParam_HitResult(const FGameplayTag BatchedCueTag,
+	const FHitResult& HitResult)
+{
+	UExpandedAbilitySystemComponent* ASC = Cast<UExpandedAbilitySystemComponent>(GetAbilitySystemComponentFromActorInfo());
+	if(ASC)
+	{
+		ASC->AddBatchGameplayCueParam_HitResult(BatchedCueTag, HitResult);
+	}
 }
 
 void UExpandedGameplayAbility::TryActivateAbility(const FGameplayAbilitySpec& Spec)

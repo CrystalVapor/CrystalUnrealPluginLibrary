@@ -178,28 +178,93 @@ void UExpandedAbilitySystemComponent::TryActivateAbilitiesOnActorInfoSet()
 	}
 }
 
-void UExpandedAbilitySystemComponent::ExecuteGameplayCueLocal(const FGameplayTag GameplayCueTag,
-	const FGameplayCueParameters& GameplayCueParameters)
+void UExpandedAbilitySystemComponent::LocallyExecuteGameplayCueOnOwner(const FGameplayTag GameplayCueTag,
+                                                              const FGameplayCueParameters& GameplayCueParameters)
 {
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::Executed, GameplayCueParameters);
+	InvokeGameplayCueEvent(GameplayCueTag, EGameplayCueEvent::Type::Executed, GameplayCueParameters);
 }
 
-void UExpandedAbilitySystemComponent::AddGameplayCueLocal(const FGameplayTag GameplayCueTag,
+void UExpandedAbilitySystemComponent::LocallyAddGameplayCueOnOwner(const FGameplayTag GameplayCueTag,
 	const FGameplayCueParameters& GameplayCueParameters)
 {
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::OnActive, GameplayCueParameters);
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::WhileActive, GameplayCueParameters);
+	InvokeGameplayCueEvent(GameplayCueTag, EGameplayCueEvent::Type::OnActive, GameplayCueParameters);
+	InvokeGameplayCueEvent(GameplayCueTag, EGameplayCueEvent::Type::WhileActive, GameplayCueParameters);
 }
 
-void UExpandedAbilitySystemComponent::RemoveGameplayCueLocal(const FGameplayTag GameplayCueTag,
-	const FGameplayCueParameters& GameplayCueParameters)
+void UExpandedAbilitySystemComponent::LocallyRemoveGameplayCueOnOwner(const FGameplayTag GameplayCueTag)
 {
-	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::Removed, GameplayCueParameters);
+	const FGameplayCueParameters EmptyParameters;
+	InvokeGameplayCueEvent(GameplayCueTag, EGameplayCueEvent::Type::Removed, EmptyParameters);
 }
 
 bool UExpandedAbilitySystemComponent::HasMoreTagStack(const FGameplayTag Tag, const FGameplayTag OtherTag)
 {
 	return GetTagCount(Tag) > GetTagCount(OtherTag);
+}
+
+void UExpandedAbilitySystemComponent::AddBatchGameplayCueParam_HitResult(const FGameplayTag BatchedCueTag,
+	const FHitResult& HitResult)
+{
+	FBatchedGameplayCueParameter_HitResult* Param = new FBatchedGameplayCueParameter_HitResult(HitResult);
+	if(BatchedGameplayCueParams.Contains(BatchedCueTag))
+	{
+#if WITH_EDITOR
+		// Check if the existing data is the same type
+		if(BatchedGameplayCueParams[BatchedCueTag].Data[0]->GetScriptStruct() != Param->GetScriptStruct())
+		{
+			UE_LOG(LogAbilitySystemComponent, Warning, TEXT("AddBatchGameplayCueParam_HitResult: Existing data is not the same type as the new data. Ignoring."));
+			return;
+		}
+#endif
+		BatchedGameplayCueParams[BatchedCueTag].Data.Add(MakeShareable(Param));
+	}
+	else
+	{
+		FBatchedGameplayCueParameterHandle Handle;
+		Handle.Add(Param);
+		BatchedGameplayCueParams.Add(BatchedCueTag, Handle);
+	}
+}
+
+void UExpandedAbilitySystemComponent::Call_ReplicateBatchedGameplayCueParameters(const FGameplayTag& BatchedCueTag,
+	FPredictionKey PredictionKey)
+{
+	if(BatchedGameplayCueParams.Contains(BatchedCueTag))
+	{
+		FBatchedGameplayCueParameterHandle Handle;
+		BatchedGameplayCueParams.RemoveAndCopyValue(BatchedCueTag, Handle);
+		Multicast_ReplicateBatchedGameplayCueParameters(BatchedCueTag, PredictionKey, Handle);
+	}
+}
+
+void UExpandedAbilitySystemComponent::Multicast_ReplicateBatchedGameplayCueParameters_Implementation(
+	const FGameplayTag& BatchedCueTag, FPredictionKey PredictionKey,
+	const FBatchedGameplayCueParameterHandle& BatchedCueParams)
+{
+	if (IsOwnerActorAuthoritative() || PredictionKey.IsLocalClientKey() == false)
+	{
+		ExecuteBatchedGameplayCue(BatchedCueTag, BatchedCueParams);
+	}
+}
+
+void UExpandedAbilitySystemComponent::InvokeBatchedGameplayCueEvent(const FGameplayTag& BatchedCueTag)
+{
+	if(BatchedGameplayCueParams.Contains(BatchedCueTag))
+	{
+		FBatchedGameplayCueParameterHandle BatchedCueParamHandle;
+		BatchedGameplayCueParams.RemoveAndCopyValue(BatchedCueTag, BatchedCueParamHandle);
+		ExecuteBatchedGameplayCue(BatchedCueTag, BatchedCueParamHandle);
+	}
+}
+
+void UExpandedAbilitySystemComponent::ExecuteBatchedGameplayCue(const FGameplayTag& BatchedCueTag,
+                                                                    const FBatchedGameplayCueParameterHandle& BatchedCueParams)
+{
+	for(auto& BatchedCueParam:BatchedCueParams.Data)
+	{
+		FGameplayCueParameters Param = BatchedCueParam.Get()->ToGameplayCueParameters();
+		InvokeGameplayCueEvent(BatchedCueTag, EGameplayCueEvent::Type::Executed, Param);
+	}
 }
 
 void UExpandedAbilitySystemComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)

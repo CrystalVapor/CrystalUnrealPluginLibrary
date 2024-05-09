@@ -36,6 +36,14 @@ public:
 	
 	void TryActivateOnSpawnOrGranted(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec);
 
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (GameplayTagFilter = "GameplayCue"), DisplayName = "Locally Execute Gameplay Cue On Owner")
+	void LocallyExecuteGameplayCueOnOwner(const FGameplayTag GameplayCueTag, const FGameplayCueParameters GameplayCueParameters);
+
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (GameplayTagFilter = "GameplayCue"), DisplayName = "Locally Add Gameplay Cue On Owner")
+	void LocallyAddGameplayCueOnOwner(const FGameplayTag GameplayCueTag, const FGameplayCueParameters GameplayCueParameters);
+
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (GameplayTagFilter = "GameplayCue"), DisplayName = "Locally Remove Gameplay Cue On Owner")
+	void LocallyRemoveGameplayCueOnOwner(const FGameplayTag GameplayCueTag);
 	
 	// Customized version of the CheckCost function, to add cost without using GameplayEffects
 	// - Cannot be predicted
@@ -55,10 +63,13 @@ public:
 	// Is the ability's input currently being pressed? Called on instanced abilities
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInputPressed() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (GameplayTagFilter = "GameplayCue"), DisplayName = "Add Hit Result To Batched Gameplay Cue Parameter")
+	void AddBatchGameplayCueParam_HitResult(const FGameplayTag BatchedCueTag, const FHitResult& HitResult);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Settings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Advanced)
 	EAbilityActivationPolicy ActivationPolicy = EAbilityActivationPolicy::OnInputTriggered;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Settings", meta = (Categories = "Input"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Triggers, meta = (Categories = "Input"))
 	FGameplayTagContainer InputTags;
 protected:
 	void TryActivateAbility(const FGameplayAbilitySpec& Spec);

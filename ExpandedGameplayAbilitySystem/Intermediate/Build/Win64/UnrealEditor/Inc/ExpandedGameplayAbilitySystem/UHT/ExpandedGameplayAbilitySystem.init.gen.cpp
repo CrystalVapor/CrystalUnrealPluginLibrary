@@ -17,13 +17,13 @@ void EmptyLinkFunctionForGeneratedCodeExpandedGameplayAbilitySystem_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0xE5FF1249,
-				0x955275F9,
+				0x512C0630,
+				0xBDCE3FE8,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_ExpandedGameplayAbilitySystem.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_ExpandedGameplayAbilitySystem.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_ExpandedGameplayAbilitySystem(Z_Construct_UPackage__Script_ExpandedGameplayAbilitySystem, TEXT("/Script/ExpandedGameplayAbilitySystem"), Z_Registration_Info_UPackage__Script_ExpandedGameplayAbilitySystem, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xE5FF1249, 0x955275F9));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_ExpandedGameplayAbilitySystem(Z_Construct_UPackage__Script_ExpandedGameplayAbilitySystem, TEXT("/Script/ExpandedGameplayAbilitySystem"), Z_Registration_Info_UPackage__Script_ExpandedGameplayAbilitySystem, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x512C0630, 0xBDCE3FE8));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

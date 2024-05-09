@@ -4,7 +4,7 @@
 	DO NOT modify this manually! Edit the corresponding .h files instead!
 ===========================================================================*/
 
-// IWYU pragma: private, include "Fragments/EquipmentManagerComponent.h"
+// IWYU pragma: private, include "EquipmentManagerComponent.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ScriptMacros.h"
 
@@ -14,29 +14,81 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define EQUIPMENTSYSTEM_EquipmentManagerComponent_generated_h
 
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_SPARSE_DATA
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_RPC_WRAPPERS
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_ACCESSORS
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_INCLASS_NO_PURE_DECLS \
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_19_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FEquipmentInstanceEntry_Statics; \
+	EQUIPMENTSYSTEM_API static class UScriptStruct* StaticStruct(); \
+	typedef FFastArraySerializerItem Super;
+
+
+template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<struct FEquipmentInstanceEntry>();
+
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_34_GENERATED_BODY \
+	friend struct Z_Construct_UScriptStruct_FEquipmentInstancesContainer_Statics; \
+	EQUIPMENTSYSTEM_API static class UScriptStruct* StaticStruct(); \
+	typedef FFastArraySerializer Super; \
+	UE_NET_DECLARE_FASTARRAY(FEquipmentInstancesContainer, Items, EQUIPMENTSYSTEM_API );
+
+
+template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<struct FEquipmentInstancesContainer>();
+
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_SPARSE_DATA
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_RPC_WRAPPERS \
+	virtual void ClientUnequipEquipment_Implementation(int32 Id); \
+	virtual void ClientEquipEquipment_Implementation(int32 Id); \
+	virtual void ServerUnequipEquipment_Implementation(int32 Id); \
+	virtual void ServerEquipEquipment_Implementation(int32 Id); \
+ \
+	DECLARE_FUNCTION(execClientUnequipEquipment); \
+	DECLARE_FUNCTION(execClientEquipEquipment); \
+	DECLARE_FUNCTION(execServerUnequipEquipment); \
+	DECLARE_FUNCTION(execServerEquipEquipment);
+
+
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual void ClientUnequipEquipment_Implementation(int32 Id); \
+	virtual void ClientEquipEquipment_Implementation(int32 Id); \
+	virtual void ServerUnequipEquipment_Implementation(int32 Id); \
+	virtual void ServerEquipEquipment_Implementation(int32 Id); \
+ \
+	DECLARE_FUNCTION(execClientUnequipEquipment); \
+	DECLARE_FUNCTION(execClientEquipEquipment); \
+	DECLARE_FUNCTION(execServerUnequipEquipment); \
+	DECLARE_FUNCTION(execServerEquipEquipment);
+
+
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_ACCESSORS
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_CALLBACK_WRAPPERS
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUEquipmentManagerComponent(); \
 	friend struct Z_Construct_UClass_UEquipmentManagerComponent_Statics; \
 public: \
 	DECLARE_CLASS(UEquipmentManagerComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/EquipmentSystem"), NO_API) \
-	DECLARE_SERIALIZER(UEquipmentManagerComponent)
+	DECLARE_SERIALIZER(UEquipmentManagerComponent) \
+	enum class ENetFields_Private : uint16 \
+	{ \
+		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
+		Instances=NETFIELD_REP_START, \
+		NETFIELD_REP_END=Instances	}; \
+	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_INCLASS \
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_INCLASS \
 private: \
 	static void StaticRegisterNativesUEquipmentManagerComponent(); \
 	friend struct Z_Construct_UClass_UEquipmentManagerComponent_Statics; \
 public: \
 	DECLARE_CLASS(UEquipmentManagerComponent, UActorComponent, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/EquipmentSystem"), NO_API) \
-	DECLARE_SERIALIZER(UEquipmentManagerComponent)
+	DECLARE_SERIALIZER(UEquipmentManagerComponent) \
+	enum class ENetFields_Private : uint16 \
+	{ \
+		NETFIELD_REP_START=(uint16)((int32)Super::ENetFields_Private::NETFIELD_REP_END + (int32)1), \
+		Instances=NETFIELD_REP_START, \
+		NETFIELD_REP_END=Instances	}; \
+	NO_API virtual void ValidateGeneratedRepEnums(const TArray<struct FRepRecord>& ClassReps) const override;
 
 
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_STANDARD_CONSTRUCTORS \
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UEquipmentManagerComponent(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UEquipmentManagerComponent) \
@@ -50,7 +102,7 @@ public: \
 	NO_API virtual ~UEquipmentManagerComponent();
 
 
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_ENHANCED_CONSTRUCTORS \
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UEquipmentManagerComponent(UEquipmentManagerComponent&&); \
@@ -62,27 +114,29 @@ public: \
 	NO_API virtual ~UEquipmentManagerComponent();
 
 
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_10_PROLOG
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_GENERATED_BODY_LEGACY \
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_73_PROLOG
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_SPARSE_DATA \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_RPC_WRAPPERS \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_ACCESSORS \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_INCLASS \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_STANDARD_CONSTRUCTORS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_SPARSE_DATA \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_RPC_WRAPPERS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_ACCESSORS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_CALLBACK_WRAPPERS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_INCLASS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_GENERATED_BODY \
+#define FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_SPARSE_DATA \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_ACCESSORS \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_INCLASS_NO_PURE_DECLS \
-	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h_13_ENHANCED_CONSTRUCTORS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_SPARSE_DATA \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_ACCESSORS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_CALLBACK_WRAPPERS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_INCLASS_NO_PURE_DECLS \
+	FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h_76_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -90,7 +144,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> EQUIPMENTSYSTEM_API UClass* StaticClass<class UEquipmentManagerComponent>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentManagerComponent_h
+#define CURRENT_FILE_ID FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentManagerComponent_h
 
 
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

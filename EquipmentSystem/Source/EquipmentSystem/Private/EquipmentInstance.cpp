@@ -13,14 +13,14 @@
 AEquipmentInstance::AEquipmentInstance()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	SetReplicates(true);
+	bReplicates = true;
+	bAlwaysRelevant = true;
 
 	InitializeComponent = CreateDefaultSubobject<UEquipmentInstanceInitializeComponent>(TEXT("InitializeComponent"));
 	InitializeComponent->SetIsReplicated(true);
 
 	ReplicatedPropertyManagerComponent = CreateDefaultSubobject<UEquipmentReplicatedPropertyManagerComponent>(
 		TEXT("ReplicatedPropertyManagerComponent"));
-	
 }
 
 UEquipmentFragment* AEquipmentInstance::GetFragment(TSubclassOf<UEquipmentFragment> FragmentClass)
@@ -165,6 +165,14 @@ void AEquipmentInstance::HandleInitializeInstanceChanged()
 			Fragment->NotifyStartFinalInitialize(this);
 		}
 	}
+	if(InitializeState == EEquipmentInstanceState::RegisteringVisualActors)
+	{
+		TArray<TSubclassOf<AEquipmentVisualActor>>& VisualActorData = FeatureData.VisualActorClasses;
+		for(auto& VisualActorClass:VisualActorData)
+		{
+			HandleRegisterVisualActor(VisualActorClass, nullptr);
+		}
+	}
 	if(InitializeState == EEquipmentInstanceState::GrantingAbility)
 	{
 		// Grant Ability
@@ -244,6 +252,11 @@ bool AEquipmentInstance::CanChangeInitializeState() const
 		}
 		return true;
 	}
+	if(InitializeState == EEquipmentInstanceState::RegisteringVisualActors)
+	{
+		// Can Continue Initialize Instance
+		return true;
+	}
 	if(InitializeState == EEquipmentInstanceState::GrantingAbility)
 	{
 		// Can Continue Initialize Instance
@@ -289,6 +302,34 @@ void AEquipmentInstance::LocalUninitializeInstance()
 	InitializeComponent->ResetInitializeSource();
 }
 
+AEquipmentVisualActor* AEquipmentInstance::HandleRegisterVisualActor(
+	TSubclassOf<AEquipmentVisualActor> VisualActorClass,
+	AEquipmentVisualActor* MasterVisualActor)
+{
+	AEquipmentVisualActor* VisualActor = GetWorld()->SpawnActor<AEquipmentVisualActor>(VisualActorClass);
+	VisualActor->SetOwner(this);
+	VisualActor->InitVisualActor(this, MasterVisualActor);
+	VisualActors.Add(VisualActor);
+	return VisualActor;
+}
+
+void AEquipmentInstance::GetVisualActors(FGameplayTag VisualActorTag, TArray<AEquipmentVisualActor*>& OutVisualActors)
+{
+	if(FGameplayTag() == VisualActorTag)
+	{
+		OutVisualActors = VisualActors;
+		return;
+	}
+	for(auto& VisualActor:VisualActors)
+	{
+		FGameplayTagContainer VisualActorTags = VisualActor->GetVisualActorTags();
+		if(VisualActorTags.HasTag(VisualActorTag))
+		{
+			OutVisualActors.Add(VisualActor);
+		}
+	}
+}
+
 bool AEquipmentInstance::IsEquipped()
 {
 	return bIsEquipped; 
@@ -312,5 +353,19 @@ void AEquipmentInstance::NotifyUnequipped()
 	}
 	bIsEquipped = false;
 	OnUnequipped.Broadcast(this);
+}
+
+UAbilitySystemComponent* AEquipmentInstance::GetAbilitySystemComponent() const
+{
+	return ManagerComponent->GetAbilitySystemComponent();
+}
+
+void AEquipmentInstance::HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag,
+	EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters)
+{
+	for(auto& VisualActor:VisualActors)
+	{
+		VisualActor->HandleGameplayCue(VisualActor, GameplayCueTag, EventType, Parameters);
+	}
 }
 

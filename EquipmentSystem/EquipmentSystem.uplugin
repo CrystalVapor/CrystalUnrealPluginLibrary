@@ -19,11 +19,20 @@
 			"Name": "EquipmentSystem",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "EquipmentSystemEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [
 		{
 			"Name": "ExpandedGameplayAbilitySystem",
+			"Enabled": true
+		},
+		{
+			"Name": "CrystalRecoil",
 			"Enabled": true
 		}
 	]

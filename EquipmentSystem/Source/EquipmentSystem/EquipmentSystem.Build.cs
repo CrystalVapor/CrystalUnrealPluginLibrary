@@ -28,6 +28,7 @@ public class EquipmentSystem : ModuleRules
 				"Core",
 				"ExpandedGameplayAbilitySystem",
 				"GameplayTags",
+				"CrystalRecoil",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -44,6 +45,7 @@ public class EquipmentSystem : ModuleRules
 				"GameplayAbilities",
 				"GameplayTasks",
 				"GameplayTags",
+				"GameplayCameras"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-CrystalRecoil.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\unrealProject\Aether\Intermediate\Build\Win64\x64\AetherEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_1.h.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\CrystalRecoil\Intermediate\Build\Win64\x64\UnrealEditor\Development\CrystalRecoil\Module.CrystalRecoil.cpp.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\CrystalRecoil\Intermediate\Build\Win64\x64\UnrealEditor\Development\CrystalRecoil\Default.rc2.res"
+/OUT:"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\CrystalRecoil\Intermediate\Build\Win64\x64\UnrealEditor\Development\CrystalRecoil\UnrealEditor-CrystalRecoil.lib"

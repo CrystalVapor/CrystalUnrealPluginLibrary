@@ -1,0 +1,109 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+/*===========================================================================
+	Generated code exported from UnrealHeaderTool.
+	DO NOT modify this manually! Edit the corresponding .h files instead!
+===========================================================================*/
+
+// IWYU pragma: private, include "VisualActors/EquipmentVisualActor_RangedWeapon.h"
+#include "UObject/ObjectMacros.h"
+#include "UObject/ScriptMacros.h"
+
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+#ifdef EQUIPMENTSYSTEM_EquipmentVisualActor_RangedWeapon_generated_h
+#error "EquipmentVisualActor_RangedWeapon.generated.h already included, missing '#pragma once' in EquipmentVisualActor_RangedWeapon.h"
+#endif
+#define EQUIPMENTSYSTEM_EquipmentVisualActor_RangedWeapon_generated_h
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_SPARSE_DATA
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_RPC_WRAPPERS \
+	virtual FVector K2_GetTraceStart_Implementation() const; \
+ \
+	DECLARE_FUNCTION(execK2_GetTraceStart);
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+	virtual FVector K2_GetTraceStart_Implementation() const; \
+ \
+	DECLARE_FUNCTION(execK2_GetTraceStart);
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_ACCESSORS
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_CALLBACK_WRAPPERS
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_INCLASS_NO_PURE_DECLS \
+private: \
+	static void StaticRegisterNativesAEquipmentVisualActor_RangedWeapon(); \
+	friend struct Z_Construct_UClass_AEquipmentVisualActor_RangedWeapon_Statics; \
+public: \
+	DECLARE_CLASS(AEquipmentVisualActor_RangedWeapon, AEquipmentVisualActor, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/EquipmentSystem"), NO_API) \
+	DECLARE_SERIALIZER(AEquipmentVisualActor_RangedWeapon)
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_INCLASS \
+private: \
+	static void StaticRegisterNativesAEquipmentVisualActor_RangedWeapon(); \
+	friend struct Z_Construct_UClass_AEquipmentVisualActor_RangedWeapon_Statics; \
+public: \
+	DECLARE_CLASS(AEquipmentVisualActor_RangedWeapon, AEquipmentVisualActor, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/EquipmentSystem"), NO_API) \
+	DECLARE_SERIALIZER(AEquipmentVisualActor_RangedWeapon)
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_STANDARD_CONSTRUCTORS \
+	/** Standard constructor, called after all reflected properties have been initialized */ \
+	NO_API AEquipmentVisualActor_RangedWeapon(const FObjectInitializer& ObjectInitializer); \
+	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AEquipmentVisualActor_RangedWeapon) \
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, AEquipmentVisualActor_RangedWeapon); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AEquipmentVisualActor_RangedWeapon); \
+private: \
+	/** Private move- and copy-constructors, should never be used */ \
+	NO_API AEquipmentVisualActor_RangedWeapon(AEquipmentVisualActor_RangedWeapon&&); \
+	NO_API AEquipmentVisualActor_RangedWeapon(const AEquipmentVisualActor_RangedWeapon&); \
+public: \
+	NO_API virtual ~AEquipmentVisualActor_RangedWeapon();
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_ENHANCED_CONSTRUCTORS \
+private: \
+	/** Private move- and copy-constructors, should never be used */ \
+	NO_API AEquipmentVisualActor_RangedWeapon(AEquipmentVisualActor_RangedWeapon&&); \
+	NO_API AEquipmentVisualActor_RangedWeapon(const AEquipmentVisualActor_RangedWeapon&); \
+public: \
+	DECLARE_VTABLE_PTR_HELPER_CTOR(NO_API, AEquipmentVisualActor_RangedWeapon); \
+	DEFINE_VTABLE_PTR_HELPER_CTOR_CALLER(AEquipmentVisualActor_RangedWeapon); \
+	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AEquipmentVisualActor_RangedWeapon) \
+	NO_API virtual ~AEquipmentVisualActor_RangedWeapon();
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_14_PROLOG
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_GENERATED_BODY_LEGACY \
+PRAGMA_DISABLE_DEPRECATION_WARNINGS \
+public: \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_SPARSE_DATA \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_RPC_WRAPPERS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_ACCESSORS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_CALLBACK_WRAPPERS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_INCLASS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_STANDARD_CONSTRUCTORS \
+public: \
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+
+#define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_GENERATED_BODY \
+PRAGMA_DISABLE_DEPRECATION_WARNINGS \
+public: \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_SPARSE_DATA \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_ACCESSORS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_CALLBACK_WRAPPERS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_INCLASS_NO_PURE_DECLS \
+	FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h_17_ENHANCED_CONSTRUCTORS \
+private: \
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
+
+
+template<> EQUIPMENTSYSTEM_API UClass* StaticClass<class AEquipmentVisualActor_RangedWeapon>();
+
+#undef CURRENT_FILE_ID
+#define CURRENT_FILE_ID FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_VisualActors_EquipmentVisualActor_RangedWeapon_h
+
+
+PRAGMA_ENABLE_DEPRECATION_WARNINGS

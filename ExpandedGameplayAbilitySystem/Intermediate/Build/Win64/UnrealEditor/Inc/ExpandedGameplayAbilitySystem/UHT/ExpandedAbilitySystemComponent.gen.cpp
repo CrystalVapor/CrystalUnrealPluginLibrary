@@ -6,21 +6,27 @@
 
 #include "UObject/GeneratedCppIncludes.h"
 #include "ExpandedGameplayAbilitySystem/Public/ExpandedAbilitySystemComponent.h"
+#include "../../Source/Runtime/Engine/Classes/Engine/HitResult.h"
+#include "ExpandedGameplayAbilitySystem/Public/BatchedGameplayCueParameter.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayAbilitySpecHandle.h"
 #include "GameplayEffectTypes.h"
+#include "GameplayPrediction.h"
 #include "GameplayTagContainer.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeExpandedAbilitySystemComponent() {}
 // Cross Module References
+	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FHitResult();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* Z_Construct_UClass_UExpandedAbilitySystemComponent();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UClass* Z_Construct_UClass_UExpandedAbilitySystemComponent_NoRegister();
+	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FBatchedGameplayCueParameterHandle();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayAbilitySpecHandleContainer();
 	EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayAbilitySpecInputMeta();
 	GAMEPLAYABILITIES_API UClass* Z_Construct_UClass_UAbilitySystemComponent();
 	GAMEPLAYABILITIES_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayAbilitySpec();
 	GAMEPLAYABILITIES_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayAbilitySpecHandle();
 	GAMEPLAYABILITIES_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayCueParameters();
+	GAMEPLAYABILITIES_API UScriptStruct* Z_Construct_UScriptStruct_FPredictionKey();
 	GAMEPLAYTAGS_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayTag();
 	UPackage* Z_Construct_UPackage__Script_ExpandedGameplayAbilitySystem();
 // End Cross Module References
@@ -143,6 +149,25 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		}
 		return Z_Registration_Info_UScriptStruct_GameplayAbilitySpecHandleContainer.InnerSingleton;
 	}
+	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execMulticast_ReplicateBatchedGameplayCueParameters)
+	{
+		P_GET_STRUCT(FGameplayTag,Z_Param_BatchedCueTag);
+		P_GET_STRUCT(FPredictionKey,Z_Param_PredictionKey);
+		P_GET_STRUCT(FBatchedGameplayCueParameterHandle,Z_Param_BatchedCueParams);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->Multicast_ReplicateBatchedGameplayCueParameters_Implementation(Z_Param_BatchedCueTag,Z_Param_PredictionKey,Z_Param_BatchedCueParams);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execAddBatchGameplayCueParam_HitResult)
+	{
+		P_GET_STRUCT(FGameplayTag,Z_Param_BatchedCueTag);
+		P_GET_STRUCT_REF(FHitResult,Z_Param_Out_HitResult);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->AddBatchGameplayCueParam_HitResult(Z_Param_BatchedCueTag,Z_Param_Out_HitResult);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execHasMoreTagStack)
 	{
 		P_GET_STRUCT(FGameplayTag,Z_Param_Tag);
@@ -152,31 +177,30 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		*(bool*)Z_Param__Result=P_THIS->HasMoreTagStack(Z_Param_Tag,Z_Param_OtherTag);
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execRemoveGameplayCueLocal)
+	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execLocallyRemoveGameplayCueOnOwner)
 	{
 		P_GET_STRUCT(FGameplayTag,Z_Param_GameplayCueTag);
-		P_GET_STRUCT_REF(FGameplayCueParameters,Z_Param_Out_GameplayCueParameters);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->RemoveGameplayCueLocal(Z_Param_GameplayCueTag,Z_Param_Out_GameplayCueParameters);
+		P_THIS->LocallyRemoveGameplayCueOnOwner(Z_Param_GameplayCueTag);
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execAddGameplayCueLocal)
+	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execLocallyAddGameplayCueOnOwner)
 	{
 		P_GET_STRUCT(FGameplayTag,Z_Param_GameplayCueTag);
 		P_GET_STRUCT_REF(FGameplayCueParameters,Z_Param_Out_GameplayCueParameters);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->AddGameplayCueLocal(Z_Param_GameplayCueTag,Z_Param_Out_GameplayCueParameters);
+		P_THIS->LocallyAddGameplayCueOnOwner(Z_Param_GameplayCueTag,Z_Param_Out_GameplayCueParameters);
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execExecuteGameplayCueLocal)
+	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execLocallyExecuteGameplayCueOnOwner)
 	{
 		P_GET_STRUCT(FGameplayTag,Z_Param_GameplayCueTag);
 		P_GET_STRUCT_REF(FGameplayCueParameters,Z_Param_Out_GameplayCueParameters);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->ExecuteGameplayCueLocal(Z_Param_GameplayCueTag,Z_Param_Out_GameplayCueParameters);
+		P_THIS->LocallyExecuteGameplayCueOnOwner(Z_Param_GameplayCueTag,Z_Param_Out_GameplayCueParameters);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UExpandedAbilitySystemComponent::execClientAddSpecInputMapping)
@@ -191,6 +215,12 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 	{
 		FGameplayAbilitySpec AbilitySpec;
 	};
+	struct ExpandedAbilitySystemComponent_eventMulticast_ReplicateBatchedGameplayCueParameters_Parms
+	{
+		FGameplayTag BatchedCueTag;
+		FPredictionKey PredictionKey;
+		FBatchedGameplayCueParameterHandle BatchedCueParams;
+	};
 	static FName NAME_UExpandedAbilitySystemComponent_ClientAddSpecInputMapping = FName(TEXT("ClientAddSpecInputMapping"));
 	void UExpandedAbilitySystemComponent::ClientAddSpecInputMapping(FGameplayAbilitySpec const& AbilitySpec)
 	{
@@ -198,33 +228,44 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		Parms.AbilitySpec=AbilitySpec;
 		ProcessEvent(FindFunctionChecked(NAME_UExpandedAbilitySystemComponent_ClientAddSpecInputMapping),&Parms);
 	}
+	static FName NAME_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters = FName(TEXT("Multicast_ReplicateBatchedGameplayCueParameters"));
+	void UExpandedAbilitySystemComponent::Multicast_ReplicateBatchedGameplayCueParameters(FGameplayTag const& BatchedCueTag, FPredictionKey PredictionKey, FBatchedGameplayCueParameterHandle const& BatchedCueParams)
+	{
+		ExpandedAbilitySystemComponent_eventMulticast_ReplicateBatchedGameplayCueParameters_Parms Parms;
+		Parms.BatchedCueTag=BatchedCueTag;
+		Parms.PredictionKey=PredictionKey;
+		Parms.BatchedCueParams=BatchedCueParams;
+		ProcessEvent(FindFunctionChecked(NAME_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters),&Parms);
+	}
 	void UExpandedAbilitySystemComponent::StaticRegisterNativesUExpandedAbilitySystemComponent()
 	{
 		UClass* Class = UExpandedAbilitySystemComponent::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
-			{ "AddGameplayCueLocal", &UExpandedAbilitySystemComponent::execAddGameplayCueLocal },
+			{ "AddBatchGameplayCueParam_HitResult", &UExpandedAbilitySystemComponent::execAddBatchGameplayCueParam_HitResult },
 			{ "ClientAddSpecInputMapping", &UExpandedAbilitySystemComponent::execClientAddSpecInputMapping },
-			{ "ExecuteGameplayCueLocal", &UExpandedAbilitySystemComponent::execExecuteGameplayCueLocal },
 			{ "HasMoreTagStack", &UExpandedAbilitySystemComponent::execHasMoreTagStack },
-			{ "RemoveGameplayCueLocal", &UExpandedAbilitySystemComponent::execRemoveGameplayCueLocal },
+			{ "LocallyAddGameplayCueOnOwner", &UExpandedAbilitySystemComponent::execLocallyAddGameplayCueOnOwner },
+			{ "LocallyExecuteGameplayCueOnOwner", &UExpandedAbilitySystemComponent::execLocallyExecuteGameplayCueOnOwner },
+			{ "LocallyRemoveGameplayCueOnOwner", &UExpandedAbilitySystemComponent::execLocallyRemoveGameplayCueOnOwner },
+			{ "Multicast_ReplicateBatchedGameplayCueParameters", &UExpandedAbilitySystemComponent::execMulticast_ReplicateBatchedGameplayCueParameters },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
-	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics
+	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics
 	{
-		struct ExpandedAbilitySystemComponent_eventAddGameplayCueLocal_Parms
+		struct ExpandedAbilitySystemComponent_eventAddBatchGameplayCueParam_HitResult_Parms
 		{
-			FGameplayTag GameplayCueTag;
-			FGameplayCueParameters GameplayCueParameters;
+			FGameplayTag BatchedCueTag;
+			FHitResult HitResult;
 		};
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueTag_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_BatchedCueTag_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueTag;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_BatchedCueTag;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueParameters_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_HitResult_MetaData[];
 #endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueParameters;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_HitResult;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
@@ -232,36 +273,35 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_BatchedCueTag_MetaData[] = {
 		{ "NativeConst", "" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueTag = { "GameplayCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventAddGameplayCueLocal_Parms, GameplayCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData)) }; // 1225434376
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_BatchedCueTag = { "BatchedCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventAddBatchGameplayCueParam_HitResult_Parms, BatchedCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_BatchedCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_BatchedCueTag_MetaData)) }; // 1225434376
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_HitResult_MetaData[] = {
 		{ "NativeConst", "" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueParameters = { "GameplayCueParameters", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventAddGameplayCueLocal_Parms, GameplayCueParameters), Z_Construct_UScriptStruct_FGameplayCueParameters, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData)) }; // 3089669807
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueTag,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::NewProp_GameplayCueParameters,
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_HitResult = { "HitResult", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventAddBatchGameplayCueParam_HitResult_Parms, HitResult), Z_Construct_UScriptStruct_FHitResult, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_HitResult_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_HitResult_MetaData)) }; // 1287526515
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_BatchedCueTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::NewProp_HitResult,
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::Function_MetaDataParams[] = {
-		{ "AutoCreateRefTerm", "GameplayCueParameters" },
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::Function_MetaDataParams[] = {
 		{ "Category", "GameplayCue" },
-		{ "GameplayTagFilter", "GameplayCue" },
+		{ "DisplayName", "Add Hit Result To Batched Gameplay Cue Parameter" },
 		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "AddGameplayCueLocal", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::ExpandedAbilitySystemComponent_eventAddGameplayCueLocal_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal()
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "AddBatchGameplayCueParam_HitResult", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::ExpandedAbilitySystemComponent_eventAddBatchGameplayCueParam_HitResult_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal_Statics::FuncParams);
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -298,61 +338,6 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		if (!ReturnFunction)
 		{
 			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_ClientAddSpecInputMapping_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics
-	{
-		struct ExpandedAbilitySystemComponent_eventExecuteGameplayCueLocal_Parms
-		{
-			FGameplayTag GameplayCueTag;
-			FGameplayCueParameters GameplayCueParameters;
-		};
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueTag_MetaData[];
-#endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueTag;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueParameters_MetaData[];
-#endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueParameters;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData[] = {
-		{ "NativeConst", "" },
-	};
-#endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueTag = { "GameplayCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventExecuteGameplayCueLocal_Parms, GameplayCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData)) }; // 1225434376
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData[] = {
-		{ "NativeConst", "" },
-	};
-#endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueParameters = { "GameplayCueParameters", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventExecuteGameplayCueLocal_Parms, GameplayCueParameters), Z_Construct_UScriptStruct_FGameplayCueParameters, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData)) }; // 3089669807
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueTag,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::NewProp_GameplayCueParameters,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::Function_MetaDataParams[] = {
-		{ "AutoCreateRefTerm", "GameplayCueParameters" },
-		{ "Category", "GameplayCue" },
-		{ "GameplayTagFilter", "GameplayCue" },
-		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "ExecuteGameplayCueLocal", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::ExpandedAbilitySystemComponent_eventExecuteGameplayCueLocal_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -420,9 +405,9 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		}
 		return ReturnFunction;
 	}
-	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics
+	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics
 	{
-		struct ExpandedAbilitySystemComponent_eventRemoveGameplayCueLocal_Parms
+		struct ExpandedAbilitySystemComponent_eventLocallyAddGameplayCueOnOwner_Parms
 		{
 			FGameplayTag GameplayCueTag;
 			FGameplayCueParameters GameplayCueParameters;
@@ -442,36 +427,184 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData[] = {
 		{ "NativeConst", "" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueTag = { "GameplayCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventRemoveGameplayCueLocal_Parms, GameplayCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueTag_MetaData)) }; // 1225434376
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueTag = { "GameplayCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventLocallyAddGameplayCueOnOwner_Parms, GameplayCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData)) }; // 1225434376
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters_MetaData[] = {
 		{ "NativeConst", "" },
 	};
 #endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueParameters = { "GameplayCueParameters", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventRemoveGameplayCueLocal_Parms, GameplayCueParameters), Z_Construct_UScriptStruct_FGameplayCueParameters, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueParameters_MetaData)) }; // 3089669807
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueTag,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::NewProp_GameplayCueParameters,
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters = { "GameplayCueParameters", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventLocallyAddGameplayCueOnOwner_Parms, GameplayCueParameters), Z_Construct_UScriptStruct_FGameplayCueParameters, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters_MetaData)) }; // 3089669807
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters,
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::Function_MetaDataParams[] = {
-		{ "AutoCreateRefTerm", "GameplayCueParameters" },
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::Function_MetaDataParams[] = {
 		{ "Category", "GameplayCue" },
+		{ "DisplayName", "Locally Add Gameplay Cue On Owner" },
 		{ "GameplayTagFilter", "GameplayCue" },
 		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "RemoveGameplayCueLocal", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::ExpandedAbilitySystemComponent_eventRemoveGameplayCueLocal_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal()
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "LocallyAddGameplayCueOnOwner", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::ExpandedAbilitySystemComponent_eventLocallyAddGameplayCueOnOwner_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal_Statics::FuncParams);
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics
+	{
+		struct ExpandedAbilitySystemComponent_eventLocallyExecuteGameplayCueOnOwner_Parms
+		{
+			FGameplayTag GameplayCueTag;
+			FGameplayCueParameters GameplayCueParameters;
+		};
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueTag_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueTag;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueParameters_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueParameters;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueTag = { "GameplayCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventLocallyExecuteGameplayCueOnOwner_Parms, GameplayCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData)) }; // 1225434376
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters = { "GameplayCueParameters", nullptr, (EPropertyFlags)0x0010008008000182, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventLocallyExecuteGameplayCueOnOwner_Parms, GameplayCueParameters), Z_Construct_UScriptStruct_FGameplayCueParameters, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters_MetaData)) }; // 3089669807
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::NewProp_GameplayCueParameters,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::Function_MetaDataParams[] = {
+		{ "Category", "GameplayCue" },
+		{ "DisplayName", "Locally Execute Gameplay Cue On Owner" },
+		{ "GameplayTagFilter", "GameplayCue" },
+		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "LocallyExecuteGameplayCueOnOwner", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::ExpandedAbilitySystemComponent_eventLocallyExecuteGameplayCueOnOwner_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04420401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics
+	{
+		struct ExpandedAbilitySystemComponent_eventLocallyRemoveGameplayCueOnOwner_Parms
+		{
+			FGameplayTag GameplayCueTag;
+		};
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameplayCueTag_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_GameplayCueTag;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::NewProp_GameplayCueTag = { "GameplayCueTag", nullptr, (EPropertyFlags)0x0010000000000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventLocallyRemoveGameplayCueOnOwner_Parms, GameplayCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::NewProp_GameplayCueTag_MetaData)) }; // 1225434376
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::NewProp_GameplayCueTag,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::Function_MetaDataParams[] = {
+		{ "Category", "GameplayCue" },
+		{ "DisplayName", "Locally Remove Gameplay Cue On Owner" },
+		{ "GameplayTagFilter", "GameplayCue" },
+		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "LocallyRemoveGameplayCueOnOwner", nullptr, nullptr, sizeof(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::ExpandedAbilitySystemComponent_eventLocallyRemoveGameplayCueOnOwner_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_BatchedCueTag_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_BatchedCueTag;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_PredictionKey;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_BatchedCueParams_MetaData[];
+#endif
+		static const UECodeGen_Private::FStructPropertyParams NewProp_BatchedCueParams;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueTag_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueTag = { "BatchedCueTag", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventMulticast_ReplicateBatchedGameplayCueParameters_Parms, BatchedCueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueTag_MetaData)) }; // 1225434376
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_PredictionKey = { "PredictionKey", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventMulticast_ReplicateBatchedGameplayCueParameters_Parms, PredictionKey), Z_Construct_UScriptStruct_FPredictionKey, METADATA_PARAMS(nullptr, 0) }; // 2453680625
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueParams_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueParams = { "BatchedCueParams", nullptr, (EPropertyFlags)0x0010000008000082, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(ExpandedAbilitySystemComponent_eventMulticast_ReplicateBatchedGameplayCueParameters_Parms, BatchedCueParams), Z_Construct_UScriptStruct_FBatchedGameplayCueParameterHandle, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueParams_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueParams_MetaData)) }; // 2226460467
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueTag,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_PredictionKey,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::NewProp_BatchedCueParams,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UExpandedAbilitySystemComponent, nullptr, "Multicast_ReplicateBatchedGameplayCueParameters", nullptr, nullptr, sizeof(ExpandedAbilitySystemComponent_eventMulticast_ReplicateBatchedGameplayCueParameters_Parms), Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00024C40, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -493,6 +626,12 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_InputTagMapping_MetaData[];
 #endif
 		static const UECodeGen_Private::FMapPropertyParams NewProp_InputTagMapping;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_BatchedGameplayCueParams_ValueProp;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_BatchedGameplayCueParams_Key_KeyProp;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_BatchedGameplayCueParams_MetaData[];
+#endif
+		static const UECodeGen_Private::FMapPropertyParams NewProp_BatchedGameplayCueParams;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -502,11 +641,13 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 		(UObject* (*)())Z_Construct_UPackage__Script_ExpandedGameplayAbilitySystem,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddGameplayCueLocal, "AddGameplayCueLocal" }, // 3332519693
+		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_AddBatchGameplayCueParam_HitResult, "AddBatchGameplayCueParam_HitResult" }, // 3158715929
 		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_ClientAddSpecInputMapping, "ClientAddSpecInputMapping" }, // 297442657
-		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_ExecuteGameplayCueLocal, "ExecuteGameplayCueLocal" }, // 2667642388
 		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_HasMoreTagStack, "HasMoreTagStack" }, // 3327959912
-		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_RemoveGameplayCueLocal, "RemoveGameplayCueLocal" }, // 1628608707
+		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyAddGameplayCueOnOwner, "LocallyAddGameplayCueOnOwner" }, // 3001216061
+		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyExecuteGameplayCueOnOwner, "LocallyExecuteGameplayCueOnOwner" }, // 3727291306
+		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_LocallyRemoveGameplayCueOnOwner, "LocallyRemoveGameplayCueOnOwner" }, // 2771963999
+		{ &Z_Construct_UFunction_UExpandedAbilitySystemComponent_Multicast_ReplicateBatchedGameplayCueParameters, "Multicast_ReplicateBatchedGameplayCueParameters" }, // 658530934
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::Class_MetaDataParams[] = {
@@ -527,10 +668,23 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 	};
 #endif
 	const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_InputTagMapping = { "InputTagMapping", nullptr, (EPropertyFlags)0x0020080000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UExpandedAbilitySystemComponent, InputTagMapping), EMapPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_InputTagMapping_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_InputTagMapping_MetaData)) }; // 1225434376 3665543078
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_ValueProp = { "BatchedGameplayCueParams", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 1, Z_Construct_UScriptStruct_FBatchedGameplayCueParameterHandle, METADATA_PARAMS(nullptr, 0) }; // 2226460467
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_Key_KeyProp = { "BatchedGameplayCueParams_Key", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(nullptr, 0) }; // 1225434376
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_MetaData[] = {
+		{ "Comment", "// ~InputTag internals\n" },
+		{ "ModuleRelativePath", "Public/ExpandedAbilitySystemComponent.h" },
+		{ "ToolTip", "~InputTag internals" },
+	};
+#endif
+	const UECodeGen_Private::FMapPropertyParams Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams = { "BatchedGameplayCueParams", nullptr, (EPropertyFlags)0x0020080000000000, UECodeGen_Private::EPropertyGenFlags::Map, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UExpandedAbilitySystemComponent, BatchedGameplayCueParams), EMapPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_MetaData)) }; // 1225434376 2226460467
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_InputTagMapping_ValueProp,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_InputTagMapping_Key_KeyProp,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_InputTagMapping,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_ValueProp,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams_Key_KeyProp,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::NewProp_BatchedGameplayCueParams,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UExpandedAbilitySystemComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UExpandedAbilitySystemComponent>::IsAbstract,
@@ -565,20 +719,20 @@ template<> EXPANDEDGAMEPLAYABILITYSYSTEM_API UScriptStruct* StaticStruct<FGamepl
 	UExpandedAbilitySystemComponent::UExpandedAbilitySystemComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UExpandedAbilitySystemComponent);
 	UExpandedAbilitySystemComponent::~UExpandedAbilitySystemComponent() {}
-	struct Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics
+	struct Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics
 	{
 		static const FStructRegisterCompiledInInfo ScriptStructInfo[];
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ScriptStructInfo[] = {
+	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ScriptStructInfo[] = {
 		{ FGameplayAbilitySpecInputMeta::StaticStruct, Z_Construct_UScriptStruct_FGameplayAbilitySpecInputMeta_Statics::NewStructOps, TEXT("GameplayAbilitySpecInputMeta"), &Z_Registration_Info_UScriptStruct_GameplayAbilitySpecInputMeta, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FGameplayAbilitySpecInputMeta), 3080835700U) },
 		{ FGameplayAbilitySpecHandleContainer::StaticStruct, Z_Construct_UScriptStruct_FGameplayAbilitySpecHandleContainer_Statics::NewStructOps, TEXT("GameplayAbilitySpecHandleContainer"), &Z_Registration_Info_UScriptStruct_GameplayAbilitySpecHandleContainer, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FGameplayAbilitySpecHandleContainer), 3665543078U) },
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UExpandedAbilitySystemComponent, UExpandedAbilitySystemComponent::StaticClass, TEXT("UExpandedAbilitySystemComponent"), &Z_Registration_Info_UClass_UExpandedAbilitySystemComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UExpandedAbilitySystemComponent), 2992302987U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UExpandedAbilitySystemComponent, UExpandedAbilitySystemComponent::StaticClass, TEXT("UExpandedAbilitySystemComponent"), &Z_Registration_Info_UClass_UExpandedAbilitySystemComponent, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UExpandedAbilitySystemComponent), 236456805U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_4198217075(TEXT("/Script/ExpandedGameplayAbilitySystem"),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ClassInfo),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ScriptStructInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_98220714(TEXT("/Script/ExpandedGameplayAbilitySystem"),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ClassInfo),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_ExpandedGameplayAbilitySystem_Source_ExpandedGameplayAbilitySystem_Public_ExpandedAbilitySystemComponent_h_Statics::ScriptStructInfo),
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

@@ -2,6 +2,8 @@
 
 
 #include "EquipmentManagerComponent.h"
+#include "ExpandedAbilityGrantSource.h"
+#include "Misc/DataValidation.h"
 
 #include "Net/UnrealNetwork.h"
 
@@ -11,7 +13,10 @@ void FEquipmentInstancesContainer::PreReplicatedRemove(const TArrayView<int32>& 
 	for(auto& Index:RemovedIndices)
 	{
 		FEquipmentInstanceEntry& Entry = Items[Index];
-		Manager->OnInstanceRemoved.Broadcast(Entry.Id);
+		if(Manager)
+		{
+			Manager->OnInstanceRemoved.Broadcast(Entry.Id);
+		}
 	}
 }
 
@@ -20,7 +25,10 @@ void FEquipmentInstancesContainer::PostReplicatedAdd(const TArrayView<int32>& Ad
 	for(auto& Index:AddedIndices)
 	{
 		FEquipmentInstanceEntry& Entry = Items[Index];
-		Manager->OnInstanceCreated.Broadcast(Entry.Id);
+		if(Manager)
+		{
+			Manager->OnInstanceCreated.Broadcast(Entry.Id);
+		}
 	}
 }
 
@@ -81,10 +89,25 @@ FEquipmentInstanceEntry* FEquipmentInstancesContainer::GetEntry(int32 Id)
 	return nullptr;
 }
 
+EDataValidationResult UEquipmentManagerComponent::IsDataValid(FDataValidationContext& Context)
+{
+	if(!GetOwner()->IsA(APawn::StaticClass()))
+	{
+		Context.AddError(FText::FromString(TEXT("Equipment Manager expects be on a pawn")));
+		return EDataValidationResult::Invalid;
+	}
+	return Super::IsDataValid(Context);
+}
+
 UEquipmentManagerComponent::UEquipmentManagerComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
-	SetIsReplicated(true);
+	SetIsReplicatedByDefault(true);
+}
+
+UEquipmentManagerComponent* UEquipmentManagerComponent::FindEquipmentManagerComponent(AActor* Actor)
+{
+	return Actor ? Actor->FindComponentByClass<UEquipmentManagerComponent>() : nullptr;
 }
 
 void UEquipmentManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -374,6 +397,15 @@ void UEquipmentManagerComponent::InternalUnequipEquipment(int32 Id)
 		{
 			EquipmentInstanceEntry->RemoteEquipped = false;
 		}
+	}
+}
+
+void UEquipmentManagerComponent::HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag,
+	EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters)
+{
+	for(auto& InstanceEntry:Instances.Items)
+	{
+		InstanceEntry.Instance->HandleGameplayCue(InstanceEntry.Instance, GameplayCueTag, EventType, Parameters);
 	}
 }
 

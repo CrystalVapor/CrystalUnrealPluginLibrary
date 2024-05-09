@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-EquipmentSystem-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\DebugGame\UnrealEd\SharedPCH.UnrealEd.NonOptimized.ShadowErrors.InclOrderUnreal5_0.h.obj"
+"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\EquipmentSystem\Module.EquipmentSystem.cpp.obj"
+"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\EquipmentSystem\Default.rc2.res"
+/OUT:"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\EquipmentSystem\UnrealEditor-EquipmentSystem-Win64-DebugGame.lib"

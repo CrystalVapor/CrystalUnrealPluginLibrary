@@ -40,6 +40,7 @@
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Engine\UnrealEditor-Engine.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Slate\UnrealEditor-Slate.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\SlateCore\UnrealEditor-SlateCore.lib"
+"..\Intermediate\Build\Win64\x64\UnrealEditor\Development\EditorInteractiveToolsFramework\UnrealEditor-EditorInteractiveToolsFramework.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\Core\UnrealEditor-Core.lib"
 "..\Plugins\Runtime\GameplayAbilities\Intermediate\Build\Win64\x64\UnrealEditor\Development\GameplayAbilities\UnrealEditor-GameplayAbilities.lib"
 "..\Intermediate\Build\Win64\x64\UnrealEditor\Development\GameplayTags\UnrealEditor-GameplayTags.lib"

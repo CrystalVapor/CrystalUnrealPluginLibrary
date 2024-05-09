@@ -83,7 +83,15 @@ public:
 
 	bool HasProperty(FGameplayTag PropertyTag) const;
 
-	void RegisterProperty(FGameplayTag PropertyTag, float DefaultValue, bool bSyncOnEndPrediction = false);
+	/**
+	 * Register a replicated float property to manager
+	 * @param PropertyTag the tag of property
+	 * @param DefaultValue the default value of property
+	 * @param bSyncRemoteValueWhenEndPrediction if true, when we end the local prediction, we will send a sync request to server to make sure the property is fully synced.
+	 *                                      if false, the most recent value will be used when we end the local prediction
+	 *                                      for example you should set this to true for ammo to avoid the "ammo rollback" issue
+	 */
+	void RegisterProperty(FGameplayTag PropertyTag, float DefaultValue, bool bSyncRemoteValueWhenEndPrediction = false);
 
 	FOnEquipmentReplicatedPropertyChangedDelegate& GetOnPropertyChangedDelegate(FGameplayTag PropertyTag);
 

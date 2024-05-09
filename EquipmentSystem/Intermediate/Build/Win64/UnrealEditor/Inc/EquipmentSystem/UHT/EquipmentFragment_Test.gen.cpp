@@ -15,7 +15,6 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentFragment_Test() {}
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentFragment();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentFragment_Test();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentFragment_Test_NoRegister();
-	GAMEPLAYTAGS_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayTag();
 	GAMEPLAYTAGS_API UScriptStruct* Z_Construct_UScriptStruct_FGameplayTagContainer();
 	UPackage* Z_Construct_UPackage__Script_EquipmentSystem();
 // End Cross Module References
@@ -38,25 +37,13 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentFragment_Test() {}
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_TestValue;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_TestValueTag_MetaData[];
-#endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_TestValueTag;
-#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_TestTags_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_TestTags;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_TestTagsTag_MetaData[];
-#endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_TestTagsTag;
-#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_TestCurve_MetaData[];
 #endif
 		static const UECodeGen_Private::FStructPropertyParams NewProp_TestCurve;
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_TestCurveTag_MetaData[];
-#endif
-		static const UECodeGen_Private::FStructPropertyParams NewProp_TestCurveTag;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UECodeGen_Private::FClassParams ClassParams;
@@ -80,15 +67,6 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentFragment_Test() {}
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValue = { "TestValue", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentFragment_Test, TestValue), METADATA_PARAMS(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValue_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValue_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValueTag_MetaData[] = {
-		{ "Categories", "Equipment.Property" },
-		{ "Category", "PropertyTags" },
-		{ "DisplayName", "Test Value" },
-		{ "ModuleRelativePath", "Public/Fragments/EquipmentFragment_Test.h" },
-	};
-#endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValueTag = { "TestValueTag", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentFragment_Test, TestValueTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValueTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValueTag_MetaData)) }; // 1225434376
-#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTags_MetaData[] = {
 		{ "Category", "EquipmentFragment_Test" },
 		{ "ModuleRelativePath", "Public/Fragments/EquipmentFragment_Test.h" },
@@ -96,37 +74,16 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentFragment_Test() {}
 #endif
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTags = { "TestTags", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentFragment_Test, TestTags), Z_Construct_UScriptStruct_FGameplayTagContainer, METADATA_PARAMS(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTags_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTags_MetaData)) }; // 3057219007
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTagsTag_MetaData[] = {
-		{ "Categories", "Equipment.Property" },
-		{ "Category", "PropertyTags" },
-		{ "DisplayName", "Test Tags" },
-		{ "ModuleRelativePath", "Public/Fragments/EquipmentFragment_Test.h" },
-	};
-#endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTagsTag = { "TestTagsTag", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentFragment_Test, TestTagsTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTagsTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTagsTag_MetaData)) }; // 1225434376
-#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurve_MetaData[] = {
 		{ "Category", "EquipmentFragment_Test" },
 		{ "ModuleRelativePath", "Public/Fragments/EquipmentFragment_Test.h" },
 	};
 #endif
 	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurve = { "TestCurve", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentFragment_Test, TestCurve), Z_Construct_UScriptStruct_FRuntimeFloatCurve, METADATA_PARAMS(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurve_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurve_MetaData)) }; // 1477693291
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurveTag_MetaData[] = {
-		{ "Categories", "Equipment.Property" },
-		{ "Category", "PropertyTags" },
-		{ "DisplayName", "Test Curve" },
-		{ "ModuleRelativePath", "Public/Fragments/EquipmentFragment_Test.h" },
-	};
-#endif
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurveTag = { "TestCurveTag", nullptr, (EPropertyFlags)0x0020080000000001, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentFragment_Test, TestCurveTag), Z_Construct_UScriptStruct_FGameplayTag, METADATA_PARAMS(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurveTag_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurveTag_MetaData)) }; // 1225434376
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UEquipmentFragment_Test_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValue,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestValueTag,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTags,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestTagsTag,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurve,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentFragment_Test_Statics::NewProp_TestCurveTag,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UEquipmentFragment_Test_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UEquipmentFragment_Test>::IsAbstract,
@@ -161,15 +118,15 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentFragment_Test() {}
 	UEquipmentFragment_Test::UEquipmentFragment_Test(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UEquipmentFragment_Test);
 	UEquipmentFragment_Test::~UEquipmentFragment_Test() {}
-	struct Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics
+	struct Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UEquipmentFragment_Test, UEquipmentFragment_Test::StaticClass, TEXT("UEquipmentFragment_Test"), &Z_Registration_Info_UClass_UEquipmentFragment_Test, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UEquipmentFragment_Test), 2962933078U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UEquipmentFragment_Test, UEquipmentFragment_Test::StaticClass, TEXT("UEquipmentFragment_Test"), &Z_Registration_Info_UClass_UEquipmentFragment_Test, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UEquipmentFragment_Test), 193348235U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_542390474(TEXT("/Script/EquipmentSystem"),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_1839751366(TEXT("/Script/EquipmentSystem"),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_Fragments_EquipmentFragment_Test_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

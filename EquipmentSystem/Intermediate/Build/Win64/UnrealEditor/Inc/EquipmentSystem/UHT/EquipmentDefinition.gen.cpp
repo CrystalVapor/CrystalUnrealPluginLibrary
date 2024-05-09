@@ -12,6 +12,7 @@ void EmptyLinkFunctionForGeneratedCodeEquipmentDefinition() {}
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UObject_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UDataAsset();
+	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_AEquipmentVisualActor_NoRegister();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentDefinition();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentDefinition_NoRegister();
 	EQUIPMENTSYSTEM_API UClass* Z_Construct_UClass_UEquipmentFeature_NoRegister();
@@ -43,11 +44,16 @@ template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<FEquipmentFeatureData
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_FragmentClasses_MetaData[];
 #endif
 		static const UECodeGen_Private::FArrayPropertyParams NewProp_FragmentClasses;
-		static const UECodeGen_Private::FObjectPtrPropertyParams NewProp_AbilitySets_Inner;
+		static const UECodeGen_Private::FClassPropertyParams NewProp_VisualActorClasses_Inner;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_AbilitySets_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_VisualActorClasses_MetaData[];
 #endif
-		static const UECodeGen_Private::FArrayPropertyParams NewProp_AbilitySets;
+		static const UECodeGen_Private::FArrayPropertyParams NewProp_VisualActorClasses;
+		static const UECodeGen_Private::FObjectPtrPropertyParams NewProp_AbilityGrantSources_Inner;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_AbilityGrantSources_MetaData[];
+#endif
+		static const UECodeGen_Private::FArrayPropertyParams NewProp_AbilityGrantSources;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const UECodeGen_Private::FStructParams ReturnStructParams;
 	};
@@ -67,18 +73,27 @@ template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<FEquipmentFeatureData
 	};
 #endif
 	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_FragmentClasses = { "FragmentClasses", nullptr, (EPropertyFlags)0x0014000000000000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FEquipmentFeatureData, FragmentClasses), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_FragmentClasses_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_FragmentClasses_MetaData)) };
-	const UECodeGen_Private::FObjectPtrPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets_Inner = { "AbilitySets", nullptr, (EPropertyFlags)0x0004000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FClassPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses_Inner = { "VisualActorClasses", nullptr, (EPropertyFlags)0x0004000000000000, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UClass_UClass, Z_Construct_UClass_AEquipmentVisualActor_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses_MetaData[] = {
 		{ "ModuleRelativePath", "Public/EquipmentDefinition.h" },
 	};
 #endif
-	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets = { "AbilitySets", nullptr, (EPropertyFlags)0x0014000000000000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FEquipmentFeatureData, AbilitySets), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets_MetaData)) };
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses = { "VisualActorClasses", nullptr, (EPropertyFlags)0x0014000000000000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FEquipmentFeatureData, VisualActorClasses), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses_MetaData)) };
+	const UECodeGen_Private::FObjectPtrPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources_Inner = { "AbilityGrantSources", nullptr, (EPropertyFlags)0x0004000000000000, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, 0, Z_Construct_UClass_UObject_NoRegister, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources_MetaData[] = {
+		{ "ModuleRelativePath", "Public/EquipmentDefinition.h" },
+	};
+#endif
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources = { "AbilityGrantSources", nullptr, (EPropertyFlags)0x0014000000000000, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(FEquipmentFeatureData, AbilityGrantSources), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources_MetaData, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_FragmentClasses_Inner,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_FragmentClasses,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets_Inner,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilitySets,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses_Inner,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_VisualActorClasses,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources_Inner,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewProp_AbilityGrantSources,
 	};
 	const UECodeGen_Private::FStructParams Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::ReturnStructParams = {
 		(UObject* (*)())Z_Construct_UPackage__Script_EquipmentSystem,
@@ -148,7 +163,7 @@ template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<FEquipmentFeatureData
 		{ "ModuleRelativePath", "Public/EquipmentDefinition.h" },
 	};
 #endif
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName = { "EquipmentName", nullptr, (EPropertyFlags)0x0010000000000015, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentDefinition, EquipmentName), METADATA_PARAMS(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName_MetaData)) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName = { "EquipmentName", nullptr, (EPropertyFlags)0x0020080000000015, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentDefinition, EquipmentName), METADATA_PARAMS(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features_Inner_MetaData[] = {
 		{ "Category", "Features" },
@@ -164,7 +179,7 @@ template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<FEquipmentFeatureData
 		{ "ModuleRelativePath", "Public/EquipmentDefinition.h" },
 	};
 #endif
-	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features = { "Features", nullptr, (EPropertyFlags)0x001400800000001d, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentDefinition, Features), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features_MetaData)) };
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features = { "Features", nullptr, (EPropertyFlags)0x002408800000001d, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(UEquipmentDefinition, Features), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UEquipmentDefinition_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_EquipmentName,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UEquipmentDefinition_Statics::NewProp_Features_Inner,
@@ -203,19 +218,19 @@ template<> EQUIPMENTSYSTEM_API UScriptStruct* StaticStruct<FEquipmentFeatureData
 	UEquipmentDefinition::UEquipmentDefinition(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UEquipmentDefinition);
 	UEquipmentDefinition::~UEquipmentDefinition() {}
-	struct Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics
+	struct Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics
 	{
 		static const FStructRegisterCompiledInInfo ScriptStructInfo[];
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ScriptStructInfo[] = {
-		{ FEquipmentFeatureData::StaticStruct, Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewStructOps, TEXT("EquipmentFeatureData"), &Z_Registration_Info_UScriptStruct_EquipmentFeatureData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FEquipmentFeatureData), 2957521797U) },
+	const FStructRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ScriptStructInfo[] = {
+		{ FEquipmentFeatureData::StaticStruct, Z_Construct_UScriptStruct_FEquipmentFeatureData_Statics::NewStructOps, TEXT("EquipmentFeatureData"), &Z_Registration_Info_UScriptStruct_EquipmentFeatureData, CONSTRUCT_RELOAD_VERSION_INFO(FStructReloadVersionInfo, sizeof(FEquipmentFeatureData), 2408444804U) },
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UEquipmentDefinition, UEquipmentDefinition::StaticClass, TEXT("UEquipmentDefinition"), &Z_Registration_Info_UClass_UEquipmentDefinition, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UEquipmentDefinition), 2264294420U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UEquipmentDefinition, UEquipmentDefinition::StaticClass, TEXT("UEquipmentDefinition"), &Z_Registration_Info_UClass_UEquipmentDefinition, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UEquipmentDefinition), 2769560964U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_4150665352(TEXT("/Script/EquipmentSystem"),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ClassInfo),
-		Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ScriptStructInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_2704187071(TEXT("/Script/EquipmentSystem"),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ClassInfo),
+		Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ScriptStructInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Aether_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentDefinition_h_Statics::ScriptStructInfo),
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

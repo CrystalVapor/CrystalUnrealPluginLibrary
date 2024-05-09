@@ -132,7 +132,7 @@ bool UEquipmentQuickBarComponent::CanActivateEquipment(int32 Id)
 	FEquipmentQuickBarInfo* EquipmentQuickBarInfo = GetEquipmentInfo(Id);
 	if(EquipmentQuickBarInfo)
 	{
-		return EquipmentQuickBarInfo->CanActivate.Execute(this);
+		return EquipmentQuickBarInfo->CanActivate.Execute(Id, this);
 	}
 	return false;
 }
@@ -142,7 +142,7 @@ bool UEquipmentQuickBarComponent::CanDeactivateEquipment(int32 Id)
 	FEquipmentQuickBarInfo* EquipmentQuickBarInfo = GetEquipmentInfo(Id);
 	if(EquipmentQuickBarInfo)
 	{
-		return EquipmentQuickBarInfo->CanDeactivate.Execute(this);
+		return EquipmentQuickBarInfo->CanDeactivate.Execute(Id, this);
 	}
 	return false;
 }
@@ -203,6 +203,11 @@ FGameplayTagContainer UEquipmentQuickBarComponent::GetActivationGroupsForEquipme
 		return EquipmentQuickBarInfo->ActivationGroups;
 	}
 	return FGameplayTagContainer();
+}
+
+UEquipmentManagerComponent* UEquipmentQuickBarComponent::GetEquipmentManagerComponent()
+{
+	return EquipmentManagerComponent;
 }
 
 FEquipmentQuickBarInfo* UEquipmentQuickBarComponent::GetEquipmentInfo(int32 Id)

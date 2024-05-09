@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-EquipmentSystemEditor.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\unrealProject\Aether\Intermediate\Build\Win64\x64\AetherEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.InclOrderUnreal5_1.h.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystemEditor\EquipmentSystemEditor.cpp.obj"
+"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystemEditor\Default.rc2.res"
+/OUT:"D:\unrealProject\Aether\Plugins\CrystalPluginLibrary\EquipmentSystem\Intermediate\Build\Win64\x64\UnrealEditor\Development\EquipmentSystemEditor\UnrealEditor-EquipmentSystemEditor.lib"

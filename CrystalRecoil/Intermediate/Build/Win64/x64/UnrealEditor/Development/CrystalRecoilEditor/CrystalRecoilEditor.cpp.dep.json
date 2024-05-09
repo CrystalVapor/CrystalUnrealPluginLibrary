@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\unrealproject\\aether\\plugins\\crystalpluginlibrary\\crystalrecoil\\source\\crystalrecoileditor\\private\\crystalrecoileditor.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\unrealproject\\aether\\intermediate\\build\\win64\\x64\\aethereditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_1.h.pch",
+        "Includes": [
+            "d:\\unrealproject\\aether\\plugins\\crystalpluginlibrary\\crystalrecoil\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\crystalrecoileditor\\definitions.crystalrecoileditor.h",
+            "d:\\unrealproject\\aether\\plugins\\crystalpluginlibrary\\crystalrecoil\\source\\crystalrecoileditor\\public\\crystalrecoileditor.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -1,0 +1,8 @@
+{
+	"BuildId": "25360045",
+	"Modules": 
+	{
+		"CrystalRecoil": "UnrealEditor-CrystalRecoil-Win64-DebugGame.dll",
+		"CrystalRecoilEditor": "UnrealEditor-CrystalRecoilEditor-Win64-DebugGame.dll"
+	}
+}

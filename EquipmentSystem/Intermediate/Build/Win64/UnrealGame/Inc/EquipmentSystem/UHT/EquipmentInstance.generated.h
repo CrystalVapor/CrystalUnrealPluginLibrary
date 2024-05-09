@@ -9,6 +9,10 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UEquipmentFragment;
+struct FGameplayTag;
+struct FGameplayTagContainer;
+struct FRuntimeFloatCurve;
 #ifdef EQUIPMENTSYSTEM_EquipmentInstance_generated_h
 #error "EquipmentInstance.generated.h already included, missing '#pragma once' in EquipmentInstance.h"
 #endif
@@ -18,13 +22,21 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_35_RPC_WRAPPERS \
 	virtual void UninitializeInstance_Implementation(); \
  \
-	DECLARE_FUNCTION(execUninitializeInstance);
+	DECLARE_FUNCTION(execUninitializeInstance); \
+	DECLARE_FUNCTION(execGetCurveProperty); \
+	DECLARE_FUNCTION(execGetTagContainerProperty); \
+	DECLARE_FUNCTION(execGetFloatProperty); \
+	DECLARE_FUNCTION(execGetFragment);
 
 
 #define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_35_RPC_WRAPPERS_NO_PURE_DECLS \
 	virtual void UninitializeInstance_Implementation(); \
  \
-	DECLARE_FUNCTION(execUninitializeInstance);
+	DECLARE_FUNCTION(execUninitializeInstance); \
+	DECLARE_FUNCTION(execGetCurveProperty); \
+	DECLARE_FUNCTION(execGetTagContainerProperty); \
+	DECLARE_FUNCTION(execGetFloatProperty); \
+	DECLARE_FUNCTION(execGetFragment);
 
 
 #define FID_PluginProject_Plugins_CrystalPluginLibrary_EquipmentSystem_Source_EquipmentSystem_Public_EquipmentInstance_h_35_ACCESSORS

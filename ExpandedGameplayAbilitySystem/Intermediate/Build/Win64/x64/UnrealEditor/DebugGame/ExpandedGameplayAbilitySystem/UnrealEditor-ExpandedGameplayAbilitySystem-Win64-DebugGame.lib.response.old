@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-ExpandedGameplayAbilitySystem-Win64-DebugGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\unrealProject\PluginProject\Intermediate\Build\Win64\x64\PluginProjectEditor\DebugGame\Engine\SharedPCH.Engine.NonOptimized.ShadowErrors.InclOrderUnreal5_0.h.obj"
+"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\ExpandedGameplayAbilitySystem\Module.ExpandedGameplayAbilitySystem.cpp.obj"
+"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\ExpandedGameplayAbilitySystem\Default.rc2.res"
+/OUT:"D:\unrealProject\PluginProject\Plugins\CrystalPluginLibrary\ExpandedGameplayAbilitySystem\Intermediate\Build\Win64\x64\UnrealEditor\DebugGame\ExpandedGameplayAbilitySystem\UnrealEditor-ExpandedGameplayAbilitySystem-Win64-DebugGame.lib"
