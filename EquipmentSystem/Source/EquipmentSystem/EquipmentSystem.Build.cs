@@ -45,7 +45,6 @@ public class EquipmentSystem : ModuleRules
 				"GameplayAbilities",
 				"GameplayTasks",
 				"GameplayTags",
-				"GameplayCameras"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

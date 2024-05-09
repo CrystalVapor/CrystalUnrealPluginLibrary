@@ -40,8 +40,4 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UCRSpreadRecoilComponent* RecoilComponent;
-	
-	int ContinuousRecoilShakeCount = 0;
-
-	float CurrentRecoilCameraShakeStrength = 1.f;
 };
