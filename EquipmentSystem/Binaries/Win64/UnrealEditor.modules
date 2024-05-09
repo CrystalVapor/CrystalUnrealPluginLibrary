@@ -1,8 +1,0 @@
-{
-	"BuildId": "25360045",
-	"Modules": 
-	{
-		"EquipmentSystem": "UnrealEditor-EquipmentSystem.dll",
-		"EquipmentSystemEditor": "UnrealEditor-EquipmentSystemEditor.dll"
-	}
-}

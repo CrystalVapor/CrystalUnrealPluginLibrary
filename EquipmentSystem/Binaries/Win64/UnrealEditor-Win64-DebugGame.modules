@@ -1,8 +1,0 @@
-{
-	"BuildId": "25360045",
-	"Modules": 
-	{
-		"EquipmentSystem": "UnrealEditor-EquipmentSystem-Win64-DebugGame.dll",
-		"EquipmentSystemEditor": "UnrealEditor-EquipmentSystemEditor-Win64-DebugGame.dll"
-	}
-}
