@@ -42,7 +42,6 @@ void UEquipmentInstanceInitializeComponent::CheckInstanceInitializeStatus()
 		&&  ManagerComponent
 		&& !FeatureTags.HasTag(EquipmentInstanceInitializeComponent::Equipment_Util_FeatureTagIsEmpty))
 	{
-		GetInstance()->LocalInitializeInstance(Definition, FeatureTags, ManagerComponent);
 	}
 }
 

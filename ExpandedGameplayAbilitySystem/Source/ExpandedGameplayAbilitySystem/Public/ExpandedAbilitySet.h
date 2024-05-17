@@ -21,7 +21,9 @@ class EXPANDEDGAMEPLAYABILITYSYSTEM_API UExpandedAbilitySet : public UDataAsset,
 public:
 	virtual void GiveToAbilitySystem(UAbilitySystemComponent* AbilitySystemComponent, UObject* SourceObject,
 	                                 FExpandedAbilityGrantSource_GrantHandle& GrantHandle);
-
+	const TArray<FExpandedAbilityGrantSource_Ability>& GetAbilities() const { return Abilities; }
+	const TArray<FExpandedAbilityGrantSource_Effect>& GetEffects() const { return Effects; }
+	const TArray<FExpandedAbilityGrantSource_AttributeSet>& GetAttributeSets() const { return AttributeSets; }
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FExpandedAbilityGrantSource_Ability> Abilities;

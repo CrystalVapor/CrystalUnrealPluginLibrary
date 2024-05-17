@@ -174,7 +174,6 @@ void UEquipmentManagerComponent::RemoveInstance(int32 Id, bool bDestroyInstance)
 void UEquipmentManagerComponent::InitializeInstance(AEquipmentInstance* Instance, UEquipmentDefinition* Definition,
                                                     FGameplayTagContainer FeatureTags)
 {
-	Instance->InitializeInstance(Definition, FeatureTags, this);
 }
 
 void UEquipmentManagerComponent::UninitializeInstance(AEquipmentInstance* Instance, bool bDestroyInstance)
