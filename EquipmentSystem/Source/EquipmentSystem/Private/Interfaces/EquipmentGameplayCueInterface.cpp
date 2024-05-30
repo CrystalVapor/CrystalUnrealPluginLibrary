@@ -3,7 +3,7 @@
 
 #include "Interfaces/EquipmentGameplayCueInterface.h"
 
-#include "EquipmentManagerComponent.h"
+#include "Basics/EquipmentManagerComponent.h"
 
 UE_DEFINE_GAMEPLAY_TAG(GameplayCue_Equipment, "GameplayCue.Equipment");
 

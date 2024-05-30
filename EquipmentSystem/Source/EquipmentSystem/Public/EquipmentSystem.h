@@ -8,8 +8,12 @@
 class FEquipmentSystemModule : public IModuleInterface
 {
 public:
-
+	static FEquipmentSystemModule& Get();
+	class UEquipmentSystemGlobal* GetEquipmentSystemGlobal();
+	bool IsAbilitySystemGlobalsAvailable();
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+protected:
+	UEquipmentSystemGlobal* EquipmentSystemGlobal = nullptr;
 };

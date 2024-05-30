@@ -6,7 +6,7 @@
 #include "EquipmentGameplayAbility_RangedWeapon.h"
 #include "EquipmentGameplayAbility_TraceRangedWeapon.generated.h"
 
-class UEquipmentFragment_TraceRangedWeapon;
+class UEquipmentFeature_TraceRangedWeapon;
 /**
  * An Example Ability for constructing a trace-based ranged weapon, 
  * codes copied from Lyra Game. 
@@ -20,8 +20,8 @@ public:
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
-	
-	UEquipmentFragment_TraceRangedWeapon* GetTraceRangedWeaponFragment();
+
+	UEquipmentFeature_TraceRangedWeapon* GetTraceRangedWeaponFeature();
 	
 	static int32 FindFirstPawnHitIndex(const TArray<FHitResult>& Hits, int32 StartIndex = 0);
 

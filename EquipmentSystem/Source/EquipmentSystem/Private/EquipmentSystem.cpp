@@ -2,7 +2,30 @@
 
 #include "EquipmentSystem.h"
 
+#include "Systems/EquipmentSystemGlobal.h"
+
 #define LOCTEXT_NAMESPACE "FEquipmentSystemModule"
+
+FEquipmentSystemModule& FEquipmentSystemModule::Get()
+{
+	static auto Singleton = FModuleManager::LoadModuleChecked< FEquipmentSystemModule >("EquipmentSystem");
+	return Singleton;
+}
+
+UEquipmentSystemGlobal* FEquipmentSystemModule::GetEquipmentSystemGlobal()
+{
+	if(!EquipmentSystemGlobal)
+	{
+		EquipmentSystemGlobal = NewObject<UEquipmentSystemGlobal>(GetTransientPackage(), UEquipmentSystemGlobal::StaticClass(), NAME_None);
+		EquipmentSystemGlobal->AddToRoot();
+	}
+	return EquipmentSystemGlobal;
+}
+
+bool FEquipmentSystemModule::IsAbilitySystemGlobalsAvailable()
+{
+	return EquipmentSystemGlobal != nullptr;
+}
 
 void FEquipmentSystemModule::StartupModule()
 {

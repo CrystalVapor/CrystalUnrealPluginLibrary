@@ -3,11 +3,9 @@
 
 #include "Abilities/EquipmentGameplayAbility_TraceRangedWeapon.h"
 
-#include "EquipmentInstance.h"
-#include "EquipmentReplicatedPropertyManagerComponent.h"
-#include "EquipmentTraceChannels.h"
+#include "Utils/EquipmentTraceChannels.h"
 #include "ExpandedTargetData.h"
-#include "Fragments/EquipmentFragment_TraceRangedWeapon.h"
+#include "Features/EquipmentFeature_TraceRangedWeapon.h"
 
 namespace EquipmentSystemConsoleVariables
 {
@@ -71,9 +69,9 @@ void UEquipmentGameplayAbility_TraceRangedWeapon::EndAbility(const FGameplayAbil
 	}
 }
 
-UEquipmentFragment_TraceRangedWeapon* UEquipmentGameplayAbility_TraceRangedWeapon::GetTraceRangedWeaponFragment()
+UEquipmentFeature_TraceRangedWeapon* UEquipmentGameplayAbility_TraceRangedWeapon::GetTraceRangedWeaponFeature()
 {
-	return GetEquipmentFragment<UEquipmentFragment_TraceRangedWeapon>();
+	return GetEquipmentFeature<UEquipmentFeature_TraceRangedWeapon>();
 }
 
 int32 UEquipmentGameplayAbility_TraceRangedWeapon::FindFirstPawnHitIndex(const TArray<FHitResult>& Hits, int32 StartIndex)
@@ -211,15 +209,15 @@ void UEquipmentGameplayAbility_TraceRangedWeapon::PerformLocalTargeting(TArray<F
 void UEquipmentGameplayAbility_TraceRangedWeapon::TraceBulletsInCartridge(const FRangedWeaponFiringInput& InputData,
 	TArray<FHitResult>& OutHits)
 {
-	UEquipmentFragment_TraceRangedWeapon* TraceRangedWeaponFragment = GetTraceRangedWeaponFragment();
-	const float BulletsPerCartridge = TraceRangedWeaponFragment->GetBulletsPerCartridge();
-	const float MaxDamageRange = TraceRangedWeaponFragment->GetMaxDamageRange();
-	const float CurrentSpread = TraceRangedWeaponFragment->GetCurrentRecoilHeatSpread();
+	UEquipmentFeature_TraceRangedWeapon* TraceRangedWeaponFeature = GetTraceRangedWeaponFeature();
+	const float BulletsPerCartridge = TraceRangedWeaponFeature->BulletsPerCartridge;
+	const float MaxDamageRange = TraceRangedWeaponFeature->MaxDamageRange;
+	const float CurrentSpread = TraceRangedWeaponFeature->GetCurrentRecoilHeatSpread();
 	const float SpreadMultiplier = 1.0f;
 	const float SpreadAngleInDegree = CurrentSpread * SpreadMultiplier;
 	const float HalfSpreadAngleInRadians = FMath::DegreesToRadians(SpreadAngleInDegree * 0.5f);
-	const float SpreadExponent = TraceRangedWeaponFragment->GetSpreadExponent();
-	const float BulletTraceSweepRadius = TraceRangedWeaponFragment->GetWeaponSweepRadius();
+	const float SpreadExponent = TraceRangedWeaponFeature->SpreadExponent;
+	const float BulletTraceSweepRadius = TraceRangedWeaponFeature->BulletTraceSweepRadius;
 
 	for(int32 BulletIdx = 0; BulletIdx < BulletsPerCartridge; ++BulletIdx)
 	{
@@ -316,8 +314,8 @@ FHitResult UEquipmentGameplayAbility_TraceRangedWeapon::DoSingleBulletTrace(cons
 FHitResult UEquipmentGameplayAbility_TraceRangedWeapon::FilterSingleBulletPunchThrough(
 	TArray<FHitResult>& OutHits, FHitResult Impact)
 {
-	UEquipmentFragment_RangedWeapon* RangedWeaponFragment = GetAssociatedRangedWeaponFragment();
-	const float EnemyPunchThrough = RangedWeaponFragment->GetEnemyPunchThrough();
+	UEquipmentFeature_RangedWeapon* RangedWeaponFeature = GetAssociatedRangedWeaponFeature();
+	const float EnemyPunchThrough = RangedWeaponFeature->EnemyPunchThrough;
 	int32 EnemyPunchThroughLeft = EnemyPunchThrough;
 	TArray<FHitResult> FilteredHits;
 	int32 NextPawnHitIndex = FindFirstPawnHitIndex(OutHits);

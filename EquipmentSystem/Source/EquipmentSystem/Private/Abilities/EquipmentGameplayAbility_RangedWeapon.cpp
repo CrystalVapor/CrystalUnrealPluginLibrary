@@ -3,18 +3,17 @@
 #include "Abilities/EquipmentGameplayAbility_RangedWeapon.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "EquipmentInstance.h"
-#include "EquipmentReplicatedPropertyManagerComponent.h"
+#include "Basics/EquipmentInstance.h"
 #include "ExpandedTargetData.h"
-#include "Fragments/EquipmentFragment_RangedWeapon.h"
+#include "Features/EquipmentFeature_RangedWeapon.h"
 #include "GameFramework/PlayerController.h"
 
 void UEquipmentGameplayAbility_RangedWeapon::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-	const FGameplayEventData* TriggerEventData)
+                                                             const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+                                                             const FGameplayEventData* TriggerEventData)
 {
-	UEquipmentFragment_RangedWeapon* RangedWeaponFragment = GetAssociatedRangedWeaponFragment();
-	if(RangedWeaponFragment)
+	UEquipmentFeature_RangedWeapon* RangedWeaponFeature = GetAssociatedRangedWeaponFeature();
+	if(RangedWeaponFeature)
 	{
 	}
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
@@ -24,19 +23,19 @@ void UEquipmentGameplayAbility_RangedWeapon::EndAbility(const FGameplayAbilitySp
                                                         const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                                         bool bReplicateEndAbility, bool bWasCancelled)
 {
-	UEquipmentFragment_RangedWeapon* RangedWeaponFragment = GetAssociatedRangedWeaponFragment();
-	if(RangedWeaponFragment)
+	UEquipmentFeature_RangedWeapon* RangedWeaponFeature = GetAssociatedRangedWeaponFeature();
+	if(RangedWeaponFeature)
 	{
 	}
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
-UEquipmentFragment_RangedWeapon* UEquipmentGameplayAbility_RangedWeapon::GetAssociatedRangedWeaponFragment()
+UEquipmentFeature_RangedWeapon* UEquipmentGameplayAbility_RangedWeapon::GetAssociatedRangedWeaponFeature()
 {
 	AEquipmentInstance* EquipmentInstance = GetEquipmentInstance();
 	if (EquipmentInstance)
 	{
-		return Cast<UEquipmentFragment_RangedWeapon>(EquipmentInstance->GetFragment(AssociatedRangedWeaponFragmentClass));
+		return EquipmentInstance->GetFeature<UEquipmentFeature_RangedWeapon>(AssociatedRangedWeaponFeatureClass);
 	}
 	return nullptr;
 }

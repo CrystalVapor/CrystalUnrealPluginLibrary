@@ -21,6 +21,10 @@ void UCRRecoilComponent::TickComponent(float DeltaTime, ELevelTick TickType,
                                        FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	if(!RecoilPattern)
+	{
+		return;
+	}
 	if(!GetTargetController())
 	{
 		return;

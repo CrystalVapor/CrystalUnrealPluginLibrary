@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CRRecoilInterface.h"
-#include "EquipmentVisualActor.h"
+#include "Basics/EquipmentVisualActor.h"
 #include "ExpandedGameplayCueManager.h"
 #include "NativeGameplayTags.h"
 #include "EquipmentVisualActor_RangedWeapon.generated.h"
@@ -25,7 +25,7 @@ class EQUIPMENTSYSTEM_API AEquipmentVisualActor_RangedWeapon : public AEquipment
 public:
 	AEquipmentVisualActor_RangedWeapon();
 
-	virtual void InitVisualActor(AEquipmentInstance* InOwnerInstance, AEquipmentVisualActor* InMasterVisualActor) override;
+	virtual void InitVisualActor(AEquipmentInstance* InOwnerInstance) override;
 
 	//ICRRecoilInterface
 	virtual UCRRecoilComponent* GetRecoilComponent() override;

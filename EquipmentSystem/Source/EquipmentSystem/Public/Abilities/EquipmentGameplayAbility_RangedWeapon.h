@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EquipmentGameplayAbility.h"
+#include "Basics/EquipmentGameplayAbility.h"
 #include "EquipmentGameplayAbility_RangedWeapon.generated.h"
 
 class APawn;
@@ -45,7 +45,7 @@ public:
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
 
 	// Get Associated Ranged Weapon Fragment
-	UEquipmentFragment_RangedWeapon* GetAssociatedRangedWeaponFragment();
+	UEquipmentFeature_RangedWeapon* GetAssociatedRangedWeaponFeature();
 
 	static FVector VRandConeNormalDistribution(const FVector& Dir, const float ConeHalfAngleRad, const float Exponent);
 	
@@ -58,19 +58,13 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Equipment")
-	TSubclassOf<UEquipmentFragment_RangedWeapon> AssociatedRangedWeaponFragmentClass;
+	TSubclassOf<UEquipmentFeature_RangedWeapon> AssociatedRangedWeaponFeatureClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UAnimMontage* FireAnimationMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float FireAnimationPlayRate = 1.0f;
-
-	/**
-	 * The tag represents the visual actor which will be called with gameplay cue events
-	 */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (Categories = "GameplayCue"))
-	FGameplayTag FireGameplayCueVisualActorTag;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (Categories = "GameplayCue"))
 	FGameplayTag FireGameplayCueTag;
