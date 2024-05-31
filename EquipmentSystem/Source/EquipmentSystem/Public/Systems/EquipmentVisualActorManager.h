@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 #include "Utils/EquipmentSystemTypes.h"
-#include "EquipmentAssetManager.generated.h"
+#include "EquipmentVisualActorManager.generated.h"
 
 class UObjectLibrary;
 class AEquipmentVisualActor;
@@ -28,23 +28,17 @@ struct FEquipmentVisualActorLibraryDataContainer
  * 
  */
 UCLASS()
-class EQUIPMENTSYSTEM_API UEquipmentAssetManager : public UObject
+class EQUIPMENTSYSTEM_API UEquipmentVisualActorManager : public UObject
 {
 	GENERATED_BODY()
 public:
+	static UEquipmentVisualActorManager* Get();
 	void Init();
 	void InitVisualActorLibrary();
-	void InitFeatureLibrary();
 	void BuildVisualActorMapping(const TArray<FAssetData>& AssetDatas);
-	void BuildFeatureMapping(const TArray<FAssetData>& AssetDatas);
 	UClass* GetVisualActorClass(const FName& VisualActorName, const FEquipmentVisualActorSpecifier& VisualActorSpecifier) const;
-	UClass* GetFeatureClass(const FName& FeatureName) const;
 protected:
 	UPROPERTY()
 	UObjectLibrary* VisualActorLibrary = nullptr;
-	UPROPERTY()
-	UObjectLibrary* FeatureLibrary = nullptr;
-	
 	TMap<FName, FEquipmentVisualActorLibraryDataContainer> VisualActorClassMap;
-	TMap<FName, FSoftObjectPath> FeatureClassMap; 
 };

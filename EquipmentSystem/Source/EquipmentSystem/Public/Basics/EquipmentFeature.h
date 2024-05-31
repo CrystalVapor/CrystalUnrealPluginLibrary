@@ -82,12 +82,6 @@ struct TEquipmentAbilitySetRequirement_AttributeSetRegister
 	explicit TEquipmentAbilitySetRequirement_AttributeSetRegister(TSubclassOf<UAttributeSet> AttributeSetRequirement);
 };
 
-class FEquipmentFeatureFactory
-{
-public:
-	static UEquipmentFeature* FactoryCreateFeature(AEquipmentInstance* Owner, UClass* FeatureClass);
-};
-
 /**
  * Base class for Equipment Features, which represents functions or data unit that can be added to Equipment Instances.
  */
@@ -95,11 +89,12 @@ UCLASS(Blueprintable, HideDropdown)
 class EQUIPMENTSYSTEM_API UEquipmentFeature : public UActorComponent
 {
 	GENERATED_BODY()
-	friend class FEquipmentFeatureFactory;
+	friend class UEquipmentFeatureFactory;
 	friend class AEquipmentInstance;
 public:
 	UEquipmentFeature();
-	FName GetFeatureName() const;
+	virtual void BeginPlay() override;
+	virtual FName GetFeatureName() const;
 	const TArray<FEquipmentVisualActorAction>& GetVisualActorActions() const;
 	const TArray<FEquipmentPropertyModifier>& GetPropertyModifiers() const;
 	const TArray<UEquipmentAbilitySet*>& GetAbilitySets() const;
@@ -124,7 +119,6 @@ public:
 	T* GetProperty(FName PropertyName) const;
 	
 #if WITH_EDITOR
-	
 	virtual EDataValidationResult IsDataValid(TArray<FText>& ValidationErrors) override;
 #endif
 	

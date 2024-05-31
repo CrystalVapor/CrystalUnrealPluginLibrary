@@ -5,12 +5,25 @@
 
 #include "Basics/EquipmentAbilitySet.h"
 #include "Basics/EquipmentGameplayAbility.h"
-#include "Features/EquipmentFeature_RangedWeapon.h"
 #include "Utils/EquipmentSystemLogs.h"
 
 UEquipmentFeature::UEquipmentFeature()
 {
 	SetIsReplicatedByDefault(true);
+}
+
+void UEquipmentFeature::BeginPlay()
+{
+	Super::BeginPlay();
+	if(!GetOwner()->HasAuthority())
+	{
+		// we are client, notify instance that we are ready
+		AEquipmentInstance* OwnerInstance = Cast<AEquipmentInstance>(GetOwner());
+		if(OwnerInstance)
+		{
+			OwnerInstance->NotifyFeatureReplicated(GetFeatureName());
+		}
+	}
 }
 
 void FEquipmentPropertyModifierAggregator::Apply(UEquipmentFeature* Feature, FProperty* PropertyToEdit)
@@ -219,16 +232,9 @@ void FEquipmentPropertyModifierAggregatorContainer::ApplyModifiersToFeature(UEqu
 	}
 }
 
-UEquipmentFeature* FEquipmentFeatureFactory::FactoryCreateFeature(AEquipmentInstance* Owner, UClass* FeatureClass)
-{
-	UEquipmentFeature* NewFeature = NewObject<UEquipmentFeature>(Owner, FeatureClass);
-	NewFeature->PropertyModifiersOwned.Empty();
-	return NewFeature;
-}
-
 FName UEquipmentFeature::GetFeatureName() const
 {
-	return FName(GetClass()->GetName());
+	return GetClass()->GetFName();
 }
 
 const TArray<FEquipmentVisualActorAction>& UEquipmentFeature::GetVisualActorActions() const

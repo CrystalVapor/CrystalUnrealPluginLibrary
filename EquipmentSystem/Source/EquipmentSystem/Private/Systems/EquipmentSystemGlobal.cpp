@@ -6,7 +6,8 @@
 #include "EquipmentSystem.h"
 #include "Basics/EquipmentFeature.h"
 #include "Basics/EquipmentInstance.h"
-#include "Systems/EquipmentAssetManager.h"
+#include "Systems/EquipmentFeatureManager.h"
+#include "Systems/EquipmentVisualActorManager.h"
 #include "Utils/EquipmentSystemLogs.h"
 
 
@@ -64,7 +65,7 @@ bool UEquipmentSystemGlobal::RegisterPropertyToManager(const FEquipmentPropertyT
 
 const FEquipmentPropertyModifier* UEquipmentSystemGlobal::GetPropertyModifier(const FName& FeatureName, const FName& ModifierName)
 {
-	UClass* FeatureClassPtr = UEquipmentSystemGlobal::Get()->GetEquipmentAssetManager()->GetFeatureClass(FeatureName);
+	UClass* FeatureClassPtr = Get()->GetEquipmentFeatureManager()->GetFeatureClass(FeatureName);
 	if(!FeatureClassPtr)
 	{
 		UE_LOG(LogEquipmentSystem, Warning, TEXT("Feature with name \"%s\" does not exist when trying getting modifier named \"%s\""), *FeatureName.ToString(), *ModifierName.ToString());
@@ -99,9 +100,14 @@ UClass* UEquipmentSystemGlobal::GetVisualActor(const FName& VisualActorName,
 	return nullptr;
 }
 
-UEquipmentAssetManager* UEquipmentSystemGlobal::GetEquipmentAssetManager()
+UEquipmentVisualActorManager* UEquipmentSystemGlobal::GetEquipmentVisualActorManager()
 {
-	return EquipmentAssetManager;
+	return EquipmentVisualActorManager;
+}
+
+UEquipmentFeatureManager* UEquipmentSystemGlobal::GetEquipmentFeatureManager()
+{
+	return EquipmentFeatureManager;
 }
 
 TMap<FGameplayTag, FEquipmentPropertyTagContainer>& UEquipmentSystemGlobal::GetPropertyTagMap()
@@ -113,7 +119,7 @@ TMap<FGameplayTag, FEquipmentPropertyTagContainer>& UEquipmentSystemGlobal::GetP
 bool UEquipmentSystemGlobal::ValidateFeatureAbilityRequirements(const FName& FeatureName,
                                                                 const TArray<UEquipmentAbilitySet*>& AbilitySets, TArray<FText>& OutMessages)
 {
-	const UClass* FeatureClass = UEquipmentSystemGlobal::Get()->GetEquipmentAssetManager()->GetFeatureClass(FeatureName);
+	const UClass* FeatureClass = Get()->GetEquipmentFeatureManager()->GetFeatureClass(FeatureName);
 	bool bResult = true;
 	while(FeatureClass!=nullptr && FeatureClass != UEquipmentFeature::StaticClass())
 	{
@@ -140,14 +146,24 @@ void UEquipmentSystemGlobal::Init()
 		FeaturePaths.Add(TEXT("/Game"));
 	}
 	FeaturePaths.Add(TEXT("/EquipmentSystem"));
-	if(!EquipmentAssetManager)
+	if(!EquipmentVisualActorManager)
 	{
 		UClass* LoadedEquipmentAssetManagerClass = EquipmentAssetManagerClass.TryLoadClass<UObject>();
 		if(!LoadedEquipmentAssetManagerClass)
 		{
-			LoadedEquipmentAssetManagerClass = UEquipmentAssetManager::StaticClass();
+			LoadedEquipmentAssetManagerClass = UEquipmentVisualActorManager::StaticClass();
 		}
-		EquipmentAssetManager = NewObject<UEquipmentAssetManager>(this, LoadedEquipmentAssetManagerClass);
+		EquipmentVisualActorManager = NewObject<UEquipmentVisualActorManager>(this, LoadedEquipmentAssetManagerClass);
 	}
-	EquipmentAssetManager->Init();
+	EquipmentVisualActorManager->Init();
+	if(!EquipmentFeatureManager)
+	{
+		UClass* LoadedEquipmentFeatureManagerClass = EquipmentFeatureManagerClass.TryLoadClass<UObject>();
+		if(!LoadedEquipmentFeatureManagerClass)
+		{
+			LoadedEquipmentFeatureManagerClass = UEquipmentFeatureManager::StaticClass();
+		}
+		EquipmentFeatureManager = NewObject<UEquipmentFeatureManager>(this, LoadedEquipmentFeatureManagerClass);
+	}
+	EquipmentFeatureManager->Init();
 }

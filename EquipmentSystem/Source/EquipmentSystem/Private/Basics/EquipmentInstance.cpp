@@ -10,7 +10,9 @@
 #include "Utils/EquipmentSystemLogs.h"
 #include "Basics/EquipmentVisualActor.h"
 #include "Net/UnrealNetwork.h"
-#include "Systems/EquipmentAssetManager.h"
+#include "Systems/EquipmentFeatureManager.h"
+#include "Systems/EquipmentVisualActorManager.h"
+#include "Utils/EquipmentFeatureFactory.h"
 
 
 void FEquipmentFeatureContainer::PostReplicatedAdd(const TArrayView<int32>& AddedIndices, int32 FinalSize)
@@ -18,11 +20,16 @@ void FEquipmentFeatureContainer::PostReplicatedAdd(const TArrayView<int32>& Adde
 	// this only be called on client
 	for(int32 Idx: AddedIndices)
 	{
-		FEquipmentFeatureEntry& Entry = Features[Idx];
-		UEquipmentFeature* Feature = Entry.Feature;
+		const FEquipmentFeatureEntry& Entry = Features[Idx];
+		const UEquipmentFeature* Feature = Entry.Feature;
+		if(!Feature)
+		{
+			continue;
+		}
+		const FName& FeatureName = Feature->GetFeatureName();
 		// assume that replication is later than flush on client.
-		Owner->PendingFeatureRegistrations[Feature->GetClass()] = true;
-		Owner->OnFeatureSpawnedOrReplicated(Feature->StaticClass());
+		Owner->PendingFeatureRegistrations[FeatureName] = true;
+		Owner->OnFeatureSpawnedOrReplicated(FeatureName);
 	}
 }
 
@@ -80,33 +87,55 @@ void AEquipmentInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AEquipmentInstance, FeatureContainer);
 }
 
-void AEquipmentInstance::AddFeature(TSubclassOf<UEquipmentFeature> FeatureClass, bool bInitalizeImmediately)
+void AEquipmentInstance::NotifyFeatureReplicated(const FName& FeatureName)
 {
-	MarkAsPendingFeatureRegistration(FeatureClass);
-	if(bInitalizeImmediately)
+	
+	OnFeatureSpawnedOrReplicated(FeatureName);
+}
+
+void AEquipmentInstance::AddFeature(const FName& FeatureName)
+{
+	AddFeatures({FeatureName});
+}
+
+void AEquipmentInstance::AddFeatures(const TArray<FName>& FeatureNames)
+{
+	for(const auto& FeatureName: FeatureNames)
+	{
+		MarkAsPendingFeatureRegistration(FeatureName);
+	}
+	if(FeatureNames.Num() > 0)
 	{
 		FlushPendingFeatureRegistrations();
 	}
 }
 
-void AEquipmentInstance::AddFeatures(const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses)
+void AEquipmentInstance::RemoveFeature(const FName& FeatureName)
 {
-	for(const auto& FeatureClass: FeatureClasses)
+	RemoveFeatures({FeatureName});
+}
+
+void AEquipmentInstance::RemoveFeatures(const TArray<FName>& FeatureNames)
+{
+	for(const auto& FeatureName: FeatureNames)
 	{
-		AddFeature(FeatureClass, false);
+		MarkAsPendingFeatureRemoval(FeatureName);
 	}
-	if(FeatureClasses.Num() > 0)
+	if(FeatureNames.Num() > 0)
 	{
-		FlushPendingFeatureRegistrations();
+		FlushPendingFeatureRemovals();
 	}
 }
 
-void AEquipmentInstance::MarkAsPendingFeatureRegistration(TSubclassOf<UEquipmentFeature> FeatureClass)
+void AEquipmentInstance::MarkAsPendingFeatureRegistration(const FName& FeatureName)
 {
-	PendingFeatureRegistrations.Add(FeatureClass, false);
-
-	const UEquipmentFeature* FeatureCDO = FeatureClass.GetDefaultObject();
-	const FName FeatureName = FeatureCDO->GetFeatureName();
+	const UEquipmentFeature* FeatureCDO = UEquipmentFeatureManager::Get()->GetFeatureCDO(FeatureName);
+	if(!FeatureCDO)
+	{
+		UE_LOG(LogEquipmentSystem, Warning, TEXT("Feature %s not found in Feature Class Map"), *FeatureName.ToString());
+		return;
+	}
+	PendingFeatureRegistrations.Add(FeatureName, false);
 	// Add Modifiers
 	auto& PropertyModifiers = FeatureCDO->GetPropertyModifiers();
 	for(const auto& Modifier: PropertyModifiers)
@@ -129,30 +158,9 @@ void AEquipmentInstance::MarkAsPendingFeatureRegistration(TSubclassOf<UEquipment
 	}
 }
 
-void AEquipmentInstance::RemoveFeature(TSubclassOf<UEquipmentFeature> FeatureClass, bool bRemoveImmediately)
+void AEquipmentInstance::MarkAsPendingFeatureRemoval(const FName& FeatureName)
 {
-	MarkAsPendingFeatureRemoval(FeatureClass);
-	if(bRemoveImmediately)
-	{
-		FlushPendingFeatureRemovals();
-	}
-}
-
-void AEquipmentInstance::RemoveFeatures(const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses)
-{
-	for(const auto& FeatureClass: FeatureClasses)
-	{
-		RemoveFeature(FeatureClass, false);
-	}
-	if(FeatureClasses.Num() > 0)
-	{
-		FlushPendingFeatureRemovals();
-	}
-}
-
-void AEquipmentInstance::MarkAsPendingFeatureRemoval(TSubclassOf<UEquipmentFeature> FeatureClass)
-{
-	PendingFeatureRemovals.AddUnique(FeatureClass);
+	PendingFeatureRemovals.AddUnique(FeatureName);
 }
 
 void AEquipmentInstance::FlushPendingFeatureRegistrations()
@@ -160,7 +168,6 @@ void AEquipmentInstance::FlushPendingFeatureRegistrations()
 	// 1. Try allocating all the features.
 	if(HasAuthority())
 	{
-		// we are the server, try to create all the features we have not created yet.
 		for(auto Iter = PendingFeatureRegistrations.CreateConstIterator(); Iter; ++Iter)
 		{
 			const auto PendingFeature = *Iter;
@@ -280,13 +287,13 @@ void AEquipmentInstance::FlushPendingVisualActorRegistrations()
 		VisualActorNameToFeatureName.Add(VisualActorName, VisualActorAction.Key);
 	}
 	// recursively load all the sub visual actors.
-	UEquipmentAssetManager* EquipmentAssetManager = FEquipmentSystemModule::Get().GetEquipmentSystemGlobal()->GetEquipmentAssetManager();
+	UEquipmentVisualActorManager* EquipmentVisualActorManager = FEquipmentSystemModule::Get().GetEquipmentSystemGlobal()->GetEquipmentVisualActorManager();
 	TArray<FVisualActorRegisterTask> VisualActorRegisterTasks;
 	for(int i = 0; i< VisualActorNamesToRegister.Num(); ++i)
 	{
 		const FName& FeatureName = VisualActorNameToFeatureName[VisualActorNamesToRegister[i]];
 		const FName& VisualActorName = VisualActorNamesToRegister[i];
-		UClass* VisualActorClass = EquipmentAssetManager->GetVisualActorClass(VisualActorName, GetVisualActorSpecifier(VisualActorName));
+		UClass* VisualActorClass = EquipmentVisualActorManager->GetVisualActorClass(VisualActorName, GetVisualActorSpecifier(VisualActorName));
 		FVisualActorRegisterTask RegisterTask(VisualActorName, VisualActorClass, i);
 		const AEquipmentVisualActor* VisualActorCDO = Cast<AEquipmentVisualActor>(VisualActorClass->GetDefaultObject());
 		for(const auto& SubVisualActorRegEntry: VisualActorCDO->SubVisualActorRegisterEntries)
@@ -413,28 +420,47 @@ void AEquipmentInstance::UnregisterSingleFeature(const FName& FeatureName)
 	FeatureRuntimeDataHandles.Remove(FeatureName);
 }
 
-void AEquipmentInstance::ServerOnly_CreateAndAddFeature(TSubclassOf<UEquipmentFeature> FeatureClass)
+void AEquipmentInstance::ServerOnly_CreateAndAddFeature(const FName& FeatureName)
 {
 	if(!HasAuthority())
 	{
 		return;
 	}
-	UEquipmentFeature* NewFeature = FEquipmentFeatureFactory::FactoryCreateFeature(this, FeatureClass);
-	AddInstanceComponent(NewFeature);
-	FeatureContainer.AddFeature(NewFeature);
-	OnFeatureSpawnedOrReplicated(FeatureClass);
+	UEquipmentFeature* NewFeature = UEquipmentFeatureFactory::CreateFeature(this, FeatureName);
+	if(!NewFeature)
+	{
+		UE_LOG(LogEquipmentSystem, Warning, TEXT("Failed to create feature %s"), *FeatureName.ToString());
+		return;
+	}
+	NewFeature->RegisterComponent();
+	NewFeature->SetIsReplicated(true);
+	if(HasAuthority())
+	{
+		FeatureContainer.AddFeature(NewFeature);
+	}
+	OnFeatureSpawnedOrReplicated(FeatureName);
 }
 
-void AEquipmentInstance::OnFeatureSpawnedOrReplicated(TSubclassOf<UEquipmentFeature> FeatureClass)
+void AEquipmentInstance::OnFeatureSpawnedOrReplicated(const FName& FeatureName)
 {
-	auto& FeatureRegistrationValue = PendingFeatureRegistrations.FindOrAdd(FeatureClass);
+	auto& FeatureRegistrationValue = PendingFeatureRegistrations.FindOrAdd(FeatureName);
 	FeatureRegistrationValue = true;
 	FlushPendingFeatureRegistrations();
 }
 
-FEquipmentVisualActorSpecifier AEquipmentInstance::GetVisualActorSpecifier(const FName& VisualActorName)
+FEquipmentVisualActorSpecifier AEquipmentInstance::GetVisualActorSpecifier_Internal(const FName& VisualActorName)
 {
 	return FEquipmentVisualActorSpecifier();
+}
+
+FEquipmentVisualActorSpecifier AEquipmentInstance::GetVisualActorSpecifier(const FName& VisualActorName)
+{
+	FEquipmentVisualActorSpecifier Specifier;
+	if(!K2_GetVisualActorSpecifier(VisualActorName, Specifier))
+	{
+		Specifier = GetVisualActorSpecifier_Internal(VisualActorName);
+	}
+	return Specifier;
 }
 
 void AEquipmentInstance::RegisterModifier(UEquipmentFeature* TargetFeature,
@@ -602,6 +628,12 @@ bool AEquipmentInstance::InternalK2_GetPropertyByFeatureClass(AEquipmentInstance
 	return true;
 }
 
+bool AEquipmentInstance::K2_GetVisualActorSpecifier_Implementation(const FName& VisualActorName,
+	FEquipmentVisualActorSpecifier& OutSpecifier)
+{
+	return false;
+}
+
 AEquipmentVisualActor* AEquipmentInstance::GetVisualActor(const FName& VisualActorName)
 {
 	for(auto VisualActor: VisualActors)
@@ -653,4 +685,3 @@ void AEquipmentInstance::HandleGameplayCue(UObject* Self, FGameplayTag GameplayC
 		VisualActor->HandleGameplayCue(VisualActor, GameplayCueTag, EventType, Parameters);
 	}
 }
-

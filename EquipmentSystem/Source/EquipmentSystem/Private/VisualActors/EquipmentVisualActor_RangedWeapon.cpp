@@ -27,9 +27,10 @@ void AEquipmentVisualActor_RangedWeapon::InitVisualActor(AEquipmentInstance* InO
 	check(Feature);
 	RecoilComponent->SetRecoilPattern(Feature->RecoilPattern);
 	RecoilComponent->SetMaxRecoilHeat(Feature->MaxSpreadHeat);
-	RecoilComponent->SetShotToHeatCurve(&Feature->HeatToHeatPerShotCurve);
-	RecoilComponent->SetHeatToCooldownPerSecondCurve(&Feature->HeatToCooldownPerSecondCurve);
-	RecoilComponent->SetHeatToSpreadAngleCurve(&Feature->HeatToSpreadCurve);
+	RecoilComponent->SetRecoilHeatCoolDownDelay(Feature->RecoilHeatCooldownDelay);
+	RecoilComponent->SetShotToHeatCurve(Feature->HeatToHeatPerShotCurve.GetRichCurveConst());
+	RecoilComponent->SetHeatToCooldownPerSecondCurve(Feature->HeatToCooldownPerSecondCurve.GetRichCurveConst());
+	RecoilComponent->SetHeatToSpreadAngleCurve(Feature->HeatToSpreadCurve.GetRichCurveConst());
 	Feature->GetRecoilHeatSpreadDelegate.BindUObject(RecoilComponent, &UCRSpreadRecoilComponent::GetCurrentSpreadAngle);
 }
 

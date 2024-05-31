@@ -112,14 +112,15 @@ public:
 	AEquipmentInstance();
 	virtual void PreInstanceDestroyed();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	void NotifyFeatureReplicated(const FName& FeatureName);
 protected:
 	// These Functions should only be called by Manager Component due to Replicate.
-	void AddFeature(TSubclassOf<UEquipmentFeature> FeatureClass, bool bInitalizeImmediately = true);
-	void AddFeatures(const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses);
-	void MarkAsPendingFeatureRegistration(TSubclassOf<UEquipmentFeature> FeatureClass);
-	void RemoveFeature(TSubclassOf<UEquipmentFeature> FeatureClass, bool bRemoveImmediately = true);
-	void RemoveFeatures(const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses);
-	void MarkAsPendingFeatureRemoval(TSubclassOf<UEquipmentFeature> FeatureClass);
+	void AddFeature(const FName& FeatureName);
+	void AddFeatures(const TArray<FName>& FeatureNames);
+	void RemoveFeature(const FName& FeatureName);
+	void RemoveFeatures(const TArray<FName>& FeatureNames);
+	void MarkAsPendingFeatureRegistration(const FName& FeatureName);
+	void MarkAsPendingFeatureRemoval(const FName& FeatureName);
 
 	// filter the feature registrations and removals, and call Register/Unregister functions
 	void FlushPendingFeatureRegistrations();
@@ -128,8 +129,8 @@ protected:
 	void FlushPendingAbilitySetRegistrations();
 	void FlushPendingFeatureRemovals();
 	
-	void ServerOnly_CreateAndAddFeature(TSubclassOf<UEquipmentFeature> FeatureClass);
-	void OnFeatureSpawnedOrReplicated(TSubclassOf<UEquipmentFeature> FeatureClass);
+	void ServerOnly_CreateAndAddFeature(const FName& FeatureName);
+	void OnFeatureSpawnedOrReplicated(const FName& FeatureName);
 
 	void RegisterModifier(UEquipmentFeature* TargetFeature, const FEquipmentPropertyModifierHandle& Modifier);
 	bool RegisterVisualActor(const FName& SourceFeatureNamePtr, const UClass* ActorClass);
@@ -152,6 +153,10 @@ protected:
 	static bool InternalK2_GetPropertyByFeatureClass(AEquipmentInstance* Instance, TSubclassOf<UEquipmentFeature> FeatureClass, FGameplayTag PropertyTag, void* OutProperty, FProperty* PropertyType);
 	
 public:
+	UFUNCTION(BlueprintNativeEvent)
+	bool K2_GetVisualActorSpecifier(const FName& VisualActorName, UPARAM(ref) FEquipmentVisualActorSpecifier& OutSpecifier);
+	// Override this function to provide custom visual actor specifier.
+	virtual FEquipmentVisualActorSpecifier GetVisualActorSpecifier_Internal(const FName& VisualActorName);
 	FEquipmentVisualActorSpecifier GetVisualActorSpecifier(const FName& VisualActorName);
 	
 	AEquipmentVisualActor* GetVisualActor(const FName& VisualActorName);
@@ -185,9 +190,10 @@ protected:
 	TMultiMap<TSubclassOf<UEquipmentFeature>, FEquipmentPropertyModifierHandle> PendingPropertyModifierRegistrations;
 	TMultiMap<FName, UEquipmentAbilitySet*> PendingAbilitySetRegistrations;
 	TMultiMap<FName, FEquipmentVisualActorAction> PendingVisualActorActionRegistrations;
-	TMap<TSubclassOf<UEquipmentFeature>, bool> PendingFeatureRegistrations;
 	
-	TArray<TSubclassOf<UEquipmentFeature>> PendingFeatureRemovals;
+	TMap<FName, bool> PendingFeatureRegistrations;
+	
+	TArray<FName> PendingFeatureRemovals;
 	TArray<UEquipmentFeature*> ChangedFeatures;
 	
 	bool bIsEquipped = false;

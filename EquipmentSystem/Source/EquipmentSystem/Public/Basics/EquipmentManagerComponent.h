@@ -28,7 +28,7 @@ struct FEquipmentManagerFeatureEvent
 	UPROPERTY()
 	int32 Id = -1;
 	UPROPERTY()
-	TArray<TSubclassOf<UEquipmentFeature>> FeatureClasses;
+	TArray<FName> FeatureNames;
 };
 
 USTRUCT()
@@ -108,13 +108,9 @@ public:
 	void HandleInstanceCreated(AEquipmentInstance* NewInstance);
 	void ServerOnly_DestroyInstance(int32 Id);
 	void HandleInstanceDestroyed(AEquipmentInstance* Instance);
-	void AddFeature(int32 Id, TSubclassOf<UEquipmentFeature> FeatureClass, bool bFlushImmediately = true);
-	void AddFeatures(int32 Id, const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses);
-	void AddFeature(int32 Id, const FName& FeatureName, bool bFlushImmediately = true);
+	void AddFeature(int32 Id, const FName& FeatureName);
 	void AddFeatures(int32 Id, const TArray<FName>& FeatureNames);
-	void RemoveFeature(int32 Id, TSubclassOf<UEquipmentFeature> FeatureClass, bool bFlushImmediately = true);
-	void RemoveFeatures(int32 Id, const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses);
-	void RemoveFeature(int32 Id, const FName& FeatureName, bool bFlushImmediately = true);
+	void RemoveFeature(int32 Id, const FName& FeatureName);
 	void RemoveFeatures(int32 Id, const TArray<FName>& FeatureNames);
 	
 	UFUNCTION(NetMultiCast, Reliable)

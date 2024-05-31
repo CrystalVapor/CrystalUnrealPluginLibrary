@@ -33,7 +33,7 @@ UCLASS()
 class EQUIPMENTSYSTEM_API AEquipmentVisualActor : public AActor, public IGameplayCueInterface, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-	friend class UEquipmentAssetManager;
+	friend class UEquipmentVisualActorManager;
 	friend class AEquipmentInstance;
 public:
 	AEquipmentVisualActor();

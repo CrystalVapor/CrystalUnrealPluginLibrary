@@ -105,7 +105,7 @@ struct FEquipmentPropertyModifierHandle
 };
 uint32 GetTypeHash(const FEquipmentPropertyModifierHandle& Other);
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FEquipmentVisualActorSpecifier
 {
 	GENERATED_BODY()

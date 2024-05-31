@@ -8,7 +8,7 @@
 #include "Misc/DataValidation.h"
 
 #include "Net/UnrealNetwork.h"
-#include "Systems/EquipmentAssetManager.h"
+#include "Systems/EquipmentVisualActorManager.h"
 
 
 void FEquipmentInstancesContainer::PreReplicatedRemove(const TArrayView<int32>& RemovedIndices, int32 FinalSize)
@@ -159,143 +159,32 @@ void UEquipmentManagerComponent::HandleInstanceDestroyed(AEquipmentInstance* Ins
 	OnInstanceRemoved.Broadcast(GetInstanceId(Instance));
 }
 
-void UEquipmentManagerComponent::AddFeature(int32 Id, TSubclassOf<UEquipmentFeature> FeatureClass,
-                                            bool bFlushImmediately)
+void UEquipmentManagerComponent::AddFeature(int32 Id, const FName& FeatureName)
 {
-	FEquipmentManagerFeatureEvent* Event = nullptr;
- 	const int32 Len = PendingFeatureEvents.Num();
-	// First try removing any pending remove event for the same feature
-	for(int i = 0; i <Len; i++)
-	{
-		if(PendingFeatureEvents[i].Id == Id && PendingFeatureEvents[i].Type == EEquipmentManagerFeatureEventType::RemoveFeature)
-		{
-			Event = &PendingFeatureEvents[i];
-		}
-	}
-	if(Event)
-	{
-		Event->FeatureClasses.RemoveSwap(FeatureClass);
-	}
-	Event = nullptr;
-	// Then try to add the feature
-	for(int i = 0; i <Len; i++)
-	{
-		if(PendingFeatureEvents[i].Id == Id && PendingFeatureEvents[i].Type == EEquipmentManagerFeatureEventType::AddFeature)
-		{
-			Event = &PendingFeatureEvents[i];
-		}
-	}
-	if(!Event)
-	{
-		Event = &PendingFeatureEvents.AddDefaulted_GetRef();
-		Event->Id = Id;
-		Event->Type = EEquipmentManagerFeatureEventType::AddFeature;
-	}
-	Event->FeatureClasses.AddUnique(FeatureClass);
-	if(bFlushImmediately)
-	{
-		FlushPendingFeatureEvents();
-	}
-}
-
-void UEquipmentManagerComponent::AddFeatures(int32 Id, const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses)
-{
-	for(const auto FeatureClass: FeatureClasses)
-	{
-		AddFeature(Id, FeatureClass, false);
-	}
-	if(FeatureClasses.Num() > 0)
-	{
-		FlushPendingFeatureEvents();
-	}
-}
-
-void UEquipmentManagerComponent::AddFeature(int32 Id, const FName& FeatureName, bool bFlushImmediately)
-{
-	UClass* FeatureClass = FEquipmentSystemModule::Get().GetEquipmentSystemGlobal()->GetEquipmentAssetManager()->GetFeatureClass(FeatureName);
-	AddFeature(Id, FeatureClass, bFlushImmediately);
+	AddFeatures(Id, {FeatureName});
 }
 
 void UEquipmentManagerComponent::AddFeatures(int32 Id, const TArray<FName>& FeatureNames)
 {
-	for(auto& FeatureName:FeatureNames)
-	{
-		AddFeature(Id, FeatureName, false);
-	}
-	if(FeatureNames.Num() > 0)
-	{
-		FlushPendingFeatureEvents();
-	}
+	FEquipmentManagerFeatureEvent& Event = PendingFeatureEvents.AddDefaulted_GetRef();
+	Event.Id = Id;
+	Event.Type = EEquipmentManagerFeatureEventType::AddFeature;
+	Event.FeatureNames = FeatureNames;
+	FlushPendingFeatureEvents();
 }
 
-void UEquipmentManagerComponent::RemoveFeature(int32 Id, const FName& FeatureName, bool bFlushImmediately)
+void UEquipmentManagerComponent::RemoveFeature(int32 Id, const FName& FeatureName)
 {
-	UClass* FeatureClass = FEquipmentSystemModule::Get().GetEquipmentSystemGlobal()->GetEquipmentAssetManager()->GetFeatureClass(FeatureName);
-	RemoveFeature(Id, FeatureClass, bFlushImmediately);
+	RemoveFeatures(Id, {FeatureName});
 }
 
 void UEquipmentManagerComponent::RemoveFeatures(int32 Id, const TArray<FName>& FeatureNames)
 {
-	for(auto& FeatureName:FeatureNames)
-	{
-		RemoveFeature(Id, FeatureName, false);
-	}
-	if(FeatureNames.Num() > 0)
-	{
-		FlushPendingFeatureEvents();
-	}
-}
-
-void UEquipmentManagerComponent::RemoveFeature(int32 Id, TSubclassOf<UEquipmentFeature> FeatureClass,
-                                               bool bFlushImmediately)
-{
-	FEquipmentManagerFeatureEvent* Event = nullptr;
-	const int32 Len = PendingFeatureEvents.Num();
-	for(int i = 0; i <Len; i++)
-	{
-		if(PendingFeatureEvents[i].Id == Id && PendingFeatureEvents[i].Type == EEquipmentManagerFeatureEventType::AddFeature)
-		{
-			Event = &PendingFeatureEvents[i];
-		}
-	}
-	// we first try to remove the feature before it was added
-	if(Event)
-	{
-		if(Event->FeatureClasses.RemoveSwap(FeatureClass))
-		{
-			// we have removed the feature from the pending events
-			// no more things to do
-			return;
-		}
-	}
-	Event = nullptr;
-	// No pending add event, we need a remove event
-	for(int i = 0; i < Len; i++)
-	{
-		if(PendingFeatureEvents[i].Id == Id && PendingFeatureEvents[i].Type == EEquipmentManagerFeatureEventType::RemoveFeature)
-		{
-			Event = &PendingFeatureEvents[i];
-		}
-	}
-	if(!Event)
-	{
-		Event = &PendingFeatureEvents.AddDefaulted_GetRef();
-		Event->Id = Id;
-		Event->Type = EEquipmentManagerFeatureEventType::RemoveFeature;
-	}
-	Event->FeatureClasses.AddUnique(FeatureClass);
-}
-
-void UEquipmentManagerComponent::RemoveFeatures(int32 Id, const TArray<TSubclassOf<UEquipmentFeature>>& FeatureClasses)
-{
-	for(auto& FeatureClass:FeatureClasses)
-	{
-		RemoveFeature(Id, FeatureClass, false);
-	}
-	if(FeatureClasses.Num() > 0)
-	{
-		FlushPendingFeatureEvents();
-	}
+	FEquipmentManagerFeatureEvent& Event = PendingFeatureEvents.AddDefaulted_GetRef();
+	Event.Id = Id;
+	Event.Type = EEquipmentManagerFeatureEventType::RemoveFeature;
+	Event.FeatureNames = FeatureNames;
+	FlushPendingFeatureEvents();
 }
 
 void UEquipmentManagerComponent::MULTICAST_HandleFeatureEvent_Implementation(
@@ -351,10 +240,10 @@ bool UEquipmentManagerComponent::HandleFeatureEvent(const FEquipmentManagerFeatu
 	{
 		if(Event.Type == EEquipmentManagerFeatureEventType::AddFeature)
         {
-        	Instance->AddFeatures(Event.FeatureClasses);
+			Instance->AddFeatures(Event.FeatureNames);
         }else
         {
-        	Instance->RemoveFeatures(Event.FeatureClasses);
+        	Instance->RemoveFeatures(Event.FeatureNames);
         }	
 		return true;
 	}

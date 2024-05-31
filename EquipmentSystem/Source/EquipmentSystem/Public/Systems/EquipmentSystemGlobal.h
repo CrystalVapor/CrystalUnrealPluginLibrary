@@ -9,7 +9,7 @@
 class UEquipmentAbilitySet;
 class UEquipmentGameplayAbility;
 class UAttributeSet;
-class UEquipmentAssetManager;
+class UEquipmentVisualActorManager;
 struct FEquipmentPropertyModifier;
 
 /**
@@ -18,7 +18,8 @@ struct FEquipmentPropertyModifier;
 UCLASS(Config="Game")
 class EQUIPMENTSYSTEM_API UEquipmentSystemGlobal: public UObject
 {
-	friend class UEquipmentAssetManager;
+	friend class UEquipmentVisualActorManager;
+	friend class UEquipmentFeatureManager;
 	GENERATED_BODY()
 public:
 	static UEquipmentSystemGlobal* Get();
@@ -39,7 +40,8 @@ public:
 	virtual void Init();
 		
 	virtual UClass* GetVisualActor(const FName& VisualActorName, const FEquipmentVisualActorSpecifier& VisualActorSpecifier);
-	virtual UEquipmentAssetManager* GetEquipmentAssetManager();
+	virtual UEquipmentVisualActorManager* GetEquipmentVisualActorManager();
+	virtual UEquipmentFeatureManager* GetEquipmentFeatureManager();
 	
 protected:
 	static TMap<FGameplayTag, FEquipmentPropertyTagContainer>& GetPropertyTagMap();
@@ -52,8 +54,12 @@ protected:
 
 	UPROPERTY(Config)
 	FSoftClassPath EquipmentAssetManagerClass;
+	UPROPERTY(Config)
+	FSoftClassPath EquipmentFeatureManagerClass;
 	UPROPERTY()
-	UEquipmentAssetManager* EquipmentAssetManager = nullptr;
+	UEquipmentVisualActorManager* EquipmentVisualActorManager = nullptr;
+	UPROPERTY()
+	UEquipmentFeatureManager* EquipmentFeatureManager = nullptr;
 	UPROPERTY(Config)
 	TArray<FString> VisualActorPaths;
 	UPROPERTY(Config)

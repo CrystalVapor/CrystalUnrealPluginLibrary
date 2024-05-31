@@ -16,6 +16,7 @@ BEGIN_EQUIPMENT_PROPERTY_TAG_DECLARE(UEquipmentFeature_RangedWeapon)
 	EQUIPMENT_DECLARE_PROPERTY_TAG(SpreadHeatCooldownDelay)
 	EQUIPMENT_DECLARE_PROPERTY_TAG(MaxSpreadHeat)
     EQUIPMENT_DECLARE_PROPERTY_TAG(FireDelay)
+	EQUIPMENT_DECLARE_PROPERTY_TAG(RecoilHeatCooldownDelay)
 	EQUIPMENT_DECLARE_PROPERTY_TAG(HeatToSpreadCurve)
 	EQUIPMENT_DECLARE_PROPERTY_TAG(HeatToHeatPerShotCurve)
 	EQUIPMENT_DECLARE_PROPERTY_TAG(HeatToCooldownPerSecondCurve)
@@ -28,7 +29,7 @@ class EQUIPMENTSYSTEM_API UEquipmentFeature_RangedWeapon : public UEquipmentFeat
 public:
 	DECLARE_DELEGATE_RetVal(float , FGetRecoilHeatSpreadDelegate);
 	UEquipmentFeature_RangedWeapon();
-	float GetCurrentRecoilHeatSpread(){return 0.f;};
+	float GetCurrentRecoilHeatSpread(){return GetRecoilHeatSpreadDelegate.IsBound()?GetRecoilHeatSpreadDelegate.Execute():0.f;};
 	FGetRecoilHeatSpreadDelegate GetRecoilHeatSpreadDelegate;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -56,13 +57,16 @@ public:
 	float FireDelay = 0.2f;
 
 	UPROPERTY(EditDefaultsOnly)
-	FRichCurve HeatToSpreadCurve;
+	float RecoilHeatCooldownDelay = 0.5f;
 
 	UPROPERTY(EditDefaultsOnly)
-	FRichCurve HeatToHeatPerShotCurve;
+	FRuntimeFloatCurve HeatToSpreadCurve;
 
 	UPROPERTY(EditDefaultsOnly)
-	FRichCurve HeatToCooldownPerSecondCurve;
+	FRuntimeFloatCurve HeatToHeatPerShotCurve;
+
+	UPROPERTY(EditDefaultsOnly)
+	FRuntimeFloatCurve HeatToCooldownPerSecondCurve;
 
 	UPROPERTY(EditDefaultsOnly)
 	UCRRecoilPattern* RecoilPattern;

@@ -3,6 +3,7 @@
 
 #include "Utils/EquipmentPresetData.h"
 
+#include "Basics/EquipmentFeature.h"
 #include "Basics/EquipmentManagerComponent.h"
 
 int32 UEquipmentPresetData::CreateAsNewInstance(UEquipmentManagerComponent* TargetManager, bool ReplicatedEquipped)
@@ -22,5 +23,11 @@ int32 UEquipmentPresetData::CreateAsNewInstance(UEquipmentManagerComponent* Targ
 
 void UEquipmentPresetData::ApplyToInstance(int32 InstanceId, UEquipmentManagerComponent* TargetManager)
 {
-	TargetManager->AddFeatures(InstanceId, Features);
+	TArray<FName> FeatureNames;
+	for(const auto& FeatureClass:Features)
+	{
+		const UEquipmentFeature* FeatureCDO = FeatureClass->GetDefaultObject<UEquipmentFeature>();
+		FeatureNames.Add(FeatureCDO->GetFeatureName());
+	}
+	TargetManager->AddFeatures(InstanceId, FeatureNames);
 }
