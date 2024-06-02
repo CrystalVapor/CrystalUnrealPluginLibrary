@@ -100,7 +100,8 @@ public:
 	const TArray<UEquipmentAbilitySet*>& GetAbilitySets() const;
 	const FEquipmentPropertyModifier* GetPropertyModifierOwnedByFeature(FName ModifierName) const;
 	void ApplyRegisteredPropertyModifiers(bool bResetFeatureBeforeApply = true);
-	// Register/Unregister a Modifier to feature, the property will not change until ApplyRegisteredPropertyModifiers is called.
+	
+	/* Register/Unregister a Modifier to feature, the property will not change until ApplyRegisteredPropertyModifiers is called.*/
 	void RegisterModifier(const FEquipmentPropertyModifierHandle& ModifierHandle);
 	void RegisterModifier(const FName InFeatureName, const FName ModifierName);
 	void UnregisterModifier(const FEquipmentPropertyModifierHandle& ModifierHandle);

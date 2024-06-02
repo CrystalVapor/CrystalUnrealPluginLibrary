@@ -99,15 +99,18 @@ void AEquipmentInstance::HandleInstanceReplicated()
 	}
 	if(ManagerComponent&& InstanceId!=-1 && !HasAuthority())
 	{
-		ManagerComponent->HandleInstanceReplicated(InstanceId, this);
+		ManagerComponent->NotifyInstanceReplicated(InstanceId, this);
 	}
 }
 
 void AEquipmentInstance::BeginPlay()
 {
 	Super::BeginPlay();
-	// notify manager that we have replicated from server.
-	HandleInstanceReplicated();
+	if(!HasAuthority())
+	{
+		// notify manager that we have replicated from server.
+		HandleInstanceReplicated();
+	}
 }
 
 void AEquipmentInstance::PreInstanceDestroyed()

@@ -103,13 +103,49 @@ friend UEquipmentManagerComponent;
 friend FEquipmentFeatureContainer;
 public:
 	AEquipmentInstance();
-	void HandleInstanceReplicated();
+	
+	// AActor Interface
 	virtual void BeginPlay() override;
-	virtual void PreInstanceDestroyed();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	void NotifyFeatureReplicated(const FName& FeatureName, UEquipmentFeature* ReplicatedFeature);
+	// ~AActor Interface
 
+	/* Called by Feature, notify the instance that a feature has been replicated to local. */
+	void NotifyFeatureReplicated(const FName& FeatureName, UEquipmentFeature* ReplicatedFeature);
+	/* Called right before the instance is destroyed. */
+	virtual void PreInstanceDestroyed();
+	/**
+	 * Blueprint version to override GetVisualActorSpecifier_Internal, will also override the cpp native version.
+	 * Return true if the specifier is valid, false otherwise.
+	 */
+	UFUNCTION(BlueprintNativeEvent)
+	bool K2_GetVisualActorSpecifier(const FName& VisualActorName, UPARAM(ref) FEquipmentVisualActorSpecifier& OutSpecifier);
+	/* Override this function to provide custom visual actor specifier.*/
+	virtual FEquipmentVisualActorSpecifier GetVisualActorSpecifier_Internal(const FName& VisualActorName);
+	/* Get the visual actor specifier for the visual actor with the given name. */
+	FEquipmentVisualActorSpecifier GetVisualActorSpecifier(const FName& VisualActorName);
+	/* Get the visual actor spawned by this Instance with the given name. */
+	AEquipmentVisualActor* GetVisualActor(const FName& VisualActorName);
+	template<class T>
+	T* GetFeature();
+	template<class T>
+	T* GetFeature(TSubclassOf<UEquipmentFeature> FeatureClass);
+	template<class T>
+	T* GetFeature(const FName& FeatureName);
+	UEquipmentFeature* GetFeature(const FName& FeatureName);
+	/* Get the features' names applied to this Instance. */
+	const TArray<FName>& GetAppliedFeatures();
+
+	bool IsEquipped();
+	void NotifyEquipped();
+	void NotifyUnequipped();
+	FEquipmentInstanceNotifyDelegate OnEquipped;
+	FEquipmentInstanceNotifyDelegate OnUnequipped;
+
+	UAbilitySystemComponent* GetAbilitySystemComponent() const;
+	void HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag, EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters);
 protected:
+	/* Called when the instance is replicated to local. */
+	void HandleInstanceReplicated();
 	// These Functions should only be called by Manager Component due to Replicate.
 	void AddFeature(const FName& FeatureName);
 	void AddFeatures(const TArray<FName>& FeatureNames);
@@ -127,54 +163,37 @@ protected:
 	
 	void ServerOnly_CreateAndAddFeature(const FName& FeatureName);
 	void HandleFeatureSpawnedOrReplicated(const FName& FeatureName);
-
+	/* Register a modifier to a feature, the change of modifier(s) will not be applied until ApplyRegisteredPropertyModifiers is called. */
 	void RegisterModifier(UEquipmentFeature* TargetFeature, const FEquipmentPropertyModifierHandle& Modifier);
+	/* Register & Spawn a visual actor to this instance. */
 	bool RegisterVisualActor(const FName& SourceFeatureName, const UClass* ActorClass);
+	/* Register an ability set to this instance. */
 	void RegisterAbilitySet(const FName& SourceFeatureName, const UEquipmentAbilitySet* AbilitySet);
 	
+	/* Unregister a feature from this instance. */
 	void UnregisterSingleFeature(const FName& FeatureName);
+	/* Unregister a modifier from a feature, the change of modifier(s) will not be applied until ApplyRegisteredPropertyModifiers is called. */
 	void UnregisterModifier(UEquipmentFeature* TargetFeature, const FEquipmentPropertyModifierHandle& Modifier);
 	void UnregisterVisualActor(const FName& VisualActorName);
 	void UnregisterAbilitySet(FExpandedAbilityGrantSource_GrantHandle& AbilitySetHandle);
-
+	/* Call ApplyRegisteredPropertyModifiers on all changed features during last feature registration pending. */
 	void RefreshChangedFeatures();
-
+	/**
+	 * Get a Property by Feature Name, return false if the property is not found.
+	 * @note Use improper Type variable to get Property is undefined behavior.
+	 */
 	UFUNCTION(BlueprintCallable, CustomThunk, Category = "Equipment System", DisplayName = "Get Property By Feature Name (Instance)", meta = (CustomStructureParam = "OutProperty", GameplayTagFilter = "Equipment.Property"))
 	bool K2_GetPropertyByFeatureName(UPARAM(ref) const FName& FeatureName , FGameplayTag PropertyTag, int32& OutProperty);
 	DECLARE_FUNCTION(execK2_GetPropertyByFeatureName);
 	static bool InternalK2_GetPropertyByFeatureName(AEquipmentInstance* Instance, const FName& FeatureName, FGameplayTag PropertyTag, void* OutProperty, FProperty* PropertyType);
+	/**
+	 * Get a Property by Feature Class, return false if the property is not found.
+	 * @note Use improper Type variable to get Property is undefined behavior.
+	 */
 	UFUNCTION(BlueprintCallable, CustomThunk, Category = "Equipment System", DisplayName = "Get Property By Feature Class (Instance)", meta = (CustomStructureParam = "OutProperty", GameplayTagFilter = "Equipment.Property"))
 	bool K2_GetPropertyByFeatureClass(TSubclassOf<UEquipmentFeature> FeatureClass, FGameplayTag PropertyTag, int32& OutProperty);
 	DECLARE_FUNCTION(execK2_GetPropertyByFeatureClass);
 	static bool InternalK2_GetPropertyByFeatureClass(AEquipmentInstance* Instance, TSubclassOf<UEquipmentFeature> FeatureClass, FGameplayTag PropertyTag, void* OutProperty, FProperty* PropertyType);
-	
-public:
-	UFUNCTION(BlueprintNativeEvent)
-	bool K2_GetVisualActorSpecifier(const FName& VisualActorName, UPARAM(ref) FEquipmentVisualActorSpecifier& OutSpecifier);
-	// Override this function to provide custom visual actor specifier.
-	virtual FEquipmentVisualActorSpecifier GetVisualActorSpecifier_Internal(const FName& VisualActorName);
-	FEquipmentVisualActorSpecifier GetVisualActorSpecifier(const FName& VisualActorName);
-	
-	AEquipmentVisualActor* GetVisualActor(const FName& VisualActorName);
-	template<class T>
-	T* GetFeature();
-	template<class T>
-	T* GetFeature(TSubclassOf<UEquipmentFeature> FeatureClass);
-	template<class T>
-	T* GetFeature(const FName& FeatureName);
-	UEquipmentFeature* GetFeature(const FName& FeatureName);;
-	const TArray<FName>& GetAppliedFeatures();
-
-	bool IsEquipped();
-	void NotifyEquipped();
-	void NotifyUnequipped();
-	
-	FEquipmentInstanceNotifyDelegate OnEquipped;
-	FEquipmentInstanceNotifyDelegate OnUnequipped;
-
-	UAbilitySystemComponent* GetAbilitySystemComponent() const;
-
-	void HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag, EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters);
 protected:
 	UFUNCTION()
 	void OnRep_InstanceId(const int32& OldInstanceId);

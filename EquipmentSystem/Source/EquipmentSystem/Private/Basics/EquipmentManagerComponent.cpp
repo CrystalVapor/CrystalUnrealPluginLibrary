@@ -44,11 +44,11 @@ void FEquipmentInstancesContainer::PostReplicatedChange(const TArrayView<int32>&
 		{
 			if(Entry.RemoteEquipped)
 			{
-				Manager->InternalEquipEquipment(Entry.Id);
+				Manager->EquipEquipment_Internal(Entry.Id);
 			}
 			else
 			{
-				Manager->InternalUnequipEquipment(Entry.Id);
+				Manager->UnequipEquipment_Internal(Entry.Id);
 			}
 		}
 	}
@@ -204,7 +204,7 @@ int32 UEquipmentManagerComponent::ServerOnly_CreateInstance()
 	return InstanceId;
 }
 
-void UEquipmentManagerComponent::HandleInstanceReplicated(int32 Id, AEquipmentInstance* Instance)
+void UEquipmentManagerComponent::NotifyInstanceReplicated(int32 Id, AEquipmentInstance* Instance)
 {
 	FEquipmentInstanceEntry* Entry = Instances.GetEntry(Id);
 	Entry->Instance = Instance;
@@ -371,11 +371,6 @@ void UEquipmentManagerComponent::HandleRemoveAbility(FExpandedAbilityGrantSource
 	Handle.RemoveFromAbilitySystem();
 }
 
-void UEquipmentManagerComponent::NotifyInstanceInitialized(AEquipmentInstance* Instance)
-{
-	OnInstanceInitialized.Broadcast(GetInstanceId(Instance));
-}
-
 void UEquipmentManagerComponent::InitializeManager(UAbilitySystemComponent* InAbilitySystemComponent)
 {
 	AbilitySystemComponent = InAbilitySystemComponent;
@@ -437,8 +432,8 @@ void UEquipmentManagerComponent::EquipEquipment(int32 Id)
 	{
 		ServerEquipEquipment(Id);
 	}
-	//predictive equip
-	InternalEquipEquipment(Id);
+	//predictively equip
+	EquipEquipment_Internal(Id);
 }
 
 void UEquipmentManagerComponent::UnequipEquipment(int32 Id)
@@ -451,35 +446,35 @@ void UEquipmentManagerComponent::UnequipEquipment(int32 Id)
 	{
 		ServerUnequipEquipment(Id);
 	}
-	//predictive unequip
-	InternalUnequipEquipment(Id);
+	//predictively unequip
+	UnequipEquipment_Internal(Id);
 }
 
 void UEquipmentManagerComponent::ServerEquipEquipment_Implementation(int32 Id)
 {
-	InternalEquipEquipment(Id);
+	EquipEquipment_Internal(Id);
 	// Used to calibrate the client prediction
 	ClientEquipEquipment(Id);
 }
 
 void UEquipmentManagerComponent::ServerUnequipEquipment_Implementation(int32 Id)
 {
-	InternalUnequipEquipment(Id);
+	UnequipEquipment_Internal(Id);
 	// Used to calibrate the client prediction
 	ClientUnequipEquipment(Id);
 }
 
 void UEquipmentManagerComponent::ClientEquipEquipment_Implementation(int32 Id)
 {
-	InternalEquipEquipment(Id);
+	EquipEquipment_Internal(Id);
 }
 
 void UEquipmentManagerComponent::ClientUnequipEquipment_Implementation(int32 Id)
 {
-	InternalUnequipEquipment(Id);
+	UnequipEquipment_Internal(Id);
 }
 
-void UEquipmentManagerComponent::InternalEquipEquipment(int32 Id)
+void UEquipmentManagerComponent::EquipEquipment_Internal(int32 Id)
 {
 	FEquipmentInstanceEntry* EquipmentInstanceEntry = GetEntry(Id);
 	if(EquipmentInstanceEntry)
@@ -498,7 +493,7 @@ void UEquipmentManagerComponent::InternalEquipEquipment(int32 Id)
 	}
 }
 
-void UEquipmentManagerComponent::InternalUnequipEquipment(int32 Id)
+void UEquipmentManagerComponent::UnequipEquipment_Internal(int32 Id)
 {
 	FEquipmentInstanceEntry* EquipmentInstanceEntry = GetEntry(Id);
 	if(EquipmentInstanceEntry)
