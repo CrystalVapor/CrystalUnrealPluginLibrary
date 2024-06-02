@@ -18,7 +18,6 @@ class EQUIPMENTSYSTEM_API UEquipmentPresetData : public UDataAsset
 public:
 	int32 CreateAsNewInstance(UEquipmentManagerComponent* TargetManager, bool ReplicatedEquipped = false);
 	void ApplyToInstance(int32 InstanceId, UEquipmentManagerComponent* TargetManager);
-
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<UEquipmentFeature>> Features;
 };

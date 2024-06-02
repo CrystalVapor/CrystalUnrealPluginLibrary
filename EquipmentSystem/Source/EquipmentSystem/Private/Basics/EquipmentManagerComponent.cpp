@@ -30,9 +30,7 @@ void FEquipmentInstancesContainer::PostReplicatedAdd(const TArrayView<int32>& Ad
 		FEquipmentInstanceEntry& Entry = Items[Index];
 		if(Manager)
 		{
-			Manager->HandleInstanceCreated(Entry.Instance);
-			// when replicated, try to apply pending feature events associated with this instance
-			Manager->FlushPendingFeatureEvents();
+			//Manager->HandleInstanceAddToManager(Entry.Id);
 		}
 	}
 }
@@ -61,6 +59,7 @@ int32 FEquipmentInstancesContainer::AddToItems(AEquipmentInstance* Instance)
 	FEquipmentInstanceEntry& Entry = Items.AddDefaulted_GetRef();
 	Entry.Id = GetNextId();
 	Entry.Instance = Instance;
+	Manager->FeatureRegistry.AddRegistryEntry(Entry.Id);
 	MarkItemDirty(Entry);
 	return Entry.Id;
 }
@@ -79,6 +78,7 @@ void FEquipmentInstancesContainer::RemoveFromItems(int32 Id)
 	if(Index != -1)
 	{
 		Items.RemoveAt(Index);
+		Manager->FeatureRegistry.RemoveRegistryEntry(Id);
 		MarkArrayDirty();
 	}
 }
@@ -95,6 +95,66 @@ FEquipmentInstanceEntry* FEquipmentInstancesContainer::GetEntry(int32 Id)
 	return nullptr;
 }
 
+void FEquipmentFeatureRegistryContainer::AddRegistryEntry(int32 Id)
+{
+	FEquipmentFeatureRegistryEntry& Entry = Items.AddDefaulted_GetRef();
+	Entry.Id = Id;
+	MarkItemDirty(Entry);
+}
+
+void FEquipmentFeatureRegistryContainer::RemoveRegistryEntry(int32 Id)
+{
+	for(int i = 0; i < Items.Num(); i++)
+	{
+		if(Items[i].Id == Id)
+		{
+			Items.RemoveAt(i);
+			MarkArrayDirty();
+			break;
+		}
+	}
+}
+
+FEquipmentFeatureRegistryEntry* FEquipmentFeatureRegistryContainer::GetRegistryEntry(int32 Id)
+{
+	for(int i = 0; i < Items.Num(); i++)
+	{
+		if(Items[i].Id == Id)
+		{
+			return &Items[i];
+		}
+	}
+	return nullptr;
+}
+
+void FEquipmentFeatureRegistryContainer::PreReplicatedRemove(const TArrayView<int32>& RemovedIndices, int32 FinalSize)
+{
+}
+
+void FEquipmentFeatureRegistryContainer::PostReplicatedAdd(const TArrayView<int32>& AddedIndices, int32 FinalSize)
+{
+	for(auto& Index:AddedIndices)
+	{
+		FEquipmentFeatureRegistryEntry& Entry = Items[Index];
+		if(Manager)
+		{
+			Manager->NotifyFeatureRegistryChanged(Entry.Id);
+		}
+	}
+}
+
+void FEquipmentFeatureRegistryContainer::PostReplicatedChange(const TArrayView<int32>& ChangedIndices, int32 FinalSize)
+{
+	for(auto& Index:ChangedIndices)
+	{
+		FEquipmentFeatureRegistryEntry& Entry = Items[Index];
+		if(Manager)
+		{
+			Manager->NotifyFeatureRegistryChanged(Entry.Id);
+		}
+	}
+}
+
 EDataValidationResult UEquipmentManagerComponent::IsDataValid(FDataValidationContext& Context)
 {
 	if(!GetOwner()->IsA(APawn::StaticClass()))
@@ -109,6 +169,13 @@ UEquipmentManagerComponent::UEquipmentManagerComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	SetIsReplicatedByDefault(true);
+	Instances = FEquipmentInstancesContainer(this);
+	FeatureRegistry = FEquipmentFeatureRegistryContainer(this);
+}
+
+bool UEquipmentManagerComponent::HasAuthority()
+{
+	return GetOwner()->HasAuthority();
 }
 
 UEquipmentManagerComponent* UEquipmentManagerComponent::FindEquipmentManagerComponent(AActor* Actor)
@@ -120,6 +187,7 @@ void UEquipmentManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(UEquipmentManagerComponent, Instances);
+	DOREPLIFETIME(UEquipmentManagerComponent, FeatureRegistry);
 }
 
 int32 UEquipmentManagerComponent::ServerOnly_CreateInstance()
@@ -131,14 +199,17 @@ int32 UEquipmentManagerComponent::ServerOnly_CreateInstance()
 	AEquipmentInstance* NewInstance = GetWorld()->SpawnActor<AEquipmentInstance>();
 	NewInstance->SetOwner(GetOwner());
 	int32 InstanceId = Instances.AddToItems(NewInstance);
-	HandleInstanceCreated(NewInstance);
+	NewInstance->InstanceId = InstanceId;
+	NewInstance->ManagerComponent = this;
 	return InstanceId;
 }
 
-void UEquipmentManagerComponent::HandleInstanceCreated(AEquipmentInstance* NewInstance)
+void UEquipmentManagerComponent::HandleInstanceReplicated(int32 Id, AEquipmentInstance* Instance)
 {
-	NewInstance->ManagerComponent = this;
-	OnInstanceCreated.Broadcast(GetInstanceId(NewInstance));
+	FEquipmentInstanceEntry* Entry = Instances.GetEntry(Id);
+	Entry->Instance = Instance;
+	// process feature registry
+	ProcessFeatureRegistryChange(Id);
 }
 
 void UEquipmentManagerComponent::ServerOnly_DestroyInstance(int32 Id)
@@ -166,11 +237,12 @@ void UEquipmentManagerComponent::AddFeature(int32 Id, const FName& FeatureName)
 
 void UEquipmentManagerComponent::AddFeatures(int32 Id, const TArray<FName>& FeatureNames)
 {
-	FEquipmentManagerFeatureEvent& Event = PendingFeatureEvents.AddDefaulted_GetRef();
-	Event.Id = Id;
-	Event.Type = EEquipmentManagerFeatureEventType::AddFeature;
-	Event.FeatureNames = FeatureNames;
-	FlushPendingFeatureEvents();
+	FEquipmentFeatureRegistryEntry* RegistryEntry = FeatureRegistry.GetRegistryEntry(Id);
+	if(RegistryEntry)
+	{
+		RegistryEntry->RegisteredFeatures.Append(FeatureNames);
+		ProcessFeatureRegistryChange(Id);
+	}
 }
 
 void UEquipmentManagerComponent::RemoveFeature(int32 Id, const FName& FeatureName)
@@ -180,31 +252,79 @@ void UEquipmentManagerComponent::RemoveFeature(int32 Id, const FName& FeatureNam
 
 void UEquipmentManagerComponent::RemoveFeatures(int32 Id, const TArray<FName>& FeatureNames)
 {
-	FEquipmentManagerFeatureEvent& Event = PendingFeatureEvents.AddDefaulted_GetRef();
-	Event.Id = Id;
-	Event.Type = EEquipmentManagerFeatureEventType::RemoveFeature;
-	Event.FeatureNames = FeatureNames;
+	FEquipmentFeatureRegistryEntry* RegistryEntry = FeatureRegistry.GetRegistryEntry(Id);
+	if(RegistryEntry)
+	{
+		for(auto& FeatureName:FeatureNames)
+		{
+			RegistryEntry->RegisteredFeatures.Remove(FeatureName);
+		}
+		ProcessFeatureRegistryChange(Id);
+	}
+}
+
+void UEquipmentManagerComponent::ProcessFeatureRegistryChange(int32 Id)
+{
+	if(!IsInitialized())
+	{
+		return;
+	}
+	FEquipmentFeatureRegistryEntry* EquipmentFeatureRegistryEntry = FeatureRegistry.GetRegistryEntry(Id);
+	if(!EquipmentFeatureRegistryEntry)
+	{
+		return;
+	}
+	AEquipmentInstance* EquipmentInstance = GetInstance(Id);
+	if(!EquipmentInstance)
+	{
+		return;
+	}
+	const TArray<FName> RegisteredFeatures = EquipmentFeatureRegistryEntry->RegisteredFeatures;
+	const TArray<FName> AppliedFeatures = EquipmentInstance->GetAppliedFeatures();
+	
+	FEquipmentManagerFeatureEvent AddEvent;
+	AddEvent.Id = Id;
+	AddEvent.Type = EEquipmentManagerFeatureEventType::AddFeature;
+	for(auto& Feature:RegisteredFeatures)
+	{
+		if(!AppliedFeatures.Contains(Feature))
+		{
+			AddEvent.Features.AddUnique(Feature);
+		}
+	}
+	if(!AddEvent.Features.IsEmpty())
+	{
+		PendingFeatureEvents.Add(AddEvent);
+	}
+	
+	FEquipmentManagerFeatureEvent RemoveEvent;
+	RemoveEvent.Id = Id;
+	RemoveEvent.Type = EEquipmentManagerFeatureEventType::RemoveFeature;
+	for(auto& Feature:AppliedFeatures)
+	{
+		if(!RegisteredFeatures.Contains(Feature))
+		{
+			RemoveEvent.Features.Add(Feature);
+		}
+	}
+	if(!RemoveEvent.Features.IsEmpty())
+	{
+		PendingFeatureEvents.Add(RemoveEvent);
+	}
+	if(!GetOwner()->HasAuthority())
+	{
+		int i = 1;
+	}
 	FlushPendingFeatureEvents();
 }
 
-void UEquipmentManagerComponent::MULTICAST_HandleFeatureEvent_Implementation(
-	const FEquipmentManagerFeatureEvent& Event)
+void UEquipmentManagerComponent::NotifyFeatureRegistryChanged(int32 Id)
 {
-	if(GetOwner()->HasAuthority())
-	{
-		// We are server, the event is already handled
-		return;
-	}
-	PendingFeatureEvents.Add(Event);
-	FlushPendingFeatureEvents();
+	ProcessFeatureRegistryChange(Id);
 }
 
 void UEquipmentManagerComponent::FlushPendingFeatureEvents()
 {
-	if(GetOwner()->HasAuthority())
-	{
-		ServerOnly_DispatchPendingFeatureEvents();
-	}
 	TArray<int32> EventAppliedIndices;
 	for(int32 i = 0; i < PendingFeatureEvents.Num(); i++)
 	{
@@ -220,30 +340,17 @@ void UEquipmentManagerComponent::FlushPendingFeatureEvents()
 	}
 }
 
-void UEquipmentManagerComponent::ServerOnly_DispatchPendingFeatureEvents()
-{
-	if(!GetOwner()->HasAuthority())
-	{
-		return;
-	}
-	for(auto& Event:PendingFeatureEvents)
-	{
-		MULTICAST_HandleFeatureEvent(Event);
-	}
-}
-
 bool UEquipmentManagerComponent::HandleFeatureEvent(const FEquipmentManagerFeatureEvent& Event)
 {
 	AEquipmentInstance* Instance = GetInstance(Event.Id);
-	// On Client, the instance may not be replicated yet
 	if(Instance)
 	{
 		if(Event.Type == EEquipmentManagerFeatureEventType::AddFeature)
         {
-			Instance->AddFeatures(Event.FeatureNames);
+			Instance->AddFeatures(Event.Features);
         }else
         {
-        	Instance->RemoveFeatures(Event.FeatureNames);
+        	Instance->RemoveFeatures(Event.Features);
         }	
 		return true;
 	}
@@ -272,6 +379,18 @@ void UEquipmentManagerComponent::NotifyInstanceInitialized(AEquipmentInstance* I
 void UEquipmentManagerComponent::InitializeManager(UAbilitySystemComponent* InAbilitySystemComponent)
 {
 	AbilitySystemComponent = InAbilitySystemComponent;
+	HandleManagerInitialized();
+}
+
+void UEquipmentManagerComponent::HandleManagerInitialized()
+{
+	for(auto& Entry:Instances.Items)
+	{
+		if(Entry.Instance)
+		{
+			ProcessFeatureRegistryChange(Entry.Id);
+		}
+	}
 }
 
 int32 UEquipmentManagerComponent::GetInstanceId(AEquipmentInstance* Instance)

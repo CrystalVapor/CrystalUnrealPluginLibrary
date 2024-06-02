@@ -15,6 +15,32 @@
 #include "Utils/EquipmentFeatureFactory.h"
 
 
+void FEquipmentFeatureContainer::AddFeature(UEquipmentFeature* Feature)
+{
+	FEquipmentFeatureEntry& Entry = Features.AddDefaulted_GetRef();
+	Entry.FeatureName = Feature->GetFeatureName();
+	Entry.Feature = Feature;
+	MarkItemDirty(Entry);
+}
+
+void FEquipmentFeatureContainer::RemoveFeature(UEquipmentFeature* Feature)
+{
+	Features.RemoveAll([Feature](const FEquipmentFeatureEntry& Entry)
+	{
+		return Entry.Feature == Feature;
+	});
+	MarkArrayDirty();
+}
+
+void FEquipmentFeatureContainer::RemoveFeature(const FName& FeatureName)
+{
+	Features.RemoveAll([FeatureName](const FEquipmentFeatureEntry& Entry)
+	{
+		return Entry.FeatureName == FeatureName;
+	});
+	MarkArrayDirty();
+}
+
 void FEquipmentFeatureContainer::PostReplicatedAdd(const TArrayView<int32>& AddedIndices, int32 FinalSize)
 {
 	// this only be called on client
@@ -29,7 +55,7 @@ void FEquipmentFeatureContainer::PostReplicatedAdd(const TArrayView<int32>& Adde
 		const FName& FeatureName = Feature->GetFeatureName();
 		// assume that replication is later than flush on client.
 		Owner->PendingFeatureRegistrations[FeatureName] = true;
-		Owner->OnFeatureSpawnedOrReplicated(FeatureName);
+		Owner->HandleFeatureSpawnedOrReplicated(FeatureName);
 	}
 }
 
@@ -37,7 +63,7 @@ UEquipmentFeature* FEquipmentFeatureContainer::GetFeature(TSubclassOf<UEquipment
 {
 	for(auto& Entry: Features)
 	{
-		if(Entry.Feature->GetClass()->IsChildOf(Key))
+		if(Entry.Feature && Entry.Feature->GetClass()->IsChildOf(Key))
 		{
 			return Entry.Feature;
 		}
@@ -49,7 +75,7 @@ UEquipmentFeature* FEquipmentFeatureContainer::GetFeature(const FName& Key)
 {
 	for(auto& Entry: Features)
 	{
-		if(Entry.Feature->GetFeatureName() == Key)
+		if(Entry.Feature && Entry.Feature->GetFeatureName() == Key)
 		{
 			return Entry.Feature;
 		}
@@ -58,11 +84,30 @@ UEquipmentFeature* FEquipmentFeatureContainer::GetFeature(const FName& Key)
 }
 
 // Sets default values
-AEquipmentInstance::AEquipmentInstance(): FeatureContainer(this)
+AEquipmentInstance::AEquipmentInstance() :FeatureContainer(this)
 {
 	PrimaryActorTick.bCanEverTick = false;
 	bReplicates = true;
 	bAlwaysRelevant = true;
+}
+
+void AEquipmentInstance::HandleInstanceReplicated()
+{
+	if(HasAuthority())
+	{
+		return;
+	}
+	if(ManagerComponent&& InstanceId!=-1 && !HasAuthority())
+	{
+		ManagerComponent->HandleInstanceReplicated(InstanceId, this);
+	}
+}
+
+void AEquipmentInstance::BeginPlay()
+{
+	Super::BeginPlay();
+	// notify manager that we have replicated from server.
+	HandleInstanceReplicated();
 }
 
 void AEquipmentInstance::PreInstanceDestroyed()
@@ -85,12 +130,21 @@ void AEquipmentInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME(AEquipmentInstance, FeatureContainer);
+	DOREPLIFETIME_CONDITION_NOTIFY(AEquipmentInstance, InstanceId, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME(AEquipmentInstance, ManagerComponent);
 }
 
-void AEquipmentInstance::NotifyFeatureReplicated(const FName& FeatureName)
+void AEquipmentInstance::NotifyFeatureReplicated(const FName& FeatureName, UEquipmentFeature* ReplicatedFeature)
 {
-	
-	OnFeatureSpawnedOrReplicated(FeatureName);
+	for(auto& Entry: FeatureContainer.Features)
+	{
+		if(Entry.FeatureName == FeatureName)
+		{
+			Entry.Feature = ReplicatedFeature;
+			break;
+		}
+	}
+	HandleFeatureSpawnedOrReplicated(FeatureName);
 }
 
 void AEquipmentInstance::AddFeature(const FName& FeatureName)
@@ -135,7 +189,15 @@ void AEquipmentInstance::MarkAsPendingFeatureRegistration(const FName& FeatureNa
 		UE_LOG(LogEquipmentSystem, Warning, TEXT("Feature %s not found in Feature Class Map"), *FeatureName.ToString());
 		return;
 	}
-	PendingFeatureRegistrations.Add(FeatureName, false);
+	// on client, Feature may be replicated to client before we mark them as pending registration
+	if(GetFeature(FeatureName))
+	{
+		PendingFeatureRegistrations.Add(FeatureName, true);
+	}
+	else
+	{
+		PendingFeatureRegistrations.Add(FeatureName, false);
+	}
 	// Add Modifiers
 	auto& PropertyModifiers = FeatureCDO->GetPropertyModifiers();
 	for(const auto& Modifier: PropertyModifiers)
@@ -185,7 +247,7 @@ void AEquipmentInstance::FlushPendingFeatureRegistrations()
 		{
 			continue;
 		}
-		UEquipmentFeature* Feature = FeatureContainer.GetFeature(PendingFeature.Key);
+		UEquipmentFeature* Feature = GetFeature(PendingFeature.Key);
 		if(Feature)
 		{
 			PendingFeature.Value = true;
@@ -197,6 +259,11 @@ void AEquipmentInstance::FlushPendingFeatureRegistrations()
 	}
 	
 	// if we are here, that all the feature is created whether we are server or client.
+	// Mark all Features as Applied.
+	for(auto& PendingFeature: PendingFeatureRegistrations)
+	{
+		AppliedFeatures.AddUnique(PendingFeature.Key);
+	}
 	PendingFeatureRegistrations.Empty();
 	// 2. Try to register all the property modifiers.
 	FlushPendingPropertyModifierRegistrations();
@@ -333,16 +400,21 @@ void AEquipmentInstance::FlushPendingVisualActorRegistrations()
 		{
 			int32 TaskIndex = TopologicalContainerCopy.Pop();
 			FVisualActorRegisterTask& Task = VisualActorRegisterTasks[TaskIndex];
-			RegisterVisualActor(VisualActorNameToFeatureName[Task.VisualActorName], Task.VisualActorClass);
-			for(int i = 0; i< Task.NextVisualActorCount; ++i)
+			if(RegisterVisualActor(VisualActorNameToFeatureName[Task.VisualActorName], Task.VisualActorClass))
 			{
-				FVisualActorRegisterTask& NextTask = VisualActorRegisterTasks[Task.NextVisualActorIndices[i]];
-				--NextTask.PrevVisualActorCount;
-				if(NextTask.PrevVisualActorCount == 0)
-				{
-					TopologicalContainer.Add(Task.NextVisualActorIndices[i]);
-				}
-			}
+				// Register successfully, remove exsitence from pending actions.
+				PendingVisualActorActionRegistrations.RemoveSingle(VisualActorNameToFeatureName[Task.VisualActorName], Task.VisualActorName);
+				// Try Add Next Visual Actors to Topological Container.
+				for(int i = 0; i< Task.NextVisualActorCount; ++i)
+            	{
+            		FVisualActorRegisterTask& NextTask = VisualActorRegisterTasks[Task.NextVisualActorIndices[i]];
+            		--NextTask.PrevVisualActorCount;
+            		if(NextTask.PrevVisualActorCount == 0)
+            		{
+            			TopologicalContainer.Add(Task.NextVisualActorIndices[i]);
+            		}
+            	}}
+			
 		}
 	}
 }
@@ -387,9 +459,11 @@ void AEquipmentInstance::FlushPendingFeatureRemovals()
 {
 	for(auto& PendingFeature: PendingFeatureRemovals)
 	{
-		const UEquipmentFeature* FeatureCDO = FeatureContainer.GetFeature(PendingFeature);
-		const FName& FeatureName = FeatureCDO->GetFeatureName();
+		const UEquipmentFeature* Feature = FeatureContainer.GetFeature(PendingFeature);
+		const FName& FeatureName = Feature->GetFeatureName();
 		UnregisterSingleFeature(FeatureName);
+		// Unmark feature from applied features.
+		AppliedFeatures.Remove(FeatureName);
 	}
 	PendingFeatureRemovals.Empty();
 	// we refresh all the changed features' property(since some of modifiers may be removed).
@@ -432,20 +506,24 @@ void AEquipmentInstance::ServerOnly_CreateAndAddFeature(const FName& FeatureName
 		UE_LOG(LogEquipmentSystem, Warning, TEXT("Failed to create feature %s"), *FeatureName.ToString());
 		return;
 	}
-	NewFeature->RegisterComponent();
 	NewFeature->SetIsReplicated(true);
+	NewFeature->RegisterComponent();
+	
 	if(HasAuthority())
 	{
 		FeatureContainer.AddFeature(NewFeature);
 	}
-	OnFeatureSpawnedOrReplicated(FeatureName);
+	HandleFeatureSpawnedOrReplicated(FeatureName);
 }
 
-void AEquipmentInstance::OnFeatureSpawnedOrReplicated(const FName& FeatureName)
+void AEquipmentInstance::HandleFeatureSpawnedOrReplicated(const FName& FeatureName)
 {
-	auto& FeatureRegistrationValue = PendingFeatureRegistrations.FindOrAdd(FeatureName);
-	FeatureRegistrationValue = true;
-	FlushPendingFeatureRegistrations();
+	bool* FeatureRegistrationValue = PendingFeatureRegistrations.Find(FeatureName);
+	if(FeatureRegistrationValue)
+	{
+		*FeatureRegistrationValue = true;
+		FlushPendingFeatureRegistrations();
+	}
 }
 
 FEquipmentVisualActorSpecifier AEquipmentInstance::GetVisualActorSpecifier_Internal(const FName& VisualActorName)
@@ -476,7 +554,7 @@ void AEquipmentInstance::RegisterModifier(UEquipmentFeature* TargetFeature,
 	ChangedFeatures.AddUnique(TargetFeature);
 }
 
-bool AEquipmentInstance::RegisterVisualActor(const FName& SourceFeatureNamePtr, const UClass* ActorClass)
+bool AEquipmentInstance::RegisterVisualActor(const FName& SourceFeatureName, const UClass* ActorClass)
 {
 	// returns true if the registration is successful.
 	// if failed to spawn, the pending visual actor actions will not be cleared.
@@ -486,16 +564,12 @@ bool AEquipmentInstance::RegisterVisualActor(const FName& SourceFeatureNamePtr, 
 	{
 		return false;
 	}
-	// Make Visual actor net related to pawn.
-	VisualActor->SetOwner(ManagerComponent->GetOwner());
+	VisualActor->SetOwner(this);
 	VisualActor->InitVisualActor(this);
 	VisualActors.Add(VisualActor);
 	// Add Visual Actor to Runtime Data.
-	if(&SourceFeatureNamePtr)
-	{
-		FEquipmentFeatureRuntimeDataHandle& FeatureRuntimeData = FeatureRuntimeDataHandles.FindOrAdd(SourceFeatureNamePtr);
-		FeatureRuntimeData.VisualActorNames.Add(VisualActor->VisualActorName);
-	}
+	FEquipmentFeatureRuntimeDataHandle& FeatureRuntimeData = FeatureRuntimeDataHandles.FindOrAdd(SourceFeatureName);
+	FeatureRuntimeData.VisualActorNames.Add(VisualActor->VisualActorName);
 	return true;
 }
 
@@ -647,6 +721,16 @@ AEquipmentVisualActor* AEquipmentInstance::GetVisualActor(const FName& VisualAct
 }
 
 
+UEquipmentFeature* AEquipmentInstance::GetFeature(const FName& FeatureName)
+{
+	return FeatureContainer.GetFeature(FeatureName);
+}
+
+const TArray<FName>& AEquipmentInstance::GetAppliedFeatures()
+{
+	return AppliedFeatures;
+}
+
 bool AEquipmentInstance::IsEquipped()
 {
 	return bIsEquipped; 
@@ -684,4 +768,14 @@ void AEquipmentInstance::HandleGameplayCue(UObject* Self, FGameplayTag GameplayC
 	{
 		VisualActor->HandleGameplayCue(VisualActor, GameplayCueTag, EventType, Parameters);
 	}
+}
+
+void AEquipmentInstance::OnRep_InstanceId(const int32& OldInstanceId)
+{
+	HandleInstanceReplicated();
+}
+
+void AEquipmentInstance::OnRep_ManagerComponent()
+{
+	HandleInstanceReplicated();
 }

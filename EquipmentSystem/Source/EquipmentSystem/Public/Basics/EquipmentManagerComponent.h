@@ -28,7 +28,7 @@ struct FEquipmentManagerFeatureEvent
 	UPROPERTY()
 	int32 Id = -1;
 	UPROPERTY()
-	TArray<FName> FeatureNames;
+	TArray<FName> Features;
 };
 
 USTRUCT()
@@ -84,6 +84,51 @@ struct TStructOpsTypeTraits< FEquipmentInstancesContainer > : public TStructOpsT
    };
 };
 
+USTRUCT()
+struct FEquipmentFeatureRegistryEntry : public FFastArraySerializerItem
+{
+	GENERATED_BODY()
+	UPROPERTY()
+	int32 Id = -1;
+	UPROPERTY()
+	TArray<FName> RegisteredFeatures;
+};
+
+USTRUCT()
+struct FEquipmentFeatureRegistryContainer: public FFastArraySerializer
+{
+	GENERATED_BODY()
+	
+	FEquipmentFeatureRegistryContainer(UEquipmentManagerComponent* InManager = nullptr) : FFastArraySerializer(), Manager(InManager)  { }
+
+	UPROPERTY()
+	TArray<FEquipmentFeatureRegistryEntry> Items;
+
+	UPROPERTY()
+	UEquipmentManagerComponent* Manager;
+
+	void AddRegistryEntry(int32 Id);
+	void RemoveRegistryEntry(int32 Id);
+	FEquipmentFeatureRegistryEntry* GetRegistryEntry(int32 Id);
+
+	void PreReplicatedRemove(const TArrayView<int32>& RemovedIndices, int32 FinalSize);
+	void PostReplicatedAdd(const TArrayView<int32>& AddedIndices, int32 FinalSize);
+	void PostReplicatedChange(const TArrayView<int32>& ChangedIndices, int32 FinalSize);
+
+	bool NetDeltaSerialize(FNetDeltaSerializeInfo & DeltaParms)
+	{
+		return FFastArraySerializer::FastArrayDeltaSerialize<FEquipmentFeatureRegistryEntry, FEquipmentFeatureRegistryContainer>( Items, DeltaParms, *this );
+	}
+};
+template<>
+struct TStructOpsTypeTraits< FEquipmentFeatureRegistryContainer > : public TStructOpsTypeTraitsBase2< FEquipmentFeatureRegistryContainer >
+{
+	enum 
+	{
+		WithNetDeltaSerializer = true,
+   };
+};
+
 /**
  * Equipment manager component.
  * This component expected to be on a pawn owned by a player controller.
@@ -92,31 +137,33 @@ UCLASS()
 class EQUIPMENTSYSTEM_API UEquipmentManagerComponent : public UActorComponent
 {
 	GENERATED_BODY()
-
+	friend struct FEquipmentInstancesContainer;
 public:
 #if WITH_EDITOR
 	virtual EDataValidationResult IsDataValid(FDataValidationContext& Context) override;
 #endif
-	
 	UEquipmentManagerComponent();
-
+	bool HasAuthority();
 	static UEquipmentManagerComponent* FindEquipmentManagerComponent(AActor* Actor);
 	
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	bool IsInitialized() const { return AbilitySystemComponent != nullptr; }
+	
 	int32 ServerOnly_CreateInstance();
-	void HandleInstanceCreated(AEquipmentInstance* NewInstance);
+	void HandleInstanceReplicated(int32 Id, AEquipmentInstance* Instance);
+		
 	void ServerOnly_DestroyInstance(int32 Id);
 	void HandleInstanceDestroyed(AEquipmentInstance* Instance);
 	void AddFeature(int32 Id, const FName& FeatureName);
 	void AddFeatures(int32 Id, const TArray<FName>& FeatureNames);
 	void RemoveFeature(int32 Id, const FName& FeatureName);
 	void RemoveFeatures(int32 Id, const TArray<FName>& FeatureNames);
-	
-	UFUNCTION(NetMultiCast, Reliable)
-	void MULTICAST_HandleFeatureEvent(const FEquipmentManagerFeatureEvent& Event);
+
+	void ProcessFeatureRegistryChange(int32 Id);
+	void NotifyFeatureRegistryChanged(int32 Id);
+
 	void FlushPendingFeatureEvents();
-	void ServerOnly_DispatchPendingFeatureEvents();
 	bool HandleFeatureEvent(const FEquipmentManagerFeatureEvent& Event);
 
 	FExpandedAbilityGrantSource_GrantHandle HandleGrantAbility(IExpandedAbilityGrantSource* Source, UObject* SourceObject);
@@ -124,6 +171,7 @@ public:
 	void NotifyInstanceInitialized(AEquipmentInstance* Instance);
 
 	void InitializeManager(UAbilitySystemComponent* InAbilitySystemComponent);
+	void HandleManagerInitialized();
 
 	int32 GetInstanceId(AEquipmentInstance* Instance);
 	AEquipmentInstance* GetInstance(int32 Id);
@@ -159,6 +207,9 @@ protected:
 	
 	UPROPERTY(Replicated)
 	FEquipmentInstancesContainer Instances;
+	UPROPERTY(Replicated)
+	FEquipmentFeatureRegistryContainer FeatureRegistry;
+	
 	UPROPERTY()
 	UAbilitySystemComponent* AbilitySystemComponent = nullptr;
 };

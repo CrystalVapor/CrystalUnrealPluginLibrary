@@ -106,6 +106,8 @@ public:
 	void UnregisterModifier(const FEquipmentPropertyModifierHandle& ModifierHandle);
 	void UnregisterModifier(const FName InFeatureName, const FName ModifierName);
 
+	void NotifyFullySpawnedOrReplicated();
+	
 	UFUNCTION(BlueprintCallable, CustomThunk, Category = "Equipment System", DisplayName = "Get Property (Feature)", meta = (CustomStructureParam = "OutProperty", GameplayTagFilter = "Equipment.Property"))
 	bool K2_GetProperty(FGameplayTag PropertyTag, int32& OutProperty);
 	DECLARE_FUNCTION(execK2_GetProperty);

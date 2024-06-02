@@ -21,7 +21,7 @@ void UEquipmentFeature::BeginPlay()
 		AEquipmentInstance* OwnerInstance = Cast<AEquipmentInstance>(GetOwner());
 		if(OwnerInstance)
 		{
-			OwnerInstance->NotifyFeatureReplicated(GetFeatureName());
+			OwnerInstance->NotifyFeatureReplicated(GetFeatureName(), this);
 		}
 	}
 }
@@ -304,6 +304,10 @@ void UEquipmentFeature::UnregisterModifier(const FName InFeatureName, const FNam
 	{
 		UE_LOG(LogEquipmentSystem, Warning, TEXT("Modifier named \"%s\" does not exist in feature named \"%s\""), *ModifierName.ToString(), *InFeatureName.ToString());
 	}
+}
+
+void UEquipmentFeature::NotifyFullySpawnedOrReplicated()
+{
 }
 
 bool UEquipmentFeature::K2_GetProperty(FGameplayTag PropertyTag, int32& OutProperty)

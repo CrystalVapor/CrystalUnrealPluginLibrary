@@ -25,7 +25,9 @@ struct FEquipmentFeatureEntry: public FFastArraySerializerItem
 {
 	GENERATED_BODY()
 	UPROPERTY()
-	UEquipmentFeature* Feature = nullptr;
+	FName FeatureName = NAME_None;
+	UPROPERTY()
+	UEquipmentFeature* Feature;
 };
 
 USTRUCT()
@@ -41,20 +43,11 @@ struct FEquipmentFeatureContainer: public FFastArraySerializer
 	TArray<FEquipmentFeatureEntry> Features;
 	UPROPERTY(NotReplicated)
 	AEquipmentInstance* Owner;
-	void AddFeature(UEquipmentFeature* Feature)
-	{
-		FEquipmentFeatureEntry& Entry = Features.AddDefaulted_GetRef();
-		Entry.Feature = Feature;
-		MarkItemDirty(Entry);
-	}
-	void RemoveFeature(UEquipmentFeature* Feature)
-	{
-		Features.RemoveAll([Feature](const FEquipmentFeatureEntry& Entry)
-		{
-			return Entry.Feature == Feature;
-		});
-		MarkArrayDirty();
-	}
+	void AddFeature(UEquipmentFeature* Feature);
+
+	void RemoveFeature(UEquipmentFeature* Feature);
+	void RemoveFeature(const FName& FeatureName);
+
 	FEquipmentFeatureEntry& operator[](const int32 Index)
 	{
 		return Features[Index];
@@ -110,9 +103,12 @@ friend UEquipmentManagerComponent;
 friend FEquipmentFeatureContainer;
 public:
 	AEquipmentInstance();
+	void HandleInstanceReplicated();
+	virtual void BeginPlay() override;
 	virtual void PreInstanceDestroyed();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-	void NotifyFeatureReplicated(const FName& FeatureName);
+	void NotifyFeatureReplicated(const FName& FeatureName, UEquipmentFeature* ReplicatedFeature);
+
 protected:
 	// These Functions should only be called by Manager Component due to Replicate.
 	void AddFeature(const FName& FeatureName);
@@ -130,10 +126,10 @@ protected:
 	void FlushPendingFeatureRemovals();
 	
 	void ServerOnly_CreateAndAddFeature(const FName& FeatureName);
-	void OnFeatureSpawnedOrReplicated(const FName& FeatureName);
+	void HandleFeatureSpawnedOrReplicated(const FName& FeatureName);
 
 	void RegisterModifier(UEquipmentFeature* TargetFeature, const FEquipmentPropertyModifierHandle& Modifier);
-	bool RegisterVisualActor(const FName& SourceFeatureNamePtr, const UClass* ActorClass);
+	bool RegisterVisualActor(const FName& SourceFeatureName, const UClass* ActorClass);
 	void RegisterAbilitySet(const FName& SourceFeatureName, const UEquipmentAbilitySet* AbilitySet);
 	
 	void UnregisterSingleFeature(const FName& FeatureName);
@@ -166,6 +162,8 @@ public:
 	T* GetFeature(TSubclassOf<UEquipmentFeature> FeatureClass);
 	template<class T>
 	T* GetFeature(const FName& FeatureName);
+	UEquipmentFeature* GetFeature(const FName& FeatureName);;
+	const TArray<FName>& GetAppliedFeatures();
 
 	bool IsEquipped();
 	void NotifyEquipped();
@@ -178,10 +176,18 @@ public:
 
 	void HandleGameplayCue(UObject* Self, FGameplayTag GameplayCueTag, EGameplayCueEvent::Type EventType, const FGameplayCueParameters& Parameters);
 protected:
-	UPROPERTY()
+	UFUNCTION()
+	void OnRep_InstanceId(const int32& OldInstanceId);
+	UFUNCTION()
+	void OnRep_ManagerComponent();
+	UPROPERTY(ReplicatedUsing = OnRep_InstanceId)
+	int32 InstanceId = -1;
+	UPROPERTY(ReplicatedUsing = OnRep_ManagerComponent)
 	UEquipmentManagerComponent* ManagerComponent = nullptr;
 	UPROPERTY(Replicated)
 	FEquipmentFeatureContainer FeatureContainer;
+	UPROPERTY()
+	TArray<FName> AppliedFeatures;
 	UPROPERTY()
 	TArray<AEquipmentVisualActor*> VisualActors;
 	UPROPERTY()
