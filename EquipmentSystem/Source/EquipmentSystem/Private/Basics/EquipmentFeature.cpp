@@ -366,6 +366,12 @@ FProperty* UEquipmentFeature::GetPropertyReflectInfo(FName PropertyName) const
 	return GetClass()->FindPropertyByName(PropertyName);
 }
 
+#if WITH_EDITOR
+void UEquipmentFeature::PostCDOContruct()
+{
+	Super::PostCDOContruct();
+	UEquipmentSystemGlobal::GetDisplayAbilitySetRequirement(GetClass(), AbilitySetRequirements);
+}
 
 EDataValidationResult UEquipmentFeature::IsDataValid(TArray<FText>& ValidationErrors)
 {
@@ -379,5 +385,6 @@ EDataValidationResult UEquipmentFeature::IsDataValid(TArray<FText>& ValidationEr
 	}
 	return DataValidationResult;
 }
+#endif
 
 

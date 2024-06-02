@@ -42,6 +42,20 @@ void UEquipmentFeatureManager::BuildFeatureMapping(const TArray<FAssetData>& Ass
 		const FSoftObjectPath GeneratedPath = AssetData.GetSoftObjectPath();
 		FeatureClassMap.Add(FeatureName, GeneratedPath);
 	}
+	// Add Native classes.
+	UClass* BaseFeatureClass = UEquipmentFeature::StaticClass();
+	TArray<UClass*> FeatureClasses;
+	GetDerivedClasses(BaseFeatureClass, FeatureClasses);
+	for(UClass* FeatureClass:FeatureClasses)
+	{
+		const FName FeatureName = FeatureClass->GetFName();
+		if(FeatureClassMap.Contains(FeatureName))
+		{
+			continue;
+		}
+		const FSoftObjectPath GeneratedPath = FeatureClass->GetPathName();
+		FeatureClassMap.Add(FeatureName, GeneratedPath);
+	}
 }
 
 

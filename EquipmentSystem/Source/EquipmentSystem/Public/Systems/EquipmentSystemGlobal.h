@@ -36,7 +36,9 @@ public:
 	                                            const TSubclassOf<UAttributeSet>& AttributeSetClass);
 	
 	static bool ValidateFeatureAbilityRequirements(const FName& FeatureName, const TArray<UEquipmentAbilitySet*>& AbilitySets, TArray<FText>& OutMessages);
-
+	static void GetDisplayAbilitySetRequirement(const UClass* FeatureClass,
+	                                            FEquipmentAbilitySetRequirement& OutRequirement);
+	
 	virtual void Init();
 		
 	virtual UClass* GetVisualActor(const FName& VisualActorName, const FEquipmentVisualActorSpecifier& VisualActorSpecifier);

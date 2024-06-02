@@ -134,6 +134,21 @@ bool UEquipmentSystemGlobal::ValidateFeatureAbilityRequirements(const FName& Fea
 	return bResult;
 }
 
+void UEquipmentSystemGlobal::GetDisplayAbilitySetRequirement(const UClass* FeatureClass,
+                                                             FEquipmentAbilitySetRequirement& OutRequirement)
+{
+	while(FeatureClass!=nullptr && FeatureClass != UEquipmentFeature::StaticClass())
+	{
+		const FName& CurrentFeatureName = FeatureClass->GetFName();
+		const FEquipmentAbilitySetRequirement* Requirement = FeatureAbilityRequirements.Find(CurrentFeatureName);
+		if(Requirement)
+		{
+			OutRequirement.Append(*Requirement);
+		}
+		FeatureClass = FeatureClass->GetSuperClass();
+	}
+}
+
 void UEquipmentSystemGlobal::Init()
 {
 	if(VisualActorPaths.Num() == 0)

@@ -154,4 +154,5 @@ struct FEquipmentAbilitySetRequirement
 	bool ValidateWithAbilitySets(const TArray<UEquipmentAbilitySet*>& AbilitySets, TArray<FText>& OutFailedMessages) const;
 	void AddAbilityRequirement(TSubclassOf<UEquipmentGameplayAbility> AbilityRequirement);
 	void AddAttributeSetRequirement(TSubclassOf<UAttributeSet> AttributeSetRequirement);
+	void Append(const FEquipmentAbilitySetRequirement& Requirement);
 };

@@ -122,6 +122,7 @@ public:
 	T* GetProperty(FName PropertyName) const;
 	
 #if WITH_EDITOR
+	virtual void PostCDOContruct() override;
 	virtual EDataValidationResult IsDataValid(TArray<FText>& ValidationErrors) override;
 #endif
 	

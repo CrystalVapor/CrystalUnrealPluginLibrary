@@ -108,3 +108,15 @@ void FEquipmentAbilitySetRequirement::AddAttributeSetRequirement(TSubclassOf<UAt
 {
 	RequiredAttributeSets.Add(AttributeSetRequirement);
 }
+
+void FEquipmentAbilitySetRequirement::Append(const FEquipmentAbilitySetRequirement& Requirement)
+{
+	for(auto& Ability: Requirement.RequiredAbilities)
+	{
+		AddAbilityRequirement(Ability);
+	}
+	for(auto& AttributeSet: Requirement.RequiredAttributeSets)
+	{
+		AddAttributeSetRequirement(AttributeSet);
+	}
+}
